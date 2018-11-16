@@ -1,2 +1,1 @@
-# rekit-app
-Native Rekit App.
+# README
