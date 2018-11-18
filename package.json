@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.10.4",
+    "antd": "^3.10.7",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
     "babel-core": "6.26.0",
@@ -74,7 +74,7 @@
   "rekit": {
     "devPort": 6093,
     "studioPort": 6076,
-    "plugins": [],
+    "plugins": ["/Users/pwang7/workspace/rekit-studio/src/features/plugin-cra"],
     "css": "less"
   },
   "jest": {

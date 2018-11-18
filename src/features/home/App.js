@@ -18,6 +18,9 @@ export default class App extends Component {
   render() {
     return (
       <div className="home-app">
+        <header className="app-header">
+          Welcome to Rekit!
+        </header>
         <div className="page-container">{this.props.children}</div>
       </div>
     );
