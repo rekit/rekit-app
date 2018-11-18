@@ -16,7 +16,14 @@ function createWindow() {
   const isDev = process.env.NODE_ENV === 'development';
 
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 1200, height: 900, titleBarStyle: 'hiddenInset' });
+  mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 900,
+    titleBarStyle: 'hidden',
+
+    // transparent: true,
+    // frame: false,
+  });
   mainWindow.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
   // and load the index.html of the app.
   // mainWindow.loadURL(

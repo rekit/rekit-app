@@ -1,4 +1,5 @@
 @primary-color: #2175bc;
+@header-height: 22px;
 
 .abs-fullsize {
   position: absolute;
@@ -12,4 +13,9 @@
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.full-page {
+  .abs-fullsize;
+  top: @header-height;
 }

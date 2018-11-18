@@ -2,15 +2,17 @@
 
 .home-welcome-page {
   .abs-fullsize;
-  top: 22px;
+  top: @header-height;
   background-color: #1e1e1e;
   color: #ccc;
+  font-weight: lighter;
 
   h1,
   h2,
   h3,
   h4 {
     color: #ccc;
+    font-weight: lighter;
   }
 
   .main-area {
@@ -19,6 +21,8 @@
     background-color: #191919;
     border-radius: 6px;
     margin: 0 auto;
+    overflow: hidden;
+
     .vertical-center;
     .rekit-logo {
       width: 60px;
@@ -36,7 +40,7 @@
   .row-button {
     position: relative;
     padding-left: 20px;
-    margin: 15px 0 0 90px;
+    margin: 15px 0 0 110px;
     text-align: left;
     line-height: 20px;
     color: @primary-color;
@@ -53,24 +57,57 @@
   }
 
   .recent-projects {
-    ul, li {
+    background-color: #222;
+    height: 400px;
+    padding-left: 20px;
+    overflow: hidden;
+
+    h2 {
+      line-height: 44px;
+      border-bottom: 1px solid #444;
+      margin-bottom: 0;
+      margin-right: 20px;
+    }
+    ul,
+    li {
       margin: 0;
       padding: 0;
       list-style: none;
+    }
+    ul {
+      height: 360px;
+      overflow: auto;
+      padding-right: 20px;
     }
 
     .row-button {
       padding-left: 50px;
       color: #ccc;
+      height: 60px;
+      border-bottom: 1px solid #444;
+      white-space: nowrap;
       .anticon {
-        left: 5px;
-        top: 7px;
+        left: 7px;
+        top: 15px;
         font-size: 32px;
       }
       h4 {
-        padding-top: 5px;
+        padding-top: 13px;
         margin: 0;
         line-height: 16px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      &:hover {
+        h4,
+        p {
+          color: @primary-color;
+        }
+      }
+      p {
+        color: #777;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
     }
   }
