@@ -19,6 +19,7 @@
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
+    "electron-config": "^2.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "4.10.0",
@@ -38,6 +39,7 @@
     "less-loader": "^4.1.0",
     "lodash": "^4.17.5",
     "nock": "^9.2.3",
+    "node-pty": "^0.7.8",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
@@ -74,7 +76,15 @@
   "rekit": {
     "devPort": 6093,
     "studioPort": 6076,
-    "plugins": ["/Users/pwang7/workspace/rekit-studio/src/features/plugin-cra"],
+    "plugins": [
+      "/Users/pwang7/workspace/rekit-studio/src/features/plugin-cra"
+    ],
+    "folders": [
+      "node"
+    ],
+    "files": [
+      "package.json"
+    ],
     "css": "less"
   },
   "jest": {
