@@ -23,8 +23,6 @@ store.onDidChange('recentProjects', () => {
 });
 
 function createMenu() {
-  const mainWindow = BrowserWindow.getFocusedWindow();
-
   const template = [
     {
       label: 'Rekit',
@@ -48,7 +46,7 @@ function createMenu() {
           label: 'Open...',
           accelerator: 'CmdOrCtrl+O',
           click() {
-            mainWindow.webContents.send('open-project');
+            BrowserWindow.getFocusedWindow().webContents.send('open-project');
           },
         },
         {
@@ -62,7 +60,7 @@ function createMenu() {
         {
           label: 'Close Project',
           click() {
-            mainWindow.webContents.send('close-project');
+            BrowserWindow.getFocusedWindow().webContents.send('close-project');
           },
         },
       ],

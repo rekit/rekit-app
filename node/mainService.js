@@ -16,14 +16,14 @@ ipcMain.on('call-window-method', (evt, method) => {
   }
 });
 
-promiseIpc.on('/start-studio', (prjDir) => {
+promiseIpc.on('/start-studio', prjDir => {
   return studioRunnder.startStudio(prjDir);
 });
 
-promiseIpc.on('/get-main-state', (prjDir) => {
+promiseIpc.on('/get-main-state', prjDir => {
   const studios = studioRunnder.getRunningStudios();
   return {
-    studios: studios,
+    studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started'])),
     recentProjects: store.get('recentProjects') || [],
   };
 });

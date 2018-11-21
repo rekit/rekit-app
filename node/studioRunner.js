@@ -14,7 +14,9 @@ function startStudio(prjDir) {
     getPort().then(port => {
       const child = taskRunner.runTask(`node ${studioBin} -d ${prjDir} -p ${port}`, prjDir);
       child.on('message', msg => {
-        if (msg === 'rekit-studio-started') resolve({ port, prjDir });
+        // if (msg === 'rekit-studio-started') resolve({ port, prjDir });
+        studioMap[prjDir].started = true;
+        utils.notifyMainStateChange();
       });
       child.on('exit', () => {
         delete studioMap[prjDir];
@@ -26,6 +28,7 @@ function startStudio(prjDir) {
         port,
         prjDir,
       };
+      resolve({ port, prjDir });
     });
   });
 }

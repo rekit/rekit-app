@@ -22,6 +22,7 @@ function openProject(dir) {
 
 function openProjectByDir(prjDir) {
   const studioById = store.getState().home.studioById;
+  
   if (studioById[prjDir]) {
     // already opened
     history.push(`/rekit-studio/${studioById[prjDir].port}`);
