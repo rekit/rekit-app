@@ -9,6 +9,6 @@ export default {
       component: WelcomePage,
       isIndex: true,
     },
-    { path: 'rekit-studio', component: RekitStudioPage },
+    { path: 'rekit-studio/:port', component: RekitStudioPage },
   ],
 };

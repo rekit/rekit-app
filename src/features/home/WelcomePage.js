@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Icon } from 'antd';
 import history from '../../common/history';
 import rekitLogo from '../../images/rekit-logo.svg';
 import * as actions from './redux/actions';
+import utils from './utils';
 
 export class WelcomePage extends Component {
-  static propTypes = {};
+  static propTypes = {
+    recentProjects: PropTypes.array.isRequired,
+  };
 
   handleCreateNewProject = () => {
     history.push('/rekit-studio');
-  }
+  };
+
+  handleOpenProject = (dir) => {
+    utils.openProject(dir);
+  };
 
   renderWelcomArea() {
     return (
@@ -23,7 +31,7 @@ export class WelcomePage extends Component {
           <Icon type="file" />
           <p>Create a new project</p>
         </div>
-        <div className="row-button">
+        <div className="row-button" onClick={() => this.handleOpenProject()}>
           <Icon type="file" />
           <p>Open an existing project</p>
         </div>
@@ -36,17 +44,24 @@ export class WelcomePage extends Component {
   }
 
   renderRecent() {
+    const { recentProjects } = this.props;
     return (
       <div className="recent-projects">
         <h2>Recent Projects</h2>
         <ul>
-          {[1, 2, 3, 4,6,7,8,9].map(() => (
-            <li className="row-button row-button-large" title={"file path"}>
+          {recentProjects.map(dir => (
+            <li
+              key={dir}
+              className="row-button row-button-large"
+              title={dir}
+              onClick={() => this.handleOpenProject(dir)}
+            >
               <Icon type="file" />
-              <h4>Rekit App</h4>
-              <p>/pwang7/workspace/rekit-app</p>
+              <h4>{dir.split('/').pop()}</h4>
+              <p>{dir}</p>
             </li>
           ))}
+          {recentProjects.length === 0 && <li className="no-recent">No recent projects.</li>}
         </ul>
       </div>
     );
@@ -69,7 +84,7 @@ export class WelcomePage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    home: state.home,
+    recentProjects: state.home.recentProjects,
   };
 }
 

@@ -36,5 +36,23 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      const { ipcRenderer, shell, remote } = require('electron');
+      const fs = require('fs');
+      const path = require('path');
+
+      window.bridge = {
+        ipcRenderer,
+        isWin: process.platform === 'win32',
+        shell,
+        remote,
+        fs,
+        path,
+        promiseIpc: require('electron-promise-ipc'),
+        openUrl(url) {
+          shell.openExternal(url);
+        }
+      };
+    </script>
   </body>
 </html>

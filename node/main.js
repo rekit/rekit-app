@@ -3,10 +3,15 @@ const electron = require('electron');
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
-const Menu = electron.Menu;
+const { ipcMain } = electron;
+
+
+const menu = require('./menu');
 
 const path = require('path');
 const url = require('url');
+
+require('./mainService');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -60,39 +65,10 @@ function createWindow() {
 app.on('ready', () => {
   createWindow();
 
-  if (0 && !isDev) {
-    // Create the Application's main menu
-    var template = [
-      {
-        label: 'Rekit',
-        submenu: [
-          { label: 'About Rekit', selector: 'orderFrontStandardAboutPanel:' },
-          { type: 'separator' },
-          {
-            label: 'Quit',
-            accelerator: 'Command+Q',
-            click: function() {
-              app.quit();
-            },
-          },
-        ],
-      },
-      {
-        label: 'Edit',
-        submenu: [
-          { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
-          { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
-          { type: 'separator' },
-          { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
-          { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
-          { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-          { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' },
-        ],
-      },
-    ];
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-  }
+  // if (0 && !isDev) {
+  // Create the Application's main menu
+  menu.createMenu(mainWindow, app);
+  // }
 });
 
 // Quit when all windows are closed.
