@@ -36,8 +36,10 @@ export class TitleBar extends Component {
     const pathname = this.props.router.location.pathname;
 
     const current = /^\/rekit-studio\/(\w+)$/.test(pathname)
-      ? _.find(studios, { port: parseInt(RegExp.$1, 10) })
+      ? _.find(studios, { port: RegExp.$1 })
       : null;
+
+    const list = _.without(studios, current);
     return (
       <header className="home-title-bar" onDoubleClick={this.handleDoubleClick}>
         {current ? (
@@ -49,7 +51,7 @@ export class TitleBar extends Component {
             </span>
             <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
               <ul>
-                {studios.map(s => (
+                {list.map(s => (
                   <li key={s.prjDir} onClick={() => this.handlePrjClick(s)}>
                     {s.prjDir}{' '}
                     <span className="studio-url">

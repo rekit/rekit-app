@@ -38,3 +38,10 @@ promiseIpc.on('/open-studio', prjDir => {
   utils.notifyMainStateChange();
   return true;
 });
+
+promiseIpc.on('/close-project', prjDir => {
+  // switch to a tab
+  return studioRunnder.stopStudio(prjDir).then(() => {
+    utils.notifyMainStateChange();
+  });
+});

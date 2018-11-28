@@ -55,7 +55,7 @@ function createMenu() {
           submenu: getRecentMenuItems(),
         },
         {
-          label: 'Relaunch Project',
+          label: 'Reload Project',
         },
         {
           label: 'Close Project',

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import history from '../../common/history';
 import { WebView } from '../common';
 import rekitLogo from '../../images/rekit-logo.svg';
 
@@ -15,17 +16,51 @@ export class RekitStudioPage extends Component {
 
   state = {
     loaded: {},
+    closing: {},
   };
 
-  handleWebViewOnload = (prjDir) => {
-    console.log('studio on load: ', prjDir);
-    setTimeout(() =>this.setState({
-      loaded: {
-        ...this.state.loaded,
-        [prjDir]: true,
-      }
-    }), 800);
+  componentDidMount() {
+    window.bridge.ipcRenderer.on('close-project', this.handleCloseProject);
+  }
+  componentWillUnmount() {
+    window.bridge.ipcRenderer.removeListener('close-project', this.handleCloseProject);
+  }
 
+  handleCloseProject = () => {
+    const { port } = this.props.match.params;
+    const { studios, studioById } = this.props;
+    const studio = _.find(Object.values(this.props.studioById, { port }));
+    console.log('closing project: ', studio.prjDir);
+    this.setState({
+      closing: {
+        ...this.state.closing,
+        [studio.prjDir]: true,
+      },
+    });
+    window.bridge.promiseIpc.send('/close-project', studio.prjDir).then(() => {
+      this.setState({
+        closing: {
+          ...this.state.closing,
+          [studio.prjDir]: false,
+        },
+      });
+      const list = _.without(studios, studio.prjDir);
+      if (list.length === 0) history.push('/');
+      else history.push(`/rekit-studio/${studioById[list[0]].port}`);
+    });
+  };
+
+  handleWebViewOnload = prjDir => {
+    setTimeout(
+      () =>
+        this.setState({
+          loaded: {
+            ...this.state.loaded,
+            [prjDir]: true,
+          },
+        }),
+      800,
+    );
   };
 
   renderLoadingStatus() {
@@ -33,7 +68,7 @@ export class RekitStudioPage extends Component {
       <div className="loading-status">
         <div className="center-block">
           <img src={rekitLogo} alt="rekit-logo" />
-          <p>Launching the project...</p>
+          <p>Loading the project...</p>
         </div>
       </div>
     );
@@ -46,7 +81,7 @@ export class RekitStudioPage extends Component {
       <WebView
         key={studio.port}
         src={`http://localhost:${studio.port}`}
-        visible={String(studio.port) === port}
+        visible={studio.port === port}
         onload={() => this.handleWebViewOnload(studio.prjDir)}
       />
     ) : null;
@@ -56,15 +91,23 @@ export class RekitStudioPage extends Component {
     return <div className="wv-container">{this.props.studios.map(this.renderWebView)}</div>;
   }
 
+  renderNotFound(port) {
+    return <div className="not-found">Project not found: {port}.</div>;
+  }
+
   render() {
     const { port } = this.props.match.params;
     const currentStudio = _.find(Object.values(this.props.studioById), {
-      port: parseInt(port, 10),
+      port,
     });
+
     return (
       <div className="home-rekit-studio-page">
         {this.renderWebViews()}
-        {(!currentStudio.started || !this.state.loaded[currentStudio.prjDir]) && this.renderLoadingStatus()}
+        {currentStudio &&
+          (!currentStudio.started || !this.state.loaded[currentStudio.prjDir]) &&
+          this.renderLoadingStatus()}
+        {!currentStudio && this.renderNotFound(port)}
       </div>
     );
   }

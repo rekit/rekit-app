@@ -25,7 +25,7 @@ function createWindow() {
     width: 1200,
     height: 900,
     titleBarStyle: 'hidden',
-
+    backgroundColor: '#1e1e1e',
     // transparent: true,
     // frame: false,
   });

@@ -12,6 +12,7 @@ function startStudio(prjDir) {
   }
   return new Promise((resolve, reject) => {
     getPort().then(port => {
+      port = String(port);
       const child = taskRunner.runTask(`node ${studioBin} -d ${prjDir} -p ${port}`, prjDir);
       child.on('message', msg => {
         // if (msg === 'rekit-studio-started') resolve({ port, prjDir });
@@ -35,6 +36,8 @@ function startStudio(prjDir) {
 
 function stopStudio(prjDir) {
   taskRunner.stopTask(prjDir);
+  delete studioMap[prjDir];
+  return Promise.resolve();
 }
 
 function getRunningStudios() {
