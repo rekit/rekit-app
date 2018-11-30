@@ -1,5 +1,6 @@
 {
   "name": "rekit-app",
+  "productName": "Rekit",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -75,6 +76,18 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
+  "build": {
+    "compression": "normal",
+    "appId": "com.webows.rekit",
+    "dmg": {
+      "icon": "build/icon.icns"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": "dmg",
+      "identity": "Pei Wang (ZUQ2GPKPP2)"
+    }
+  },
   "rekit": {
     "devPort": 6093,
     "studioPort": 6076,
@@ -82,6 +95,7 @@
       "/Users/pwang7/workspace/rekit-studio/src/features/plugin-cra"
     ],
     "folders": [
+      "app",
       "node",
       "public",
       "config",
@@ -131,6 +145,7 @@
   },
   "description": "rekit-app2 created by Rekit.",
   "devDependencies": {
-    "electron": "^3.0.8"
+    "electron": "^3.0.8",
+    "electron-builder": "^20.38.2"
   }
 }
