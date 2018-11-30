@@ -54,7 +54,7 @@ export class TitleBar extends Component {
           <span>Welcome to Rekit!</span>
         )}
 
-        <div className="open-projects">
+        {list.length > 0 && <div className="open-projects" title="Other opened projects.">
           {list.length}
           <Icon type="caret-down" />
           <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
@@ -70,7 +70,7 @@ export class TitleBar extends Component {
               ))}
             </ul>
           </div>
-        </div>
+        </div>}
       </header>
     );
   }
