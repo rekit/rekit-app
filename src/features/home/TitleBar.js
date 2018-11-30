@@ -49,23 +49,28 @@ export class TitleBar extends Component {
               (http://localhost:
               {current.port})
             </span>
-            <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
-              <ul>
-                {list.map(s => (
-                  <li key={s.prjDir} onClick={() => this.handlePrjClick(s)}>
-                    {s.prjDir}{' '}
-                    <span className="studio-url">
-                      (http://localhost:
-                      {s.port})
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </span>
         ) : (
           <span>Welcome to Rekit!</span>
         )}
+
+        <div className="open-projects">
+          {list.length}
+          <Icon type="caret-down" />
+          <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
+            <ul>
+              {list.map(s => (
+                <li key={s.prjDir} onClick={() => this.handlePrjClick(s)}>
+                  {s.prjDir}{' '}
+                  <span className="studio-url">
+                    (http://localhost:
+                    {s.port})
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </header>
     );
   }

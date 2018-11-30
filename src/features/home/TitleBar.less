@@ -16,6 +16,57 @@
   .title-container {
     position: relative;
     display: inline-block;
+  }
+
+  .studio-url {
+    color: #777;
+  }
+
+  .open-projects {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    padding: 0 8px;
+    line-height: @header-height;
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .anticon {
+      margin-left: 8px;
+      font-size: 10px;
+    }
+
+    .project-list {
+      display: none;
+      position: absolute;
+      top: @header-height + 0px;
+      z-index: 100;
+      max-width: 500px;
+      background-color: #333;
+      right: 0;
+      box-shadow: -3px 3px 5px 0px #111;
+
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      li {
+        padding: 2px 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+        &:hover {
+          background-color: #111;
+        }
+      }
+    }
+
     &:hover .project-list {
       display: block;
 
@@ -23,35 +74,5 @@
         display: none;
       }
     }
-  }
-  .project-list {
-    display: none;
-    position: absolute;
-    top: @header-height + 0px;
-    z-index: 100;
-    width: 500px;
-    background-color: #333;
-    left: 50%;
-    transform: translateX(-50%);
-
-    ul,
-    li {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    li {
-      padding: 2px 10px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      &:hover {
-        background-color: #111;
-      }
-    }
-  }
-  .studio-url {
-    color: #777;
   }
 }
