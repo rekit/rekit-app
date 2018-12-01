@@ -69,7 +69,7 @@
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
-  "main": "node/main.js",
+  "main": "./node/main.js",
   "scripts": {
     "start": "node scripts/start.js",
     "start-electron": "electron .",
