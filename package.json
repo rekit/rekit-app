@@ -1,6 +1,6 @@
 {
   "name": "rekit-app",
-  "productName": "Rekit",
+  "author": "Nate Wang",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -70,17 +70,26 @@
     "whatwg-fetch": "2.0.3"
   },
   "main": "./node/main.js",
+  "homepage": "./",
   "scripts": {
     "start": "node scripts/start.js",
-    "start-electron": "electron .",
+    "start-electron": "cross-env NODE_ENV=development electron .",
+    "start-electron-dist": "cross-env NODE_ENV=production electron .",
+    "build-static": "node ./scripts/buildStatic.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
   "build": {
     "compression": "normal",
     "appId": "com.webows.rekit",
+    "productName": "Rekit",
+    "copyright": "Copyright © 2018 ${author}",
+    "files": [
+      "build",
+      "node"
+    ],
     "dmg": {
-      "icon": "build/icon.icns"
+      "icon": "icon.icns"
     },
     "mac": {
       "category": "public.app-category.developer-tools",
@@ -145,6 +154,7 @@
   },
   "description": "rekit-app2 created by Rekit.",
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "electron": "^3.0.8",
     "electron-builder": "^20.38.2"
   }

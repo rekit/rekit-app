@@ -5,7 +5,6 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const { ipcMain } = electron;
 
-
 const menu = require('./menu');
 
 const path = require('path');
@@ -39,13 +38,13 @@ function createWindow() {
   //   }),
   // );
 
-  console.log('isdev: ', isDev);
+  console.log('isdev: ', process.env.NODE_ENV, isDev);
 
-  // if (isDev) {
-  mainWindow.loadURL('http://localhost:6093/');
-  // } else {
-  //   mainWindow.loadURL(`file://${path.join(__dirname, '../index.html')}`);
-  // }
+  if (isDev) {
+    mainWindow.loadURL('http://localhost:6093/');
+  } else {
+    mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
+  }
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
