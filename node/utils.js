@@ -15,6 +15,8 @@ module.exports = {
     if (win) {
       console.log('state -changed');
       win.webContents.send('state-changed');
+    } else {
+      console.log('no window found', win);
     }
   },
 };
