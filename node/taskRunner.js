@@ -26,6 +26,8 @@ function runTask(cmd, cwd) {
   const child = spawn(name, arr, {
     cwd,
     stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+    versions: '3.1',
+    // env: { ELECTRON_RUN_AS_NODE: '0' },
     // env: Object.assign({}, process.env, { PATH: `${process.env.PATH}${getEnvPath()}` }),
   });
   processes[cwd] = child;

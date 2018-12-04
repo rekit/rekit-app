@@ -1,0 +1,11 @@
+{
+  "name": "rekit-app-node",
+  "author": "Nate Wang",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "node": "^10.10.0",
+    "rekit-core": "file:../../rekit/packages/rekit-core",
+    "rekit-studio": "file:../../rekit-studio"
+  }
+}

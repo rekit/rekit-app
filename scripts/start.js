@@ -30,7 +30,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
 const createDevServerConfig = require('../config/webpackDevServer.config');
-const startRekitStudio = require('./startRekitStudio');
+// const startRekitStudio = require('./startRekitStudio');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 process.stdout.isTTY = false;
@@ -93,7 +93,7 @@ choosePort(HOST, DEFAULT_PORT)
         clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
+      // openBrowser(urls.localUrlForBrowser);
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
