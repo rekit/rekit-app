@@ -2,16 +2,31 @@ const getPort = require('get-port');
 const { fork } = require('child_process');
 const path = require('path');
 const { app } = require('electron');
+const log = require('electron-log');
+const { fixPathForAsarUnpack } = require('electron-util');
 const taskRunner = require('./taskRunner');
 const utils = require('./utils');
+
 // require('fsevents');
-const studioBin = require.resolve('rekit-studio/bin/index.js');
 console.log('process: ', process.versions);
 console.log('process.execPath: ', process.execPath);
 const studioMap = {};
-console.log('rekit studio: ', require.resolve('rekit-studio/lib/start'));
+
+log.transports.console.level = 'verbose';
+log.transports.file.level = 'verbose';
+log.transports.file.file = '/Users/pwang7/Library/Logs/Rekit/' + 'log.txt';
 // const start = require('rekit-studio/lib/start');
 console.log('app path: ', app.getAppPath());
+// const nodeBin = fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/node/bin/node'));
+const nodeBin = fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/node/bin/node'));
+// const studioBin = path.join(app.getAppPath(), 'node/studio.js');
+// const studioBin = fixPathForAsarUnpack(
+//   path.join(app.getAppPath(), 'node-app/nms/rekit-studio/bin/index.js'),
+// );
+const studioBin = fixPathForAsarUnpack(require.resolve('rekit-studio/bin/index.js'));
+
+log.error('node bin: ', nodeBin);
+log.error('studio bin: ', studioBin);
 function startStudio(prjDir) {
   if (studioMap[prjDir]) {
     return Promise.resolve(studioMap[prjDir]);
@@ -31,8 +46,9 @@ function startStudio(prjDir) {
         //   resolve({ port, prjDir });
         //   utils.notifyMainStateChange();
         // });
-        const nodeBin = path.join(app.getAppPath(), 'node-app/node_modules/node/bin/node');
+
         const child = taskRunner.runTask(`${nodeBin} ${studioBin} -d ${prjDir} -p ${port}`, prjDir);
+
         // const child = taskRunner.runTask(
         //   `${process.execPath} ${studioBin} -d ${prjDir} -p ${port}`,
         //   prjDir,
@@ -56,9 +72,11 @@ function startStudio(prjDir) {
           port,
           prjDir,
         };
+        log.info('rekit studio started ', prjDir);
         resolve({ port, prjDir });
       } catch (err) {
-        console.log('failed to start rekit studio: ', err);
+        log.error('failed to start rekit studio: ', err);
+
         reject(new Error({ err }));
       }
     });

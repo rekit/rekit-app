@@ -303,7 +303,7 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
 
-argparse@^1.0.7:
+argparse@^1.0.10, argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
   dependencies:
@@ -2663,6 +2663,14 @@ electron-download@^4.1.0:
     semver "^5.4.1"
     sumchecker "^2.0.2"
 
+electron-is-dev@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-1.0.1.tgz#6e0a184736fe7aea77d18210b0b0f6a02402c4bc"
+
+electron-log@^2.2.17:
+  version "2.2.17"
+  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-2.2.17.tgz#e71e2ebb949fc96ded7cdb99eeee7202e48981d2"
+
 electron-osx-sign@0.4.11:
   version "0.4.11"
   resolved "https://registry.yarnpkg.com/electron-osx-sign/-/electron-osx-sign-0.4.11.tgz#8377732fe7b207969f264b67582ee47029ce092f"
@@ -2718,6 +2726,13 @@ electron-store@^2.0.0:
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30:
   version "1.3.86"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.86.tgz#a45ea01da5b26500d12bca5e0f194ebb3e1fd14e"
+
+electron-util@^0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/electron-util/-/electron-util-0.10.2.tgz#a4f61ebe6305a526d348d034475023089d65c43a"
+  dependencies:
+    electron-is-dev "^1.0.0"
+    new-github-issue-url "^0.1.2"
 
 electron@^3.0.8:
   version "3.0.10"
@@ -3638,7 +3653,7 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
-fsevents@1.2.4, fsevents@^1.0.0, fsevents@^1.2.2:
+fsevents@^1.0.0, fsevents@^1.2.2:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.2.4.tgz#f41dcb1af2582af3692da36fc55cbd8e1041c426"
   dependencies:
@@ -5642,6 +5657,10 @@ neo-async@^2.5.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
 
+new-github-issue-url@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/new-github-issue-url/-/new-github-issue-url-0.1.2.tgz#43f852cbf4f5eaa128e0850ea527d9c103fd3b1c"
+
 next-tick@1:
   version "1.0.0"
   resolved "http://registry.npmjs.org/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -5675,6 +5694,10 @@ node-abi@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.5.0.tgz#942e1a78bce764bc0c1672d5821e492b9d032052"
   dependencies:
     semver "^5.4.1"
+
+node-bin-setup@^1.0.0:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/node-bin-setup/-/node-bin-setup-1.0.6.tgz#4b5c9bb937ece702d7069b36ca78af4684677528"
 
 node-fetch@^1.0.1:
   version "1.7.3"
@@ -5765,6 +5788,12 @@ node-pty@^0.7.6, node-pty@^0.7.8:
   resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-0.7.8.tgz#9ed2f01f84263acc96982876e734aa75490bf3d8"
   dependencies:
     nan "2.10.0"
+
+node@^10.10.0:
+  version "10.14.0"
+  resolved "https://registry.yarnpkg.com/node/-/node-10.14.0.tgz#d2607b2786a8d7184db92925aec26fc7cc9de21a"
+  dependencies:
+    node-bin-setup "^1.0.0"
 
 nomnom@~1.6.2:
   version "1.6.2"
@@ -7633,9 +7662,11 @@ regjsparser@^0.1.4:
 "rekit-studio@file:../rekit-studio":
   version "3.0.0"
   dependencies:
+    argparse "^1.0.10"
     body-parser "^1.18.2"
     compression "^1.7.3"
     express-ws "^4.0.0"
+    import-from "^2.1.0"
     lodash "^4.17.10"
     node-pty "^0.7.6"
     package-json "^4.0.1"

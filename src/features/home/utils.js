@@ -38,6 +38,8 @@ function openProjectByDir(prjDir) {
       window.bridge.promiseIpc.send('/open-studio', prjDir);
     })
     .catch(e => {
+      console.log('Failed to open project');
+      console.log(e);
       Modal.error({
         title: 'Failed to open project.',
         content: `Failed to start Rekit Studio for: ${prjDir}`,

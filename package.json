@@ -1,17 +1,18 @@
 {
   "name": "rekit-app",
   "author": "Nate Wang",
-  "version": "0.1.0",
+  "version": "3.0.0",
   "private": true,
   "dependencies": {
+    "electron-log": "^2.2.17",
     "electron-promise-ipc": "^0.1.3",
     "electron-store": "^2.0.0",
-    "fsevents": "1.2.4",
+    "electron-util": "^0.10.2",
     "get-port": "^4.0.0",
-    "import-from": "^2.1.0",
     "lodash": "^4.17.5",
-    "rekit-core": "file:../rekit/packages/rekit-core",
-    "rekit-studio": "file:../rekit-studio"
+    "node": "^10.10.0",
+    "rekit-core": "^2.0.0",
+    "rekit-studio": "^3.0.0"
   },
   "main": "./node/main.js",
   "homepage": "./",
@@ -28,9 +29,11 @@
     "appId": "com.webows.rekit",
     "productName": "Rekit",
     "copyright": "Copyright © 2018 ${author}",
+    "asar": true,
+    "asarUnpack": ["node_modules"],
+    "npmRebuild": false,
     "files": [
       "build",
-      "node-app",
       "node"
     ],
     "dmg": {

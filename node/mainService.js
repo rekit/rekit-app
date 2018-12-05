@@ -1,4 +1,4 @@
-const { ipcMain, BrowserWindow } = require('electron');
+const { ipcMain } = require('electron');
 const promiseIpc = require('electron-promise-ipc');
 const _ = require('lodash');
 const utils = require('./utils');
