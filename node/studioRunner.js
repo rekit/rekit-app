@@ -14,7 +14,7 @@ const studioMap = {};
 
 log.transports.console.level = 'verbose';
 log.transports.file.level = 'verbose';
-log.transports.file.file = '/Users/pwang7/Library/Logs/Rekit/' + 'log.txt';
+// log.transports.file.file = '/Users/pwang7/Library/Logs/Rekit/' + 'log.txt';
 // const start = require('rekit-studio/lib/start');
 console.log('app path: ', app.getAppPath());
 // const nodeBin = fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/node/bin/node'));

@@ -4,6 +4,7 @@ import homeRoute from '../features/home/route';
 import commonRoute from '../features/common/route';
 import examplesRoute from '../features/examples/route';
 import _ from 'lodash';
+import newProjectRoute from '../features/new-project/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -11,6 +12,7 @@ const childRoutes = [
   homeRoute,
   commonRoute,
   examplesRoute,
+  newProjectRoute,
 ];
 
 const routes = [{

@@ -14,7 +14,7 @@ export class WelcomePage extends Component {
   };
 
   handleCreateNewProject = () => {
-    history.push('/rekit-studio');
+    utils.showNewProjectDialog();
   };
 
   handleOpenProject = (dir) => {

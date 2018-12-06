@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { TitleBar } from './';
+import { TitleBar, DialogPlace } from './';
 import { getMainState } from './redux/actions';
 
 /*
@@ -33,6 +33,7 @@ export class App extends Component {
       <div className="home-app">
         <TitleBar />
         <div className="page-container">{this.props.initializing ? 'Loading...' : this.props.children}</div>
+        <DialogPlace />
       </div>
     );
   }

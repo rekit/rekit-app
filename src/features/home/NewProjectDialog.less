@@ -1,0 +1,41 @@
+@import '../../styles/mixins';
+
+.home-new-project-dialog {
+  .ant-modal-body {
+    height: 500px;
+    text-align:justify;
+
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+  .icon-block-container {
+    
+  }
+  .icon-block {
+    display: inline-block;
+    margin-top: 10px;
+    text-align: center;
+    width: 107px;
+    padding-top: 15px;
+    height: 100px;
+    cursor: pointer;
+    &:hover {
+      background-color: #eee;
+    }
+    .anticon {
+      font-size: 48px;
+    }
+    label {
+      display: block;
+      line-height: 40px;
+      cursor: pointer;
+    }
+
+    &.selected {
+      background-color: @primary-color;
+      color: #fff;
+    }
+  }
+}

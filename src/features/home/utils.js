@@ -1,6 +1,6 @@
 import store from '../../common/store';
 import history from '../../common/history';
-import { openProject as openProjectAction } from './redux/actions';
+import { openProject as openProjectAction, showNewProjectDialog as showNewProjectDialogAction } from './redux/actions';
 import { Modal } from 'antd';
 
 function openProject(dir) {
@@ -47,8 +47,13 @@ function openProjectByDir(prjDir) {
     });
 }
 
+function showNewProjectDialog() {
+  store.getStore().dispatch(showNewProjectDialogAction());
+}
+
 window.bridge.ipcRenderer.on('open-project', (evt, dir) => openProject(dir));
 
 export default {
   openProject,
+  showNewProjectDialog,
 };
