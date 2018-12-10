@@ -34,7 +34,12 @@ export class RekitStudioPage extends Component {
     const { port } = this.props.match.params;
     const { studioById } = this.props;
     const studio = _.find(Object.values(studioById, { port }));
-    console.log('restarting project: ', studio.prjDir);
+    this.setState({
+      loaded: {
+        ...this.state.loaded,
+        [studio.prjDir]: false,
+      },
+    });
     utils.openProject(studio.prjDir, true);
   };
 

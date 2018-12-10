@@ -12,11 +12,13 @@
     "lodash": "^4.17.5",
     "node": "^10.10.0",
     "rekit-core": "^2.0.0",
-    "rekit-studio": "^3.0.0"
+    "rekit-studio": "^3.0.0",
+    "source-map-explorer": "^1.6.0"
   },
   "main": "./node/main.js",
   "homepage": "./",
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "node scripts/start.js",
     "start-electron": "cross-env NODE_ENV=development electron .",
     "start-electron-dist": "cross-env NODE_ENV=production electron ./",
@@ -30,7 +32,9 @@
     "productName": "Rekit",
     "copyright": "Copyright © 2018 ${author}",
     "asar": true,
-    "asarUnpack": ["node_modules"],
+    "asarUnpack": [
+      "node_modules"
+    ],
     "npmRebuild": false,
     "files": [
       "build",
