@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Button } from 'antd';
 import history from '../../common/history';
 import { WebView } from '../common';
 import rekitLogo from '../../images/rekit-logo.svg';
+import utils from './utils';
 
 export class RekitStudioPage extends Component {
   static propTypes = {
@@ -21,15 +23,25 @@ export class RekitStudioPage extends Component {
 
   componentDidMount() {
     window.bridge.ipcRenderer.on('close-project', this.handleCloseProject);
+    window.bridge.ipcRenderer.on('restart-project', this.handleRestartProject);
   }
   componentWillUnmount() {
     window.bridge.ipcRenderer.removeListener('close-project', this.handleCloseProject);
+    window.bridge.ipcRenderer.removeListener('restart-project', this.handleRestartProject);
   }
+
+  handleRestartProject = () => {
+    const { port } = this.props.match.params;
+    const { studioById } = this.props;
+    const studio = _.find(Object.values(studioById, { port }));
+    console.log('restarting project: ', studio.prjDir);
+    utils.openProject(studio.prjDir, true);
+  };
 
   handleCloseProject = () => {
     const { port } = this.props.match.params;
     const { studios, studioById } = this.props;
-    const studio = _.find(Object.values(this.props.studioById, { port }));
+    const studio = _.find(Object.values(this.props.studioById), { port });
     console.log('closing project: ', studio.prjDir);
     this.setState({
       closing: {
@@ -74,6 +86,29 @@ export class RekitStudioPage extends Component {
     );
   }
 
+  renderErrorMessage(studio) {
+    return (
+      <div className="error-message">
+        <div className="center-block">
+          <h2>Fatal: Rekit Studio failed to run the project: {studio.prjDir}</h2>
+          <ul>
+            {studio.error.split(/\n/g).map(s => (
+              <li>{s}</li>
+            ))}
+          </ul>
+          <div className="buttons">
+            <Button type="primary" onClick={() => utils.openProject(studio.prjDir, true)}>
+              Restart
+            </Button>
+            <Button className="btn-close" onClick={this.handleCloseProject}>
+              Close
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderWebView = id => {
     const studio = this.props.studioById[id];
     const { port } = this.props.match.params;
@@ -105,9 +140,11 @@ export class RekitStudioPage extends Component {
       <div className="home-rekit-studio-page">
         {this.renderWebViews()}
         {currentStudio &&
+          !currentStudio.error &&
           (!currentStudio.started || !this.state.loaded[currentStudio.prjDir]) &&
           this.renderLoadingStatus()}
         {!currentStudio && this.renderNotFound(port)}
+        {currentStudio && currentStudio.error && this.renderErrorMessage(currentStudio)}
       </div>
     );
   }

@@ -1,11 +1,14 @@
 import store from '../../common/store';
 import history from '../../common/history';
-import { openProject as openProjectAction, showNewProjectDialog as showNewProjectDialogAction } from './redux/actions';
+import {
+  openProject as openProjectAction,
+  showNewProjectDialog as showNewProjectDialogAction,
+} from './redux/actions';
 import { Modal } from 'antd';
 
-function openProject(dir) {
+function openProject(dir, restart) {
   if (dir) {
-    openProjectByDir(dir);
+    openProjectByDir(dir, restart);
     return;
   }
   window.bridge.remote.dialog.showOpenDialog(
@@ -21,10 +24,10 @@ function openProject(dir) {
   );
 }
 
-function openProjectByDir(prjDir) {
+function openProjectByDir(prjDir, restart) {
   const studioById = store.getState().home.studioById;
-
-  if (studioById[prjDir]) {
+  console.log('open restart: ', restart);
+  if (studioById[prjDir] && !restart) {
     // already opened
     history.push(`/rekit-studio/${studioById[prjDir].port}`);
     window.bridge.promiseIpc.send('/open-studio', prjDir);
@@ -32,7 +35,7 @@ function openProjectByDir(prjDir) {
   }
   store
     .getStore()
-    .dispatch(openProjectAction(prjDir))
+    .dispatch(openProjectAction({ prjDir, restart }))
     .then(studio => {
       history.push(`/rekit-studio/${studio.port}`);
       window.bridge.promiseIpc.send('/open-studio', prjDir);
@@ -42,7 +45,7 @@ function openProjectByDir(prjDir) {
       console.log(e);
       Modal.error({
         title: 'Failed to open project.',
-        content: `Failed to start Rekit Studio for: ${prjDir}`,
+        content: `Failed to start Rekit Studio for: ${prjDir} ${e.stack}`,
       });
     });
 }

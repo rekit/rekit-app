@@ -27,45 +27,48 @@ const studioBin = fixPathForAsarUnpack(require.resolve('rekit-studio/bin/index.j
 
 log.error('node bin: ', nodeBin);
 log.error('studio bin: ', studioBin);
-function startStudio(prjDir) {
-  if (studioMap[prjDir]) {
+function startStudio(prjDir, restart) {
+  if (studioMap[prjDir] && !restart) {
+    console.log('already started', prjDir);
     return Promise.resolve(studioMap[prjDir]);
   }
+  log.info('starting rekit studio');
+  // if restart, keep the port
+  const defaultPort = studioMap[prjDir] ? parseInt(studioMap[prjDir].port, 10) : null;
+  log.info('default port: ', defaultPort);
+  if (studioMap[prjDir] && studioMap[prjDir].process) {
+    studioMap[prjDir].process.removeAllListeners('exit');
+  }
   return new Promise((resolve, reject) => {
-    getPort().then(port => {
+    getPort({ port: defaultPort }).then(port => {
       port = String(port);
       try {
-        // start({ projectRoot: prjDir, port }).then(app => {
-        //   studioMap[prjDir] = {
-        //     name: require(`${prjDir}/package.json`).name,
-        //     process: app,
-        //     port,
-        //     prjDir,
-        //     started: true,
-        //   };
-        //   resolve({ port, prjDir });
-        //   utils.notifyMainStateChange();
-        // });
-
         const child = taskRunner.runTask(`${nodeBin} ${studioBin} -d ${prjDir} -p ${port}`, prjDir);
 
-        // const child = taskRunner.runTask(
-        //   `${process.execPath} ${studioBin} -d ${prjDir} -p ${port}`,
-        //   prjDir,
-        // );
-        // console.log('node path: ', process.execPath);
-        // const child = fork(studioBin, ['-d', prjDir, '-p', port]);
         child.on('message', msg => {
-          if (msg === 'rekit-studio-started') {
+          if (msg.type === 'rekit-studio-started') {
             studioMap[prjDir].started = true;
+            utils.notifyMainStateChange();
+          }
+          if (msg.type === 'rekit-studio-error') {
+            console.error('studio error: ', msg.error);
+            studioMap[prjDir].started = false;
+            studioMap[prjDir].error = msg.error;
             utils.notifyMainStateChange();
           }
         });
         child.on('exit', msg => {
-          console.log('process exit', msg);
-          delete studioMap[prjDir];
+          console.log('child on exit: ', msg);
+          if (studioMap[prjDir]) {
+            if (!studioMap[prjDir].error) {
+              studioMap[prjDir].error =
+                'Rekit Studio tenimated unexpectly, please try to restart it.';
+            }
+            studioMap[prjDir].started = false;
+          }
           utils.notifyMainStateChange();
         });
+
         studioMap[prjDir] = {
           name: require(`${prjDir}/package.json`).name,
           process: child,
@@ -92,8 +95,6 @@ function stopStudio(prjDir) {
 function getRunningStudios() {
   return Object.values(studioMap);
 }
-
-// startStudio('/Users/pwang7/workspace/rekit-studio');
 
 module.exports = {
   startStudio,

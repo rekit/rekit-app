@@ -2,7 +2,8 @@ const { ipcMain } = require('electron');
 const promiseIpc = require('electron-promise-ipc');
 const _ = require('lodash');
 const utils = require('./utils');
-const studioRunnder = require('./studioRunner');
+const studioRunner = require('./studioRunner');
+const taskRunner = require('./taskRunner');
 const store = require('./store');
 
 ipcMain.on('call-window-method', (evt, method) => {
@@ -16,14 +17,17 @@ ipcMain.on('call-window-method', (evt, method) => {
   }
 });
 
-promiseIpc.on('/start-studio', prjDir => {
-  return studioRunnder.startStudio(prjDir);
+promiseIpc.on('/start-studio', args => {
+  if (args.restart) {
+    taskRunner.stopTask(args.prjDir);
+  }
+  return studioRunner.startStudio(args.prjDir, args.restart);
 });
 
 promiseIpc.on('/get-main-state', prjDir => {
-  const studios = studioRunnder.getRunningStudios();
+  const studios = studioRunner.getRunningStudios();
   return {
-    studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started'])),
+    studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started', 'error'])),
     recentProjects: store.get('recentProjects') || [],
   };
 });
@@ -41,7 +45,7 @@ promiseIpc.on('/open-studio', prjDir => {
 
 promiseIpc.on('/close-project', prjDir => {
   // switch to a tab
-  return studioRunnder.stopStudio(prjDir).then(() => {
+  return studioRunner.stopStudio(prjDir).then(() => {
     utils.notifyMainStateChange();
   });
 });

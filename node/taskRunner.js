@@ -19,8 +19,11 @@ function getEnvPath() {
   // } else {
   //   envPath = ':/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/local/share/node/bin';
   // }
-  const envPath = ':/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/local/share/node/bin';
-  return `:${envPath}:${fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/node/bin'))}:${fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/npm/bin'))}`;
+  const envPath =
+    ':/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/local/share/node/bin';
+  return `:${envPath}:${fixPathForAsarUnpack(
+    path.join(app.getAppPath(), 'node_modules/node/bin'),
+  )}:${fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/npm/bin'))}`;
 }
 console.log('node_path:', process.env.NODE_PATH);
 function runTask(cmd, cwd) {
@@ -38,6 +41,9 @@ function runTask(cmd, cwd) {
     // env: { ELECTRON_RUN_AS_NODE: '0' },
     env: Object.assign({}, process.env, { PATH: `${process.env.PATH}${getEnvPath()}` }),
   });
+  child.on('exit', () => {
+    delete processes[cwd];
+  });
   processes[cwd] = child;
   child.stdout.pipe(process.stdout);
   child.stderr.pipe(process.stderr);
@@ -51,7 +57,7 @@ function stopTask(id) {
     if (isWin) {
       exec('taskkill /pid ' + child.pid + ' /T /F');
     } else {
-      child.destroy();
+      child.kill();
     }
   } catch (e) {
     console.log('failed to kill the process: ', e);

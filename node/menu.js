@@ -56,6 +56,9 @@ function createMenu() {
         },
         {
           label: 'Reload Project',
+          click() {
+            BrowserWindow.getFocusedWindow().webContents.send('restart-project');
+          },
         },
         {
           label: 'Close Project',
