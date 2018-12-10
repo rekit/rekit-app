@@ -53,7 +53,7 @@
     "devPort": 6093,
     "studioPort": 6076,
     "plugins": [],
-    "appType": "rekit-cra",
+    "appType": "rekit-react",
     "folders": [
       "node",
       "public",
