@@ -95,7 +95,7 @@ export class RekitStudioPage extends Component {
     return (
       <div className="error-message">
         <div className="center-block">
-          <h2>Fatal: Rekit Studio failed to run the project: {studio.prjDir}</h2>
+          <h2>Fatal: Rekit Studio failed to load the project: {studio.prjDir}</h2>
           <ul>
             {studio.error.split(/\n/g).map(s => (
               <li>{s}</li>
@@ -103,7 +103,7 @@ export class RekitStudioPage extends Component {
           </ul>
           <div className="buttons">
             <Button type="primary" onClick={() => utils.openProject(studio.prjDir, true)}>
-              Restart
+              Reload
             </Button>
             <Button className="btn-close" onClick={this.handleCloseProject}>
               Close
