@@ -3,6 +3,7 @@ const path = require('path');
 const { app } = require('electron');
 const { exec, spawn } = require('child_process');
 const { fixPathForAsarUnpack } = require('electron-util');
+const terminate = require('terminate');
 
 const isWin = process.platform === 'win32';
 
@@ -25,7 +26,7 @@ function getEnvPath() {
     path.join(app.getAppPath(), 'node_modules/node/bin'),
   )}:${fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/npm/bin'))}`;
 }
-console.log('node_path:', process.env.NODE_PATH);
+
 function runTask(cmd, cwd) {
   const arr = cmd.split(/ +/g);
   const name = arr.shift();
@@ -53,15 +54,7 @@ function runTask(cmd, cwd) {
 function stopTask(id) {
   const child = typeof id === 'string' ? processes[id] : id;
   if (!child) return;
-  try {
-    if (isWin) {
-      exec('taskkill /pid ' + child.pid + ' /T /F');
-    } else {
-      child.kill();
-    }
-  } catch (e) {
-    console.log('failed to kill the process: ', e);
-  }
+  terminate(child.pid);
   delete processes[id];
 }
 

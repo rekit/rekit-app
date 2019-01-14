@@ -25,8 +25,6 @@ const nodeBin = fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/n
 // );
 const studioBin = fixPathForAsarUnpack(require.resolve('rekit-studio/bin/index.js'));
 
-log.error('node bin: ', nodeBin);
-log.error('studio bin: ', studioBin);
 function startStudio(prjDir, restart) {
   if (studioMap[prjDir] && !restart) {
     console.log('already started', prjDir);

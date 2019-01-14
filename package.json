@@ -13,7 +13,8 @@
     "node": "^10.10.0",
     "rekit-core": "^2.0.0",
     "rekit-studio": "^3.0.0",
-    "source-map-explorer": "^1.6.0"
+    "source-map-explorer": "^1.6.0",
+    "terminate": "^2.1.2"
   },
   "main": "./node/main.js",
   "homepage": "./",
