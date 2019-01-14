@@ -2,6 +2,7 @@
 const path = require('path');
 const { app } = require('electron');
 const { exec, spawn } = require('child_process');
+const log = require('electron-log');
 const { fixPathForAsarUnpack } = require('electron-util');
 const terminate = require('terminate');
 
@@ -52,14 +53,26 @@ function runTask(cmd, cwd) {
 }
 
 function stopTask(id) {
-  const child = typeof id === 'string' ? processes[id] : id;
-  if (!child) return;
-  terminate(child.pid);
-  delete processes[id];
+  const child = processes[id];
+  log.info('Stopping task: ', id);
+  if (!child) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    terminate(child.pid, err => {
+      if (err) {
+        log.error('Failed to stop task: ', id, err);
+        reject(err);
+      } else {
+        log.info('Task stopped: ', id);
+        resolve();
+      }
+    });
+    delete processes[id];
+  });
 }
 
-function stopAllTasks(id) {
-  Object.values(processes).forEach(stopTask);
+function stopAllTasks() {
+  if (Object.keys(processes).length === 0) return new Promise(resolve => setTimeout(resolve, 100));
+  return Promise.all(Object.values(Object.keys(processes)).map(stopTask));
 }
 
 module.exports = {

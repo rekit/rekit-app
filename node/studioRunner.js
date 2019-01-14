@@ -7,27 +7,14 @@ const { fixPathForAsarUnpack } = require('electron-util');
 const taskRunner = require('./taskRunner');
 const utils = require('./utils');
 
-// require('fsevents');
-console.log('process: ', process.versions);
-console.log('process.execPath: ', process.execPath);
 const studioMap = {};
 
-log.transports.console.level = 'verbose';
-log.transports.file.level = 'verbose';
-// log.transports.file.file = '/Users/pwang7/Library/Logs/Rekit/' + 'log.txt';
-// const start = require('rekit-studio/lib/start');
-console.log('app path: ', app.getAppPath());
-// const nodeBin = fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/node/bin/node'));
 const nodeBin = fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/node/bin/node'));
-// const studioBin = path.join(app.getAppPath(), 'node/studio.js');
-// const studioBin = fixPathForAsarUnpack(
-//   path.join(app.getAppPath(), 'node-app/nms/rekit-studio/bin/index.js'),
-// );
 const studioBin = fixPathForAsarUnpack(require.resolve('rekit-studio/bin/index.js'));
 
 function startStudio(prjDir, restart) {
   if (studioMap[prjDir] && !restart) {
-    console.log('already started', prjDir);
+    log.info('already started', prjDir);
     return Promise.resolve(studioMap[prjDir]);
   }
   log.info('starting rekit studio');
@@ -49,14 +36,13 @@ function startStudio(prjDir, restart) {
             utils.notifyMainStateChange();
           }
           if (msg.type === 'rekit-studio-error') {
-            console.error('studio error: ', msg.error);
+            log.error('studio error: ', msg.error);
             studioMap[prjDir].started = false;
             studioMap[prjDir].error = msg.error;
             utils.notifyMainStateChange();
           }
         });
         child.on('exit', msg => {
-          console.log('child on exit: ', msg);
           if (studioMap[prjDir]) {
             if (!studioMap[prjDir].error) {
               studioMap[prjDir].error =
@@ -85,9 +71,9 @@ function startStudio(prjDir, restart) {
 }
 
 function stopStudio(prjDir) {
-  taskRunner.stopTask(prjDir);
-  delete studioMap[prjDir];
-  return Promise.resolve();
+  return taskRunner.stopTask(prjDir).then(() => {
+    delete studioMap[prjDir];
+  });
 }
 
 function getRunningStudios() {

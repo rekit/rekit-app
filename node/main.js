@@ -1,21 +1,26 @@
 const electron = require('electron');
+
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
-const { ipcMain } = electron;
-
+const log = require('electron-log');
 const menu = require('./menu');
 
 const path = require('path');
-const url = require('url');
+const taskRunner = require('./taskRunner');
 
 require('./mainService');
+
+// Config electron log
+console.log(log.transports.file.findLogPath());
+log.transports.console.level = 'info';
+log.transports.file.level = 'info';
+log.info('electron log set up.');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-console.log('node path: ', process.execPath);
 
 function createWindow() {
   const isDev = process.env.NODE_ENV === 'development';
@@ -85,6 +90,27 @@ app.on('activate', function() {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
+  }
+});
+
+let waitStopping = true;
+app.on('will-quit', evt => {
+  log.info('app will quit');
+  if (waitStopping) {
+    evt.preventDefault();
+    taskRunner
+      .stopAllTasks()
+      .then(() => {
+        log.info('All tasks stopped.');
+        waitStopping = false;
+        app.quit();
+      })
+      .catch(err => {
+        log.error('Stop tasks failed.');
+        log.error(err);
+        waitStopping = false;
+        app.quit();
+      });
   }
 });
 
