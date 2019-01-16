@@ -5,18 +5,17 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 const log = require('electron-log');
+// Config electron log
+log.transports.console.level = 'info';
+log.transports.file.level = 'info';
+log.info('electron log set up.');
+
 const menu = require('./menu');
 
 const path = require('path');
 const taskRunner = require('./taskRunner');
 
 require('./mainService');
-
-// Config electron log
-console.log(log.transports.file.findLogPath());
-log.transports.console.level = 'info';
-log.transports.file.level = 'info';
-log.info('electron log set up.');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
