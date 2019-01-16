@@ -1,5 +1,6 @@
 const { app, Menu, BrowserWindow } = require('electron');
 const store = require('./store');
+const ua = require('./ua');
 
 function getRecentMenuItems() {
   const recent = store.get('recentProjects') || [];
@@ -46,6 +47,7 @@ function createMenu() {
           label: 'Open...',
           accelerator: 'CmdOrCtrl+O',
           click() {
+            ua.event('rekit-app', 'menu:new-project').send();
             BrowserWindow.getFocusedWindow().webContents.send('open-project');
           },
         },
@@ -57,12 +59,14 @@ function createMenu() {
         {
           label: 'Reload Project',
           click() {
+            ua.event('rekit-app', 'menu:reload-project').send();
             BrowserWindow.getFocusedWindow().webContents.send('restart-project');
           },
         },
         {
           label: 'Close Project',
           click() {
+            ua.event('rekit-app', 'menu:close-project').send();
             BrowserWindow.getFocusedWindow().webContents.send('close-project');
           },
         },

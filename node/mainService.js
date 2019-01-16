@@ -5,6 +5,7 @@ const utils = require('./utils');
 const studioRunner = require('./studioRunner');
 const taskRunner = require('./taskRunner');
 const store = require('./store');
+const ua = require('./ua');
 
 ipcMain.on('call-window-method', (evt, method) => {
   console.log('method');
@@ -18,6 +19,7 @@ ipcMain.on('call-window-method', (evt, method) => {
 });
 
 promiseIpc.on('/start-studio', args => {
+  ua.event('rekit-app', 'start-studio').send();
   if (args.restart) {
     taskRunner.stopTask(args.prjDir);
   }
@@ -44,6 +46,7 @@ promiseIpc.on('/open-studio', prjDir => {
 });
 
 promiseIpc.on('/close-project', prjDir => {
+  ua.event('rekit-app', 'close-project').send();
   // switch to a tab
   return studioRunner.stopStudio(prjDir).then(() => {
     utils.notifyMainStateChange();
