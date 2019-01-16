@@ -15,7 +15,8 @@
     "rekit-studio": "^3.0.0",
     "source-map-explorer": "^1.6.0",
     "terminate": "^2.1.2",
-    "universal-analytics": "^0.4.20"
+    "universal-analytics": "^0.4.20",
+    "uuid": "^3.3.2"
   },
   "main": "./node/main.js",
   "homepage": "./",
