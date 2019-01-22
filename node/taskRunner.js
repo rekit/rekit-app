@@ -28,7 +28,7 @@ function getEnvPath() {
   )}:${fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/npm/bin'))}`;
 }
 
-function runTask(cmd, cwd) {
+function runTask(cmd, cwd, env) {
   const arr = cmd.split(/ +/g);
   const name = arr.shift();
   const child = spawn(name, arr, {
@@ -41,7 +41,15 @@ function runTask(cmd, cwd) {
     //   )}`,
     // },
     // env: { ELECTRON_RUN_AS_NODE: '0' },
-    env: Object.assign({}, process.env, { PATH: `${process.env.PATH}${getEnvPath()}` }),
+    env: Object.assign(
+      {},
+      process.env,
+      {
+        PATH: `${process.env.PATH}${getEnvPath()}`,
+        NODE_PATH: fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules')),
+      },
+      env || {},
+    ),
   });
   child.on('exit', () => {
     delete processes[cwd];

@@ -1,0 +1,11 @@
+{
+  "name": "ebay-node",
+  "appType": "ebay-node",
+  "isAppPlugin": true,
+  "featureFiles": [
+    "src/pages",
+    "src/services",
+    "src/layouts",
+    "src/marko.json"
+  ]
+}

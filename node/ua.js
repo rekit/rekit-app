@@ -15,7 +15,6 @@ if (!uuid) {
 const ua = analytics('UA-132547525-1', uuid, { http: true });
 ua.set('uid', uuid);
 ua.set('source', 'rekit-app');
-ua.event('rekit-app', 'app-start').send();
 
 ua.screenview('start-page', 'rekit-app', '3.0.0', err => {
   if (err) {
@@ -23,4 +22,5 @@ ua.screenview('start-page', 'rekit-app', '3.0.0', err => {
     log.warn(err);
   }
 }).send();
+
 module.exports = ua;
