@@ -33,7 +33,7 @@ export class RekitStudioPage extends Component {
   handleRestartProject = () => {
     const { port } = this.props.match.params;
     const { studioById } = this.props;
-    const studio = _.find(Object.values(studioById, { port }));
+    const studio = _.find(Object.values(studioById), { port });
     this.setState({
       loaded: {
         ...this.state.loaded,
