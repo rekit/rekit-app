@@ -16,6 +16,10 @@ export class RekitStudioPage extends Component {
     studioById: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.loadingTimeout = {};
+  }
   state = {
     loaded: {},
     closing: {},
@@ -47,7 +51,6 @@ export class RekitStudioPage extends Component {
     const { port } = this.props.match.params;
     const { studios, studioById } = this.props;
     const studio = _.find(Object.values(this.props.studioById), { port });
-    console.log('closing project: ', studio.prjDir);
     this.setState({
       closing: {
         ...this.state.closing,
@@ -68,6 +71,10 @@ export class RekitStudioPage extends Component {
   };
 
   handleWebViewOnload = prjDir => {
+    if (this.loadingTimeout[prjDir]) {
+      clearTimeout(this.loadingTimeout[prjDir]);
+      delete this.loadingTimeout[prjDir];
+    }
     setTimeout(
       () =>
         this.setState({
@@ -80,12 +87,24 @@ export class RekitStudioPage extends Component {
     );
   };
 
-  renderLoadingStatus() {
+  renderLoadingStatus(studio) {
+    const prjDir = studio.prjDir;
+    let text = '';
+    if (!studio.started) text = 'Starting Rekit Studio...';
+    else {
+      text = 'Loading the project...';
+      if (!this.loadingTimeout[prjDir]) {
+        this.loadingTimeout[prjDir] = window.setTimeout(
+          () => this.handleWebViewOnload(prjDir),
+          2000,
+        );
+      }
+    }
     return (
       <div className="loading-status">
         <div className="center-block">
           <img src={rekitLogo} alt="rekit-logo" />
-          <p>Loading the project...</p>
+          <p>{text}</p>
         </div>
       </div>
     );
@@ -147,7 +166,7 @@ export class RekitStudioPage extends Component {
         {currentStudio &&
           !currentStudio.error &&
           (!currentStudio.started || !this.state.loaded[currentStudio.prjDir]) &&
-          this.renderLoadingStatus()}
+          this.renderLoadingStatus(currentStudio)}
         {!currentStudio && this.renderNotFound(port)}
         {currentStudio && currentStudio.error && this.renderErrorMessage(currentStudio)}
       </div>
