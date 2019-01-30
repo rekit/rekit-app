@@ -354,9 +354,9 @@ function getFeatures() {
   return elements;
 }
 
-function getProjectData() {
-  const srcFiles = files.readDir(paths.map('src'), true);
-  const testFiles = files.readDir(paths.map('tests'), true);
+function getProjectData(args) {
+  const srcFiles = files.readDir(paths.map('src'), args);
+  const testFiles = files.readDir(paths.map('tests'), args);
   elementById = { ...srcFiles.elementById, ...testFiles.elementById };
 
   const eleFeatures = {
