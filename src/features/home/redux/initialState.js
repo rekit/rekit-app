@@ -1,8 +1,6 @@
 const initialState = {
   openProjectPending: false,
   openProjectError: null,
-  createProjectPending: false,
-  createProjectError: null,
   closeProjectPending: false,
   closeProjectError: null,
 
@@ -15,7 +13,7 @@ const initialState = {
   getMainStatePending: false,
   getMainStateError: null,
 
-  newProjectDialogVisible: false,
+  newProjectDialogVisible: true,
 };
 
 export default initialState;

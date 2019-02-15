@@ -7,8 +7,12 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
 import initialState from './initialState';
+import { reducer as fetchAppTypesReducer } from './fetchAppTypes';
+import { reducer as createAppReducer } from './createApp';
 
 const reducers = [
+  fetchAppTypesReducer,
+  createAppReducer,
 ];
 
 export default function reducer(state = initialState, action) {

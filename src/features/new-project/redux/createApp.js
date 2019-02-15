@@ -1,16 +1,16 @@
 import {
-  HOME_CREATE_PROJECT_BEGIN,
-  HOME_CREATE_PROJECT_SUCCESS,
-  HOME_CREATE_PROJECT_FAILURE,
-  HOME_CREATE_PROJECT_DISMISS_ERROR,
+  NEW_PROJECT_CREATE_APP_BEGIN,
+  NEW_PROJECT_CREATE_APP_SUCCESS,
+  NEW_PROJECT_CREATE_APP_FAILURE,
+  NEW_PROJECT_CREATE_APP_DISMISS_ERROR,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function createProject(args = {}) {
+export function createApp(args = {}) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: HOME_CREATE_PROJECT_BEGIN,
+      type: NEW_PROJECT_CREATE_APP_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -21,11 +21,11 @@ export function createProject(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
+      const doRequest = window.bridge.promiseIpc.send('/create-app');
       doRequest.then(
         (res) => {
           dispatch({
-            type: HOME_CREATE_PROJECT_SUCCESS,
+            type: NEW_PROJECT_CREATE_APP_SUCCESS,
             data: res,
           });
           resolve(res);
@@ -33,7 +33,7 @@ export function createProject(args = {}) {
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: HOME_CREATE_PROJECT_FAILURE,
+            type: NEW_PROJECT_CREATE_APP_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -47,43 +47,43 @@ export function createProject(args = {}) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissCreateProjectError() {
+export function dismissCreateAppError() {
   return {
-    type: HOME_CREATE_PROJECT_DISMISS_ERROR,
+    type: NEW_PROJECT_CREATE_APP_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case HOME_CREATE_PROJECT_BEGIN:
+    case NEW_PROJECT_CREATE_APP_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        createProjectPending: true,
-        createProjectError: null,
+        createAppPending: true,
+        createAppError: null,
       };
 
-    case HOME_CREATE_PROJECT_SUCCESS:
+    case NEW_PROJECT_CREATE_APP_SUCCESS:
       // The request is success
       return {
         ...state,
-        createProjectPending: false,
-        createProjectError: null,
+        createAppPending: false,
+        createAppError: null,
       };
 
-    case HOME_CREATE_PROJECT_FAILURE:
+    case NEW_PROJECT_CREATE_APP_FAILURE:
       // The request is failed
       return {
         ...state,
-        createProjectPending: false,
-        createProjectError: action.data.error,
+        createAppPending: false,
+        createAppError: action.data.error,
       };
 
-    case HOME_CREATE_PROJECT_DISMISS_ERROR:
+    case NEW_PROJECT_CREATE_APP_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        createProjectError: null,
+        createAppError: null,
       };
 
     default:

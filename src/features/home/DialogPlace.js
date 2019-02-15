@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { NewProjectDialog } from './';
+import { NewProjectDialog } from '../new-project';
 
 export class DialogPlace extends Component {
   static propTypes = {
     newProjectDialogVisible: PropTypes.bool.isRequired,
-
   };
 
   render() {
