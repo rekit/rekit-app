@@ -13,7 +13,7 @@ const initialState = {
   getMainStatePending: false,
   getMainStateError: null,
 
-  newProjectDialogVisible: true,
+  newProjectDialogVisible: false,
 };
 
 export default initialState;
