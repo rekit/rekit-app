@@ -55,7 +55,8 @@ function showNewProjectDialog() {
 }
 
 window.bridge.ipcRenderer.on('open-project', (evt, dir) => openProject(dir));
-
+window.bridge.ipcRenderer.on('redux-action', (evt, action) => store.getStore().dispatch(action));
+window.bridge.ipcRenderer.on('new-project', (evt) => showNewProjectDialog());
 export default {
   openProject,
   showNewProjectDialog,

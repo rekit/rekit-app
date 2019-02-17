@@ -5,7 +5,9 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Button, Modal, message } from 'antd';
 import { hideNewProjectDialog } from '../home/redux/actions';
+import { createApp } from './redux/actions';
 import { NewProjectForm, AppTypeSelect, CreatingStatusView } from './';
+import utils from '../home/utils';
 
 export class NewProjectDialog extends Component {
   static propTypes = {
@@ -44,29 +46,44 @@ export class NewProjectDialog extends Component {
     }
   };
 
+  handleCancel = () => {
+    this.props.actions.hideNewProjectDialog();
+  }
+
   handleBack = () => {
     this.setState({ step: this.state.step - 1 });
   };
 
+  handleOpen = () => {
+    this.props.actions.hideNewProjectDialog();
+    utils.openProject(this.state.prjDir);
+  }
+
+  handleClose = () => {
+    this.props.actions.hideNewProjectDialog();
+  }
+
   handleCreationSubmit = values => {
     console.log('creation values: ', values);
-    this.setState({ values, step: 2 });
+    this.setState({ values, step: 2, prjDir: values.location + '/' + values.name });
     const appType = this.state.selected;
-    this.props.action.createApp(appType, values);
+    this.props.actions.createApp({ type: appType, ...values });
   };
 
   renderFooter() {
     const { step } = this.state;
+    const { createAppError, createAppPending } = this.props;
+    const creationDone = step === 2 && !createAppError && !createAppPending;
     return [
-      step > 0 && (
+      !creationDone && step > 0 && (
         <Button key="back" className="btn-back" onClick={this.handleBack}>
           Back
         </Button>
       ),
-      <Button key="cancel" className="btn-cancel" onClick={this.handleCancel}>
+      !creationDone && <Button key="cancel" className="btn-cancel" onClick={this.handleCancel}>
         Cancel
       </Button>,
-      <Button
+      !creationDone && !createAppError && <Button
         key="ok"
         type="primary"
         className="btn-ok"
@@ -76,6 +93,8 @@ export class NewProjectDialog extends Component {
       >
         {{ 0: 'Next', 1: 'Create', 2: 'Creating' }[step]}
       </Button>,
+      creationDone && <Button onClick={this.handleClose}>Close</Button>,
+      creationDone && <Button type="primary" onClick={this.handleOpen}>Open</Button>,
     ];
   }
 
@@ -112,14 +131,15 @@ export class NewProjectDialog extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    // appTypes: state.newProject.appTypes,
+    createAppPending: state.newProject.createAppPending,
+    createAppError: state.newProject.createAppError,
   };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ hideNewProjectDialog }, dispatch),
+    actions: bindActionCreators({ hideNewProjectDialog, createApp }, dispatch),
   };
 }
 

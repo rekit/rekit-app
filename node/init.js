@@ -9,7 +9,7 @@ const log = require('./log');
 const systemPluginDir = path.join(os.homedir(), '.rekit/plugins');
 fs.ensureDirSync(systemPluginDir);
 
-const builtInPlugins = ['rekit-react', 'ebay-node'];
+const builtInPlugins = ['rekit-react'];
 
 // Use read and write to copy files to avoid permission issue, don't know why
 function copy(src, dest) {

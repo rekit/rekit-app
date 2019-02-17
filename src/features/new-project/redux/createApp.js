@@ -21,7 +21,7 @@ export function createApp(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = window.bridge.promiseIpc.send('/create-app');
+      const doRequest = window.bridge.promiseIpc.send('/create-app', args);
       doRequest.then(
         (res) => {
           dispatch({
@@ -67,7 +67,7 @@ export function reducer(state, action) {
       // The request is success
       return {
         ...state,
-        createAppPending: false,
+        // createAppPending: false,
         createAppError: null,
       };
 

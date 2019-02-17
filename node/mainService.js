@@ -1,6 +1,7 @@
-const { ipcMain } = require('electron');
+const { ipcMain, BrowserWindow } = require('electron');
 const promiseIpc = require('electron-promise-ipc');
 const _ = require('lodash');
+const rekitCore = require('rekit-core');
 const utils = require('./utils');
 const studioRunner = require('./studioRunner');
 const taskRunner = require('./taskRunner');
@@ -51,4 +52,33 @@ promiseIpc.on('/close-project', prjDir => {
   return studioRunner.stopStudio(prjDir).then(() => {
     utils.notifyMainStateChange();
   });
+});
+
+promiseIpc.on('/create-app', options => {
+  ua.event('rekit-app', 'create-app').send();
+  rekitCore.core
+    .create({
+      ...options,
+      status: (code, msg) => {
+        console.log(code, msg);
+        BrowserWindow.getFocusedWindow().webContents.send('redux-action', {
+          type: 'CREATE_APP_STATUS',
+          data: {
+            code,
+            msg,
+          },
+        });
+      },
+    })
+    .then(() => {
+      BrowserWindow.getFocusedWindow().webContents.send('redux-action', {
+        type: 'CREATE_APP_SUCCESS',
+      });
+    })
+    .catch(err => {
+      BrowserWindow.getFocusedWindow().webContents.send('redux-action', {
+        type: 'CREATE_APP_FAILURE',
+        data: err,
+      });
+    });
 });

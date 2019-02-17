@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Alert, Modal, Icon, Form, Spin, Button } from 'antd';
-import { FormBuilder } from '../common';
+import { FormBuilder, FolderPicker } from '../common';
 
 export class NewProjectForm extends Component {
   static propTypes = {
@@ -14,10 +14,17 @@ export class NewProjectForm extends Component {
     const values = this.props.values || {};
     const meta = {
       elements: [
+        
         {
           key: 'name',
           label: 'Project Name',
           required: true,
+        },
+        {
+          key: 'location',
+          label: 'Location',
+          required: true,
+          widget: FolderPicker,
         },
         {
           key: 'css',

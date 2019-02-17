@@ -42,12 +42,19 @@ function createMenu() {
     {
       label: 'Project',
       submenu: [
-        { label: 'New Project', accelerator: 'CmdOrCtrl+N' },
+        {
+          label: 'New Project',
+          accelerator: 'CmdOrCtrl+N',
+          click() {
+            ua.event('rekit-app', 'menu:new-project').send();
+            BrowserWindow.getFocusedWindow().webContents.send('new-project');
+          },
+        },
         {
           label: 'Open...',
           accelerator: 'CmdOrCtrl+O',
           click() {
-            ua.event('rekit-app', 'menu:new-project').send();
+            ua.event('rekit-app', 'menu:open-project').send();
             BrowserWindow.getFocusedWindow().webContents.send('open-project');
           },
         },

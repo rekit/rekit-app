@@ -11,6 +11,7 @@ const initialState = {
   appTypes: null,
   createAppPending: false,
   createAppError: null,
+  createAppStatus: [],
 };
 
 export default initialState;

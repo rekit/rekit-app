@@ -16,9 +16,15 @@ const reducers = [
 ];
 
 export default function reducer(state = initialState, action) {
-  let newState;
+  let newState = state;
   switch (action.type) {
     // Handle cross-topic actions here
+    case 'CREATE_APP_STATUS':
+      break;
+    case 'CREATE_APP_SUCCESS':
+      break;
+    case 'CREATE_APP_FAILURE':
+      break;
     default:
       newState = state;
       break;

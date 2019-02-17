@@ -9,16 +9,39 @@
 import initialState from './initialState';
 import { reducer as fetchAppTypesReducer } from './fetchAppTypes';
 import { reducer as createAppReducer } from './createApp';
+import { reducer as clearCreateAppStatusReducer } from './clearCreateAppStatus';
 
 const reducers = [
   fetchAppTypesReducer,
   createAppReducer,
+  clearCreateAppStatusReducer,
 ];
 
 export default function reducer(state = initialState, action) {
-  let newState;
+  let newState = state;
   switch (action.type) {
     // Handle cross-topic actions here
+    case 'CREATE_APP_STATUS':
+      newState = {
+        ...state,
+        createAppStatus: [...state.createAppStatus, action.data],
+      };
+      break;
+    case 'CREATE_APP_SUCCESS':
+      newState = {
+        ...state,
+        createAppStatus: [],
+        createAppPending: false,
+      };
+      break;
+    case 'CREATE_APP_FAILURE':
+      newState = {
+        ...state,
+        createAppStatus: [],
+        createAppPending: false,
+        createAppError: action.data,
+      };
+      break;
     default:
       newState = state;
       break;
