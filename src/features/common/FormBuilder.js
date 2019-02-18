@@ -23,6 +23,7 @@ const componentMap = {
   radio: Radio,
   textarea: Input.TextArea,
   select: Select,
+  number: InputNumber,
   'radio-group': RadioGroup,
 };
 const defaultFormItemLayout = {
