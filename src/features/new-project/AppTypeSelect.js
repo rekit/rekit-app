@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Alert, Spin, Button } from 'antd';
 import { fetchAppTypes } from './redux/actions';
 
-
 export class AppTypeSelect extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
@@ -39,7 +38,11 @@ export class AppTypeSelect extends Component {
           type="error"
           showIcon
         />
-        <Button type="primary" onClick={this.props.actions.fetchAppTypes}>
+        <Button
+          type="primary"
+          onClick={this.props.actions.fetchAppTypes}
+          style={{ marginTop: '20px' }}
+        >
           Try again.
         </Button>
       </div>
@@ -99,11 +102,11 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ fetchAppTypes }, dispatch)
+    actions: bindActionCreators({ fetchAppTypes }, dispatch),
   };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(AppTypeSelect);
