@@ -335,7 +335,7 @@ function getFeatures() {
       id: `v:${f}-misc`,
       target: `src/features/${f}`,
       type: 'folder-alias',
-      name: 'Misc',
+      name: 'Others',
       children: misc,
     });
 
@@ -369,8 +369,9 @@ function getProjectData(args) {
   const eleMisc = {
     type: 'folder-alias',
     id: 'v:_src-misc',
-    name: 'Misc',
+    name: 'src',
     target: 'src',
+    icon: 'src-folder',
     children: srcFiles.elements.filter(eid => eid !== 'src/features'),
   };
 
@@ -393,7 +394,7 @@ function getProjectData(args) {
       children: res.elements,
     };
     elementById[folderEle.id] = folderEle;
-    elements.splice(1, 0, folderEle.id);
+    elements.push(folderEle.id);
   });
 
   const extraFiles = config.getRekitConfig().files || [];

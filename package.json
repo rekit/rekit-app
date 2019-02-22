@@ -83,7 +83,8 @@
       "scripts"
     ],
     "files": [
-      "package.json"
+      "package.json",
+      "README.md"
     ],
     "css": "less"
   },

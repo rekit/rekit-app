@@ -47,7 +47,7 @@ export default {
 
     Object.values(prjData.elementById).forEach(ele => {
       ele.feature = ele.type === 'feature' ? ele.name : getFeature(ele.id);
-      if (ele.type && iconMap[ele.type]) {
+      if (!ele.icon && ele.type && iconMap[ele.type]) {
         ele.icon = iconMap[ele.type];
         ele.iconColor = colorMap[ele.type];
       }
