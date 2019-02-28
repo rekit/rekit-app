@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const path = require('path');
+const fs = require('fs-extra');
 // const shell = require('shelljs');
 const traverse = require('babel-traverse').default;
 
@@ -393,24 +394,20 @@ function getProjectData(args) {
       target: f,
       children: res.elements,
     };
-    elementById[folderEle.id] = folderEle;
-    elements.push(folderEle.id);
+    if (!elementById[folderEle.id]) {
+      elementById[folderEle.id] = folderEle;
+      elements.push(folderEle.id);
+    }
   });
 
   const extraFiles = config.getRekitConfig().files || [];
   extraFiles.forEach(f => {
+    if (!fs.existsSync(paths.map(f))) return;
     const fileEle = files.getFileElement(paths.map(f));
-    // Object.assign(elementById, { [fileEle.id]: fileEle });
-
-    // const folderEle = {
-    //   type: 'folder-alias',
-    //   id: 'v:folder-' + f,
-    //   name: f,
-    //   target: f,
-    //   children: res.elements,
-    // };
-    elementById[fileEle.id] = fileEle;
-    elements.push(fileEle.id);
+    if (!elementById[fileEle.id]) {
+      elementById[fileEle.id] = fileEle;
+      elements.push(fileEle.id);
+    }
   });
 
   return { elements, elementById };

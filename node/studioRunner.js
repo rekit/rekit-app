@@ -12,7 +12,9 @@ const nodeBin = fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules/n
 const studioBin = fixPathForAsarUnpack(require.resolve('rekit-studio/bin/index.js'));
 log.info('Node bin: ', nodeBin);
 log.info('Studio bin: ', studioBin);
+let stopping = {}; // This is used for avoid catching 'exit' event while manually stopping
 function startStudio(prjDir, restart) {
+  delete stopping[prjDir];
   if (studioMap[prjDir] && !restart) {
     log.info('already started', prjDir);
     return Promise.resolve(studioMap[prjDir]);
@@ -43,6 +45,9 @@ function startStudio(prjDir, restart) {
           }
         });
         child.on('exit', msg => {
+          if (stopping[prjDir]) {
+            return;
+          }
           if (studioMap[prjDir]) {
             if (!studioMap[prjDir].error) {
               studioMap[prjDir].error =
@@ -71,6 +76,7 @@ function startStudio(prjDir, restart) {
 }
 
 function stopStudio(prjDir) {
+  stopping[prjDir] = true;
   return taskRunner.stopTask(prjDir).then(() => {
     delete studioMap[prjDir];
   });

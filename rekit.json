@@ -4,6 +4,6 @@
   "plugins": [],
   "appType": "rekit-react",
   "folders": ["node", "public", "config", "scripts"],
-  "files": ["package.json", ".rekit", "README.md"],
+  "files": ["package.json", "README.md", "rekit.json"],
   "css": "less"
 }
