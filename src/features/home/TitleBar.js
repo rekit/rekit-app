@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import history from '../../common/history';
+import { OpenLink } from '../common';
 import * as actions from './redux/actions';
 
 export class TitleBar extends Component {
@@ -39,9 +40,12 @@ export class TitleBar extends Component {
       ? _.find(studios, { port: RegExp.$1 })
       : null;
 
-    const arr1 = current.prjDir.split('/');
-    const currName = arr1.pop();
-    const currDir = arr1.join('/');
+    let currName, currDir;
+    if (current) {
+      const arr1 = current.prjDir.split('/');
+      currName = arr1.pop();
+      currDir = arr1.join('/');
+    }
     return (
       <header className="home-title-bar" onDoubleClick={this.handleDoubleClick}>
         {current ? (
@@ -72,14 +76,10 @@ export class TitleBar extends Component {
                           <span className="project-dir">{dir} </span>
                         </span>
                         <span className="studio-url">
-                          <a
-                            href={`http://localhost:${s.port}`}
-                            target="_blank"
-                            onClick={evt => evt.stopPropagation()}
-                          >
+                          <OpenLink href={`http://localhost:${s.port}`}>
                             http://localhost:
                             {s.port}
-                          </a>
+                          </OpenLink>
                         </span>
                       </li>
                     );
