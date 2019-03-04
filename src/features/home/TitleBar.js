@@ -31,10 +31,27 @@ export class TitleBar extends Component {
     });
   };
 
+  handleCloseIconClick = (evt, prjDir) => {
+    evt.stopPropagation();
+    this.setState({ hideDropdown: true }, () => {
+      setTimeout(() => this.setState({ hideDropdown: false }), 50);
+    });
+    const studios = this.props.studios.map(id => this.props.studioById[id]);
+    const list = [...studios];
+    _.remove(list, { prjDir });
+    const pathname = this.props.router.location.pathname;
+    const current = /^\/rekit-studio\/(\w+)$/.test(pathname)
+      ? _.find(studios, { port: RegExp.$1 })
+      : null;
+    if (list.length === 0) history.push('/');
+    else if (prjDir === current.prjDir)
+      history.push(`/rekit-studio/${list[0].port}`);
+    window.bridge.promiseIpc.send('/close-project', prjDir).then(() => {});
+  };
+
   render() {
     const studios = this.props.studios.map(id => this.props.studioById[id]);
     const pathname = this.props.router.location.pathname;
-
     const current = /^\/rekit-studio\/(\w+)$/.test(pathname)
       ? _.find(studios, { port: RegExp.$1 })
       : null;
@@ -68,6 +85,11 @@ export class TitleBar extends Component {
                             http://localhost:
                             {s.port}
                           </OpenLink>
+                          <Icon
+                            type="close-circle"
+                            title="Close the project"
+                            onClick={evt => this.handleCloseIconClick(evt, s.prjDir)}
+                          />
                         </span>
                       </li>
                     );

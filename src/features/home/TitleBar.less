@@ -22,6 +22,10 @@
       color: #888;
     }
 
+    &:hover {
+      width: 400px;
+    }
+
     &:hover .project-list {
       display: block;
 
@@ -44,7 +48,6 @@
     top: @header-height + 0px;
     z-index: 100;
     max-width: 600px;
-    width: 500px;
     background-color: #272727;
     box-shadow: 0px 3px 5px 0px #111;
     left: 50%;
@@ -93,10 +96,19 @@
         display: table-cell;
         margin-left: 20px;
         text-align: right;
+        padding: 2px 5px;
         a {
           color: #2175bc;
-          padding: 2px 10px;
         }
+        .anticon-close-circle {
+          margin-left: 5px;
+          color: #666;
+          cursor: pointer;
+          &:hover {
+            color: rgb(242, 119, 119);
+          }
+        }
+
       }
     }
   }
