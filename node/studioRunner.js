@@ -33,6 +33,7 @@ function startStudio(prjDir, restart) {
         const child = taskRunner.runTask(`${nodeBin} ${studioBin} -d ${prjDir} -p ${port}`, prjDir);
 
         child.on('message', msg => {
+          log.info('msg from rekit studio: ', msg.type);
           if (msg.type === 'rekit-studio-started') {
             studioMap[prjDir].started = true;
             utils.notifyMainStateChange();

@@ -53,15 +53,25 @@ export class TitleBar extends Component {
             {list.length > 0 && (
               <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
                 <ul>
-                  {list.map(s => (
-                    <li key={s.prjDir} onClick={() => this.handlePrjClick(s)}>
-                      {s.prjDir}{' '}
-                      <span className="studio-url">
-                        (http://localhost:
-                        {s.port})
-                      </span>
-                    </li>
-                  ))}
+                  {list.map(s => {
+                    const arr = s.prjDir.split('/');
+                    const name = arr.pop();
+                    const dir = arr.join('/');
+                    return (
+                      <li key={s.prjDir} onClick={() => this.handlePrjClick(s)}>
+                        <span className="project">
+                          <span className="project-name">{name}</span>
+                          <span className="project-dir">{dir} </span>
+                        </span>
+                        <span className="studio-url">
+                          <a href={`http://localhost:${s.port}`} target="_blank" onClick={evt => evt.stopPropagation()}>
+                            http://localhost:
+                            {s.port}
+                          </a>
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             )}

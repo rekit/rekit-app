@@ -36,15 +36,20 @@
   }
 
   .project-list {
-    display: none;
+    // display: none;
     position: absolute;
     top: @header-height + 0px;
     z-index: 100;
-    max-width: 500px;
+    max-width: 600px;
+    width: 500px;
     background-color: #272727;
     box-shadow: 0px 3px 5px 0px #111;
     left: 50%;
     transform: translateX(-50%);
+    ul {
+      display: table;
+      width: 100%;
+    }
     ul,
     li {
       margin: 0;
@@ -53,12 +58,35 @@
     }
 
     li {
-      padding: 2px 10px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-align: left;
+      display: table-row;
+      width: 100%;
+
       &:hover {
         background-color: #111;
+      }
+      .project {
+        padding: 2px 10px;
+        display: table-cell;
+      }
+      .project-name {
+        color: #ddd;
+      }
+      .project-dir {
+        color: #888;
+        margin-left: 10px;
+      }
+      .studio-url {
+        display: table-cell;
+        margin-left: 20px;
+        text-align: right;
+        a {
+          color: #2175bc;
+          padding: 2px 10px;
+        }
       }
     }
   }
