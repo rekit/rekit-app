@@ -21,7 +21,6 @@ export class TitleBar extends Component {
   };
 
   handleDoubleClick = () => {
-    console.log('double click');
     window.bridge.ipcRenderer.send('call-window-method', 'toggle-maximize');
   };
 
@@ -40,22 +39,11 @@ export class TitleBar extends Component {
       ? _.find(studios, { port: RegExp.$1 })
       : null;
 
-    let currName, currDir;
-    if (current) {
-      const arr1 = current.prjDir.split('/');
-      currName = arr1.pop();
-      currDir = arr1.join('/');
-    }
     return (
       <header className="home-title-bar" onDoubleClick={this.handleDoubleClick}>
         {current ? (
           <span className="title-container">
-            <span className="project-name">{currName}</span>
-            <span className="project-dir">({currDir}</span>{' '}
-            <span className="studio-url">
-              - http://localhost:
-              {current.port})
-            </span>
+            <span className="project-name">{current.prjDir.split('/').pop()}</span>
             {studios.length > 0 && <Icon type="caret-down" />}
             {studios.length > 0 && (
               <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
@@ -76,7 +64,7 @@ export class TitleBar extends Component {
                           <span className="project-dir">{dir} </span>
                         </span>
                         <span className="studio-url">
-                          <OpenLink href={`http://localhost:${s.port}`}>
+                          <OpenLink href={`http://localhost:${s.port}`} title="Open in the browser">
                             http://localhost:
                             {s.port}
                           </OpenLink>
