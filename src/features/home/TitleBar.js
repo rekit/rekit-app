@@ -39,32 +39,44 @@ export class TitleBar extends Component {
       ? _.find(studios, { port: RegExp.$1 })
       : null;
 
-    const list = _.without(studios, current);
+    const arr1 = current.prjDir.split('/');
+    const currName = arr1.pop();
+    const currDir = arr1.join('/');
     return (
       <header className="home-title-bar" onDoubleClick={this.handleDoubleClick}>
         {current ? (
           <span className="title-container">
-            {current.prjDir}{' '}
+            <span className="project-name">{currName}</span>
+            <span className="project-dir">({currDir}</span>{' '}
             <span className="studio-url">
-              (http://localhost:
+              - http://localhost:
               {current.port})
             </span>
-            {list.length > 0 && <Icon type="caret-down" />}
-            {list.length > 0 && (
+            {studios.length > 0 && <Icon type="caret-down" />}
+            {studios.length > 0 && (
               <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
                 <ul>
-                  {list.map(s => {
+                  {studios.map(s => {
                     const arr = s.prjDir.split('/');
                     const name = arr.pop();
                     const dir = arr.join('/');
                     return (
-                      <li key={s.prjDir} onClick={() => this.handlePrjClick(s)}>
+                      <li
+                        key={s.prjDir}
+                        onClick={() => this.handlePrjClick(s)}
+                        className={s.prjDir === current.prjDir ? 'is-current' : ''}
+                      >
                         <span className="project">
+                          <span className="current-indicator">&gt;</span>
                           <span className="project-name">{name}</span>
                           <span className="project-dir">{dir} </span>
                         </span>
                         <span className="studio-url">
-                          <a href={`http://localhost:${s.port}`} target="_blank" onClick={evt => evt.stopPropagation()}>
+                          <a
+                            href={`http://localhost:${s.port}`}
+                            target="_blank"
+                            onClick={evt => evt.stopPropagation()}
+                          >
                             http://localhost:
                             {s.port}
                           </a>

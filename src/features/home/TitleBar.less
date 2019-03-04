@@ -29,6 +29,13 @@
         display: none;
       }
     }
+    > .project-name {
+      color: #ddd;
+      margin-right: 8px;
+    }
+    > .project-dir {
+      color: #777;
+    }
   }
 
   .studio-url {
@@ -36,7 +43,7 @@
   }
 
   .project-list {
-    // display: none;
+    display: none;
     position: absolute;
     top: @header-height + 0px;
     z-index: 100;
@@ -71,6 +78,13 @@
       .project {
         padding: 2px 10px;
         display: table-cell;
+      }
+      .current-indicator {
+        margin-right: 5px;
+        visibility: hidden;
+      }
+      &.is-current .current-indicator {
+        visibility: visible;
       }
       .project-name {
         color: #ddd;
