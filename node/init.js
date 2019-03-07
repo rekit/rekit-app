@@ -24,7 +24,8 @@ function copy(src, dest) {
 }
 
 builtInPlugins.forEach(name => {
-  if (!fs.existsSync(path.join(systemPluginDir, name))) {
+  if (1||!fs.existsSync(path.join(systemPluginDir, name))) {
+    // Always replace built-in plugins when started for beta release.
     log.info('Initializing built in plugin: ', name);
     const src = path.join(__dirname, '../build/plugins', name);
     if (fs.existsSync(src)) {
