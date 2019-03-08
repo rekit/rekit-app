@@ -1,7 +1,8 @@
 const { ipcMain, BrowserWindow } = require('electron');
 const promiseIpc = require('electron-promise-ipc');
+const fs = require('fs-extra');
 const _ = require('lodash');
-const rekitCore = require('rekit-core');
+const rekitCore = require('rekit-core').core;
 const utils = require('./utils');
 const studioRunner = require('./studioRunner');
 const taskRunner = require('./taskRunner');
@@ -35,6 +36,14 @@ promiseIpc.on('/get-main-state', prjDir => {
   };
 });
 
+promiseIpc.on('/get-app-types', () => {
+  // await rekitCore.create.syncAppRegistryRepo();
+  const appTypes = fs.readJsonSync(rekitCore.paths.configFile('app-registry/appTypes.json'));
+  console.log('app types: ', appTypes);
+  return appTypes;
+
+});
+
 promiseIpc.on('/open-studio', prjDir => {
   // switch to a tab
   const recent = store.get('recentProjects') || [];
@@ -56,7 +65,7 @@ promiseIpc.on('/close-project', prjDir => {
 
 promiseIpc.on('/create-app', options => {
   ua.event('rekit-app', 'create-app').send();
-  rekitCore.core
+  rekitCore
     .create({
       ...options,
       status: (code, msg) => {

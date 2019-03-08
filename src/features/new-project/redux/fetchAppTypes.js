@@ -22,10 +22,12 @@ export function fetchAppTypes(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get('https://raw.githubusercontent.com/supnate/rekit-registry/master/appTypes.json');
+      // const doRequest = axios.get('https://raw.githubusercontent.com/supnate/rekit-registry/master/appTypes.json');
+      const doRequest = window.bridge.promiseIpc.send('/get-app-types');
+
       doRequest.then(
         (res) => {
-          const json = res.data;
+          const json = res;
           const appTypes = Object.keys(json).map(key => ({
             ...json[key],
             key,
@@ -35,7 +37,7 @@ export function fetchAppTypes(args = {}) {
             type: NEW_PROJECT_FETCH_APP_TYPES_SUCCESS,
             data: appTypes,
           });
-          resolve(res);
+          resolve(appTypes);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
