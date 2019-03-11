@@ -11,7 +11,8 @@
     display: inline-block;
     margin-top: 10px;
     text-align: center;
-    width: 107px;
+    width: 100px;
+    margin-right: 7px;
     padding-top: 15px;
     height: 100px;
     cursor: pointer;
@@ -19,6 +20,7 @@
       background-color: #eee;
     }
     img {
+      display: inline-block;
       width: 48px;
       height: 48px;
     }
@@ -32,8 +34,11 @@
     }
 
     &.selected {
-      background-color: @primary-color;
-      color: #fff;
+      background-color: #e7e7e7;
+      // color: #fff;
+      // label {
+      //   background-color: @primary-color;
+      // }
     }
   }
   .description {

@@ -36,12 +36,14 @@ promiseIpc.on('/get-main-state', prjDir => {
   };
 });
 
-promiseIpc.on('/get-app-types', () => {
-  // await rekitCore.create.syncAppRegistryRepo();
+promiseIpc.on('/get-app-types', async () => {
+  await rekitCore.create.syncAppRegistryRepo();
   const appTypes = fs.readJsonSync(rekitCore.paths.configFile('app-registry/appTypes.json'));
+  appTypes.forEach(appType => {
+    appType.logo = 'file://' + rekitCore.paths.configFile(`app-registry/app-types/${appType.id}/logo.png`);
+  });
   console.log('app types: ', appTypes);
   return appTypes;
-
 });
 
 promiseIpc.on('/open-studio', prjDir => {

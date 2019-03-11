@@ -27,6 +27,9 @@ function createWindow() {
     height: 900,
     titleBarStyle: 'hidden',
     backgroundColor: '#1e1e1e',
+    webPreferences: {
+      webSecurity: false,
+    },
     // transparent: true,
     // frame: false,
   });

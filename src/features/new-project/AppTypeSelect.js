@@ -61,18 +61,18 @@ export class AppTypeSelect extends Component {
           {appTypes.map(appType => (
             <div
               title={appType.name}
-              key={appType.key}
-              className={'icon-block' + (appType.key === this.props.value ? ' selected' : '')}
-              onClick={() => this.props.onChange(appType.key)}
+              key={appType.id}
+              className={'icon-block' + (appType.id === this.props.value ? ' selected' : '')}
+              onClick={() => this.props.onChange(appType.id)}
             >
-              <img src={appType.logo} alt="" />
+              <img src={appType.logo} alt="logo" />
               <label>{appType.name}</label>
             </div>
           ))}
         </div>
         {this.props.value && (
           <div className="description">
-            {_.find(appTypes, { key: this.props.value }).description}
+            {_.find(appTypes, { id: this.props.value }).description}
           </div>
         )}
       </React.Fragment>

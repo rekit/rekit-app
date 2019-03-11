@@ -27,17 +27,11 @@ export function fetchAppTypes(args = {}) {
 
       doRequest.then(
         (res) => {
-          const json = res;
-          const appTypes = Object.keys(json).map(key => ({
-            ...json[key],
-            key,
-            logo: `https://raw.githubusercontent.com/supnate/rekit-registry/master/logos/${key}.png`
-          }))
           dispatch({
             type: NEW_PROJECT_FETCH_APP_TYPES_SUCCESS,
-            data: appTypes,
+            data: res,
           });
-          resolve(appTypes);
+          resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
