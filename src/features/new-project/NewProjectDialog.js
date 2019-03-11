@@ -16,23 +16,22 @@ export class NewProjectDialog extends Component {
   };
 
   state = {
-    selected: null,
-    appTypes: null,
+    appType: null,
     values: null,
     step: 0, // 0: select app type 1: fill creation form 3: creation status
   };
 
   handleSelectAppType = key => {
     this.setState({
-      selected: key,
-      values: key !== this.state.selected ? null : this.state.values,
+      appType: key,
+      values: key !== this.state.appType ? null : this.state.values,
     });
   };
 
   handleOk = () => {
     switch (this.state.step) {
       case 0:
-        if (this.state.selected) {
+        if (this.state.appType) {
           this.setState({ step: 1 });
         } else {
           message.warn('Please select type of the project to create.');
@@ -48,7 +47,7 @@ export class NewProjectDialog extends Component {
 
   handleCancel = () => {
     this.props.actions.hideNewProjectDialog();
-  }
+  };
 
   handleBack = () => {
     this.setState({ step: this.state.step - 1 });
@@ -57,16 +56,16 @@ export class NewProjectDialog extends Component {
   handleOpen = () => {
     this.props.actions.hideNewProjectDialog();
     utils.openProject(this.state.prjDir);
-  }
+  };
 
   handleClose = () => {
     this.props.actions.hideNewProjectDialog();
-  }
+  };
 
   handleCreationSubmit = values => {
     console.log('creation values: ', values);
     this.setState({ values, step: 2, prjDir: values.location + '/' + values.name });
-    const appType = this.state.selected;
+    const appType = this.state.appType;
     this.props.actions.createApp({ type: appType, ...values });
   };
 
@@ -75,26 +74,36 @@ export class NewProjectDialog extends Component {
     const { createAppError, createAppPending } = this.props;
     const creationDone = step === 2 && !createAppError && !createAppPending;
     return [
-      !creationDone && step > 0 && (
-        <Button key="back" className="btn-back" onClick={this.handleBack}>
-          Back
+      !creationDone &&
+        step > 0 && (
+          <Button key="back" className="btn-back" onClick={this.handleBack}>
+            Back
+          </Button>
+        ),
+      !creationDone && (
+        <Button key="cancel" className="btn-cancel" onClick={this.handleCancel}>
+          Cancel
         </Button>
       ),
-      !creationDone && <Button key="cancel" className="btn-cancel" onClick={this.handleCancel}>
-        Cancel
-      </Button>,
-      !creationDone && !createAppError && <Button
-        key="ok"
-        type="primary"
-        className="btn-ok"
-        onClick={this.handleOk}
-        loading={step === 2}
-        disabled={step === 2}
-      >
-        {{ 0: 'Next', 1: 'Create', 2: 'Creating' }[step]}
-      </Button>,
+      !creationDone &&
+        !createAppError && (
+          <Button
+            key="ok"
+            type="primary"
+            className="btn-ok"
+            onClick={this.handleOk}
+            loading={step === 2}
+            disabled={step === 2}
+          >
+            {{ 0: 'Next', 1: 'Create', 2: 'Creating' }[step]}
+          </Button>
+        ),
       creationDone && <Button onClick={this.handleClose}>Close</Button>,
-      creationDone && <Button type="primary" onClick={this.handleOpen}>Open</Button>,
+      creationDone && (
+        <Button type="primary" onClick={this.handleOpen}>
+          Open
+        </Button>
+      ),
     ];
   }
 
@@ -113,11 +122,12 @@ export class NewProjectDialog extends Component {
         footer={this.renderFooter()}
       >
         {step === 0 && (
-          <AppTypeSelect value={this.state.selected} onChange={this.handleSelectAppType} />
+          <AppTypeSelect value={this.state.appType} onChange={this.handleSelectAppType} />
         )}
         {step === 1 && (
           <NewProjectForm
             values={this.state.values}
+            appType={_.find(this.props.appTypes, { id: this.state.appType })}
             wrappedComponentRef={f => (this.creationForm = f)}
             onSubmit={this.handleCreationSubmit}
           />
@@ -133,6 +143,7 @@ function mapStateToProps(state) {
   return {
     createAppPending: state.newProject.createAppPending,
     createAppError: state.newProject.createAppError,
+    appTypes: state.newProject.appTypes,
   };
 }
 

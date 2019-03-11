@@ -8,9 +8,11 @@ export class NewProjectForm extends Component {
     form: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
     values: PropTypes.object.isRequired,
+    appType: PropTypes.object.isRequired,
   };
 
   getMeta() {
+    const { appType } = this.props;
     const values = this.props.values || {};
     const meta = {
       elements: [
@@ -26,16 +28,11 @@ export class NewProjectForm extends Component {
           required: true,
           widget: FolderPicker,
         },
-        {
-          key: 'css',
-          label: 'CSS Transpiler',
-          widget: 'radio-group',
-          required: true,
-          options: [['less', 'Less'], ['scss', 'Sass']],
-          initialValue: 'less',
-        },
       ],
     };
+    if (appType.args) {
+      meta.elements.push(...appType.args);
+    }
     meta.elements.forEach(ele => {
       if (ele.key in values) ele.initialValue = values[ele.key];
     });
