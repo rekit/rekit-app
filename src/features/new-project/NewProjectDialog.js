@@ -112,7 +112,7 @@ export class NewProjectDialog extends Component {
     return (
       <Modal
         visible
-        title="Create a new project"
+        title="Create a New Project"
         onCancel={this.props.actions.hideNewProjectDialog}
         onOk={this.handleOk}
         className="new-project-new-project-dialog"
