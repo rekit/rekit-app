@@ -9,6 +9,14 @@ const taskRunner = require('./taskRunner');
 const store = require('./store');
 const ua = require('./ua');
 
+// filter recent projects existance
+function checkRecent() {
+  let recent = store.get('recentProjects') || [];
+  recent = recent.filter(dir => fs.existsSync(dir));
+  store.set('recentProjects', recent);
+}
+checkRecent();
+
 ipcMain.on('call-window-method', (evt, method) => {
   console.log('method');
   switch (method) {
@@ -40,7 +48,8 @@ promiseIpc.on('/get-app-types', async () => {
   await rekitCore.create.syncAppRegistryRepo();
   const appTypes = fs.readJsonSync(rekitCore.paths.configFile('app-registry/appTypes.json'));
   appTypes.forEach(appType => {
-    appType.logo = 'file://' + rekitCore.paths.configFile(`app-registry/app-types/${appType.id}/logo.png`);
+    appType.logo =
+      'file://' + rekitCore.paths.configFile(`app-registry/app-types/${appType.id}/logo.png`);
   });
   console.log('app types: ', appTypes);
   return appTypes;
@@ -48,7 +57,7 @@ promiseIpc.on('/get-app-types', async () => {
 
 promiseIpc.on('/open-studio', prjDir => {
   // switch to a tab
-  let recent = store.get('recentProjects') || [];
+  const recent = store.get('recentProjects') || [];
   _.pull(recent, prjDir);
   recent.unshift(prjDir);
   recent = recent.filter(dir => fs.existsSync(dir));
