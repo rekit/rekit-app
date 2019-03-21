@@ -1,4 +1,5 @@
 const getPort = require('get-port');
+const fs = require('fs');
 const path = require('path');
 const { app } = require('electron');
 const log = require('electron-log');
@@ -14,6 +15,9 @@ log.info('Node bin: ', nodeBin);
 log.info('Studio bin: ', studioBin);
 let stopping = {}; // This is used for avoid catching 'exit' event while manually stopping
 function startStudio(prjDir, restart) {
+  if (!fs.existsSync(prjDir)) {
+    return Promise.reject(new Error(`Project not exists: ${prjDir}`));
+  }
   delete stopping[prjDir];
   if (studioMap[prjDir] && !restart) {
     log.info('already started', prjDir);

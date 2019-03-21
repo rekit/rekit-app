@@ -48,9 +48,10 @@ promiseIpc.on('/get-app-types', async () => {
 
 promiseIpc.on('/open-studio', prjDir => {
   // switch to a tab
-  const recent = store.get('recentProjects') || [];
+  let recent = store.get('recentProjects') || [];
   _.pull(recent, prjDir);
   recent.unshift(prjDir);
+  recent = recent.filter(dir => fs.existsSync(dir));
   if (recent.length > 50) recent.length = 50;
   store.set('recentProjects', recent);
   utils.notifyMainStateChange();

@@ -1,3 +1,4 @@
+import React from 'react';
 import store from '../../common/store';
 import history from '../../common/history';
 import {
@@ -44,8 +45,12 @@ function openProjectByDir(prjDir, restart) {
       console.log('Failed to open project');
       console.log(e);
       Modal.error({
-        title: 'Failed to open project.',
-        content: `Failed to start Rekit Studio for: ${prjDir} ${e.stack}`,
+        title: 'Failed to Open Project.',
+        content: (
+          <div>
+            {e.message && <div style={{ color: 'red' }}>{e.message}</div>}
+          </div>
+        ),
       });
     });
 }
@@ -56,7 +61,7 @@ function showNewProjectDialog() {
 
 window.bridge.ipcRenderer.on('open-project', (evt, dir) => openProject(dir));
 window.bridge.ipcRenderer.on('redux-action', (evt, action) => store.getStore().dispatch(action));
-window.bridge.ipcRenderer.on('new-project', (evt) => showNewProjectDialog());
+window.bridge.ipcRenderer.on('new-project', evt => showNewProjectDialog());
 export default {
   openProject,
   showNewProjectDialog,
