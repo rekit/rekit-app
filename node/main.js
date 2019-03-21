@@ -92,6 +92,17 @@ app.on('activate', function() {
   }
 });
 
+app.on('web-contents-created', (e, contents) => {
+  // Check for a webview
+  if (contents.getType() == 'webview') {
+    // Listen for any new window events
+    contents.on('new-window', (e, url) => {
+      e.preventDefault()
+      electron.shell.openExternal(url)
+    })
+  }
+})
+
 let waitStopping = true;
 app.on('will-quit', evt => {
   log.info('app will quit');
