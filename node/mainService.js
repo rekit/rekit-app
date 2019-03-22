@@ -1,6 +1,7 @@
 const { ipcMain, BrowserWindow } = require('electron');
 const promiseIpc = require('electron-promise-ipc');
 const fs = require('fs-extra');
+const path = require('path');
 const _ = require('lodash');
 const rekitCore = require('rekit-core').core;
 const utils = require('./utils');
@@ -16,6 +17,8 @@ function checkRecent() {
   store.set('recentProjects', recent);
 }
 checkRecent();
+
+const recentProjectsInfoCache = {};
 
 ipcMain.on('call-window-method', (evt, method) => {
   console.log('method');
@@ -40,7 +43,24 @@ promiseIpc.on('/get-main-state', prjDir => {
   const studios = studioRunner.getRunningStudios();
   return {
     studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started', 'error'])),
-    recentProjects: store.get('recentProjects') || [],
+    recentProjects: (store.get('recentProjects') || []).map(prj => {
+      if (!recentProjectsInfoCache[prj]) {
+        let appType = 'common';
+        try {
+          appType = require(path.join(prj, 'rekit.json')).appType;
+        } catch(err) {}
+        let logo = null;
+        const logoPath = rekitCore.paths.configFile(`app-registry/app-types/${appType}/logo.png`);
+        if (fs.existsSync(logoPath)) {
+          logo = 'file://' + logoPath;
+        }
+        recentProjectsInfoCache[prj] = {
+          path: prj,
+          logo, 
+        }
+      }
+      return recentProjectsInfoCache[prj];
+    }),
   };
 });
 

@@ -22,16 +22,16 @@ export class RecentProjects extends Component {
       <div className="home-recent-projects">
         <h2>Recent Projects</h2>
         <ul>
-          {recentProjects.map(dir => (
+          {recentProjects.map(prj => (
             <li
-              key={dir}
+              key={prj.path}
               className="row-button row-button-large"
-              title={dir}
-              onClick={() => this.handleOpenProject(dir)}
+              title={prj.path}
+              onClick={() => this.handleOpenProject(prj.path)}
             >
-              <Icon type="file" />
-              <h4>{dir.split('/').pop()}</h4>
-              <p>{dir}</p>
+              {prj.logo ? <img className="icon" src={prj.logo} alt="logo" /> : <Icon type="folder" />}
+              <h4>{prj.path.split('/').pop()}</h4>
+              <p>{prj.path}</p>
             </li>
           ))}
           {recentProjects.length === 0 && <li className="no-recent">No recent projects.</li>}

@@ -13,9 +13,13 @@ export class WelcomePage extends Component {
     utils.showNewProjectDialog();
   };
 
-  handleOpenProject = (dir) => {
-    utils.openProject(dir);
+  handleOpenProject = () => {
+    utils.openProject();
   };
+
+  handleLearnRekit = () => {
+    window.bridge.shell.openExternal('http://rekit.org');
+  }
 
   renderWelcomArea() {
     return (
@@ -27,11 +31,11 @@ export class WelcomePage extends Component {
           <Icon type="file" />
           <p>Create a new project</p>
         </div>
-        <div className="row-button" onClick={() => this.handleOpenProject()}>
+        <div className="row-button" onClick={this.handleOpenProject}>
           <Icon type="file" />
           <p>Open an existing project</p>
         </div>
-        <div className="row-button">
+        <div className="row-button" onClick={this.handleLearnRekit}>
           <Icon type="file" />
           <p>Learn Rekit...</p>
         </div>
