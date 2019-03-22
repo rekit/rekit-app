@@ -1,6 +1,24 @@
 @primary-color: #1890ff;
 @header-height: 22px;
 
+.scroll-style() {
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    transition: all 0.3s ease;
+    border-color: transparent;
+    background-color: hsla(0, 0%, 100%, 0.1);
+    z-index: 40;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
 .abs-fullsize {
   position: absolute;
   left: 0;

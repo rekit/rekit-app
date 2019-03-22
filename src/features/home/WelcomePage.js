@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Icon } from 'antd';
-import history from '../../common/history';
 import rekitLogo from '../../images/rekit-logo.svg';
 import * as actions from './redux/actions';
 import utils from './utils';
+import { RecentProjects } from './';
 
 export class WelcomePage extends Component {
-  static propTypes = {
-    recentProjects: PropTypes.array.isRequired,
-  };
 
   handleCreateNewProject = () => {
     utils.showNewProjectDialog();
@@ -43,37 +39,13 @@ export class WelcomePage extends Component {
     );
   }
 
-  renderRecent() {
-    const { recentProjects } = this.props;
-    return (
-      <div className="recent-projects">
-        <h2>Recent Projects</h2>
-        <ul>
-          {recentProjects.map(dir => (
-            <li
-              key={dir}
-              className="row-button row-button-large"
-              title={dir}
-              onClick={() => this.handleOpenProject(dir)}
-            >
-              <Icon type="file" />
-              <h4>{dir.split('/').pop()}</h4>
-              <p>{dir}</p>
-            </li>
-          ))}
-          {recentProjects.length === 0 && <li className="no-recent">No recent projects.</li>}
-        </ul>
-      </div>
-    );
-  }
-
   render() {
     return (
       <div className="home-welcome-page">
         <div className="main-area">
           <Row>
             <Col span={13}>{this.renderWelcomArea()}</Col>
-            <Col span={11}>{this.renderRecent()}</Col>
+            <Col span={11}><RecentProjects /></Col>
           </Row>
         </div>
       </div>
@@ -84,7 +56,7 @@ export class WelcomePage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    recentProjects: state.home.recentProjects,
+    
   };
 }
 
