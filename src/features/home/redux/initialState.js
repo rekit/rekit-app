@@ -14,6 +14,7 @@ const initialState = {
   getMainStateError: null,
 
   newProjectDialogVisible: false,
+  welcomePageVisible: false,
 };
 
 export default initialState;

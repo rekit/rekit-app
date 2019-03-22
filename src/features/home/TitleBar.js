@@ -20,6 +20,9 @@ export class TitleBar extends Component {
     hideDropdown: false,
   };
 
+  showWelcomePage = () => {
+    history.push('/');
+  };
   handleDoubleClick = () => {
     window.bridge.ipcRenderer.send('call-window-method', 'toggle-maximize');
   };
@@ -44,63 +47,58 @@ export class TitleBar extends Component {
       ? _.find(studios, { port: RegExp.$1 })
       : null;
     if (list.length === 0) history.push('/');
-    else if (prjDir === current.prjDir)
-      history.push(`/rekit-studio/${list[0].port}`);
+    else if (prjDir === current.prjDir) history.push(`/rekit-studio/${list[0].port}`);
     window.bridge.promiseIpc.send('/close-project', prjDir).then(() => {});
   };
 
   render() {
     const studios = this.props.studios.map(id => this.props.studioById[id]);
     const pathname = this.props.router.location.pathname;
-    const current = /^\/rekit-studio\/(\w+)$/.test(pathname)
+    let current = /^\/rekit-studio\/(\w+)$/.test(pathname)
       ? _.find(studios, { port: RegExp.$1 })
-      : null;
-
+      : { prjDir: 'Welcome to Rekit!', isWelcome: true };
+    if (!current) current = { prjDir: 'unknown' };
     return (
       <header className="home-title-bar" onDoubleClick={this.handleDoubleClick}>
-        {current ? (
-          <span className="title-container">
-            <span className="project-name">{current.prjDir.split('/').pop()}</span>
-            {studios.length > 0 && <Icon type="caret-down" />}
-            {studios.length > 0 && (
-              <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
-                <ul>
-                  {studios.map(s => {
-                    const arr = s.prjDir.split('/');
-                    const name = arr.pop();
-                    const dir = arr.join('/');
-                    return (
-                      <li
-                        key={s.prjDir}
-                        onClick={() => this.handlePrjClick(s)}
-                        className={s.prjDir === current.prjDir ? 'is-current' : ''}
-                      >
-                        <span className="project">
-                          <span className="current-indicator">&gt;</span>
-                          <span className="project-name">{name}</span>
-                          <span className="project-dir">{dir} </span>
-                        </span>
-                        <span className="studio-url">
-                          <OpenLink href={`http://localhost:${s.port}`} title="Open in the browser">
-                            http://localhost:
-                            {s.port}
-                          </OpenLink>
-                          <Icon
-                            type="close-circle"
-                            title="Close the project"
-                            onClick={evt => this.handleCloseIconClick(evt, s.prjDir)}
-                          />
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            )}
-          </span>
-        ) : (
-          <span>Welcome to Rekit!</span>
-        )}
+        <span className="title-container">
+          <span className="project-name">{current.prjDir.split('/').pop()}</span>
+          <Icon type="caret-down" />
+          {studios.length > 0 && (
+            <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>
+              <ul>
+                {studios.map(s => {
+                  const arr = s.prjDir.split('/');
+                  const name = arr.pop();
+                  const dir = arr.join('/');
+                  return (
+                    <li
+                      key={s.prjDir}
+                      onClick={() => this.handlePrjClick(s)}
+                      className={s.prjDir === current.prjDir ? 'is-current' : ''}
+                    >
+                      <span className="project">
+                        <span className="current-indicator">&gt;</span>
+                        <span className="project-name">{name}</span>
+                        <span className="project-dir">{dir} </span>
+                      </span>
+                      <span className="studio-url">
+                        <OpenLink href={`http://localhost:${s.port}`} title="Open in the browser">
+                          http://localhost:
+                          {s.port}
+                        </OpenLink>
+                        <Icon
+                          type="close-circle"
+                          title="Close the project"
+                          onClick={evt => this.handleCloseIconClick(evt, s.prjDir)}
+                        />
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
+        </span>
       </header>
     );
   }

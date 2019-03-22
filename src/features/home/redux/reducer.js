@@ -5,6 +5,7 @@ import { reducer as getInitialStateReducer } from './getInitialState';
 import { reducer as getMainStateReducer } from './getMainState';
 import { reducer as showNewProjectDialogReducer } from './showNewProjectDialog';
 import { reducer as hideNewProjectDialogReducer } from './hideNewProjectDialog';
+import { reducer as showWelcomePageReducer } from './showWelcomePage';
 
 const reducers = [
   openProjectReducer,
@@ -13,6 +14,7 @@ const reducers = [
   getMainStateReducer,
   showNewProjectDialogReducer,
   hideNewProjectDialogReducer,
+  showWelcomePageReducer,
 ];
 
 export default function reducer(state = initialState, action) {

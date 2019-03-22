@@ -4,6 +4,7 @@ import history from '../../common/history';
 import {
   openProject as openProjectAction,
   showNewProjectDialog as showNewProjectDialogAction,
+  showWelcomePage as showWelcomePageAction,
 } from './redux/actions';
 import { Modal } from 'antd';
 
@@ -59,9 +60,16 @@ function showNewProjectDialog() {
   store.getStore().dispatch(showNewProjectDialogAction());
 }
 
+function showWelcomePage() {
+  history.push('/');
+  // store.getStore().dispatch(showWelcomePageAction());
+
+}
+
 window.bridge.ipcRenderer.on('open-project', (evt, dir) => openProject(dir));
 window.bridge.ipcRenderer.on('redux-action', (evt, action) => store.getStore().dispatch(action));
 window.bridge.ipcRenderer.on('new-project', evt => showNewProjectDialog());
+window.bridge.ipcRenderer.on('show-welcome', evt => showWelcomePage());
 export default {
   openProject,
   showNewProjectDialog,

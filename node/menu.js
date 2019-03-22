@@ -89,7 +89,13 @@ function createMenu() {
         { role: 'resetzoom' },
         { role: 'zoomin' },
         { role: 'zoomout' },
-        { label: 'Show welcome page' },
+        {
+          label: 'Show Welcome Page',
+          click() {
+            ua.event('rekit-app', 'menu:welcome-page').send();
+            BrowserWindow.getFocusedWindow().webContents.send('show-welcome');
+          },
+        },
 
         { type: 'separator' },
         { role: 'togglefullscreen' },

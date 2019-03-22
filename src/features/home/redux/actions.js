@@ -4,3 +4,4 @@ export { getInitialState, dismissGetInitialStateError } from './getInitialState'
 export { getMainState, dismissGetMainStateError } from './getMainState';
 export { showNewProjectDialog } from './showNewProjectDialog';
 export { hideNewProjectDialog } from './hideNewProjectDialog';
+export { showWelcomePage } from './showWelcomePage';

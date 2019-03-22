@@ -1,7 +1,7 @@
 {
   "name": "rekit-app",
   "author": "Nate Wang",
-  "version": "3.0.0-beta.5",
+  "version": "3.0.0-beta.6",
   "private": true,
   "dependencies": {
     "chmodr": "^1.2.0",
@@ -43,9 +43,9 @@
     "start": "node scripts/start.js",
     "start-electron": "cross-env NODE_ENV=development electron .",
     "start-electron-dist": "cross-env NODE_ENV=production electron ./",
-    "build-static": "node ./scripts/buildStatic.js && node ./scripts/copyPlugins.js",
+    "build-static": "node ./scripts/buildStatic.js",
     "pack": "electron-builder --dir",
-    "dist": "node ./scripts/buildElectron.js && electron-builder"
+    "dist": "electron-builder"
   },
   "build": {
     "compression": "normal",

@@ -9,7 +9,7 @@ const menu = require('./menu');
 
 const path = require('path');
 const taskRunner = require('./taskRunner');
-const init = require('./init');
+// const init = require('./init');
 require('./ua');
 
 require('./mainService');
@@ -97,11 +97,11 @@ app.on('web-contents-created', (e, contents) => {
   if (contents.getType() == 'webview') {
     // Listen for any new window events
     contents.on('new-window', (e, url) => {
-      e.preventDefault()
-      electron.shell.openExternal(url)
-    })
+      e.preventDefault();
+      electron.shell.openExternal(url);
+    });
   }
-})
+});
 
 let waitStopping = true;
 app.on('will-quit', evt => {
