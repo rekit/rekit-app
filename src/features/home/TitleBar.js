@@ -61,7 +61,7 @@ export class TitleBar extends Component {
     return (
       <header className="home-title-bar" onDoubleClick={this.handleDoubleClick}>
         <span className="title-container">
-          <span className="project-name">{current.prjDir.split('/').pop()}</span>
+          <span className="project-name">{current.prjDir.split(/\\|\//).pop()}</span>
           <Icon type="caret-down" />
           {studios.length > 0 && (
             <div className={`project-list ${this.state.hideDropdown ? 'hide-dropdown' : ''}`}>

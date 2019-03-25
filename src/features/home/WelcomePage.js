@@ -25,7 +25,7 @@ export class WelcomePage extends Component {
     return (
       <div className="welcome-area">
         <img src={rekitLogo} className="rekit-logo" alt="logo" />
-        <h1>Welcome to Rekit</h1>
+        <h1>Welcome to Rekit</h1>
         <p>Version: 3.0</p>
         <div className="row-button" onClick={this.handleCreateNewProject}>
           <Icon type="file" />
