@@ -80,8 +80,7 @@ promiseIpc.on('/open-studio', prjDir => {
   const recent = store.get('recentProjects') || [];
   _.pull(recent, prjDir);
   recent.unshift(prjDir);
-  recent = recent.filter(dir => fs.existsSync(dir));
-  if (recent.length > 50) recent.length = 50;
+  if (recent.length > 100) recent.length = 100;
   store.set('recentProjects', recent);
   utils.notifyMainStateChange();
   return true;
