@@ -32,11 +32,11 @@ export class WelcomePage extends Component {
           <p>Create a new project</p>
         </div>
         <div className="row-button" onClick={this.handleOpenProject}>
-          <Icon type="file" />
+          <Icon type="folder-open" />
           <p>Open an existing project</p>
         </div>
         <div className="row-button" onClick={this.handleLearnRekit}>
-          <Icon type="file" />
+          <Icon type="question-circle" />
           <p>Learn Rekit...</p>
         </div>
       </div>

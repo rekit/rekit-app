@@ -89,11 +89,20 @@ function createMenu() {
         { role: 'resetzoom' },
         { role: 'zoomin' },
         { role: 'zoomout' },
+        { type: 'separator' },
+
         {
-          label: 'Show Welcome Page',
+          label: 'Welcome Page',
           click() {
             ua.event('rekit-app', 'menu:welcome-page').send();
             BrowserWindow.getFocusedWindow().webContents.send('show-welcome');
+          },
+        },
+        {
+          label: 'Plugins',
+          click() {
+            ua.event('rekit-app', 'menu:plugins').send();
+            BrowserWindow.getFocusedWindow().webContents.send('show-plugins');
           },
         },
 

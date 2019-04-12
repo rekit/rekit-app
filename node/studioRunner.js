@@ -40,7 +40,7 @@ function startStudio(prjDir, restart) {
           log.info('msg from rekit studio: ', msg.type);
           if (msg.type === 'rekit-studio-started') {
             studioMap[prjDir].started = true;
-            utils.notifyMainStateChange();
+            setTimeout(() => utils.notifyMainStateChange(), 100);
           }
           if (msg.type === 'rekit-studio-error') {
             log.error('studio error: ', msg.error);

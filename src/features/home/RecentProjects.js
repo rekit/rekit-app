@@ -8,7 +8,7 @@ import utils from './utils';
 
 export class RecentProjects extends Component {
   static propTypes = {
-    home: PropTypes.object.isRequired,
+    recentProjects: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
   };
 

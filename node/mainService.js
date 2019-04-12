@@ -83,6 +83,7 @@ promiseIpc.on('/open-studio', prjDir => {
   if (recent.length > 100) recent.length = 100;
   store.set('recentProjects', recent);
   utils.notifyMainStateChange();
+  console.log('open recent', prjDir);
   return true;
 });
 
@@ -121,4 +122,8 @@ promiseIpc.on('/create-app', options => {
         data: err,
       });
     });
+});
+
+promiseIpc.on('/list-plugins', async () => {
+  return rekitCore.plugin.listInstalledPlugins();
 });

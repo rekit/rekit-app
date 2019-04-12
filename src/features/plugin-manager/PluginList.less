@@ -1,0 +1,25 @@
+@import '../../styles/mixins';
+
+.plugin-manager-plugin-list {
+  background-color: #262626;
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  ul {
+    height: 100%;
+    overflow: auto;
+    .scroll-style();
+  }
+  ul,
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    position: relative;
+  }
+}
