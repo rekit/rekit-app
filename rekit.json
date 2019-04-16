@@ -1,7 +1,6 @@
 {
   "devPort": 6093,
-  "studioPort": 6076,
-  "plugins": [],
+  "studioPort": 3002,
   "appType": "rekit-react",
   "folders": ["node", "public", "config", "scripts"],
   "files": ["package.json", "README.md", "rekit.json"],
