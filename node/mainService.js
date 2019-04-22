@@ -48,7 +48,7 @@ promiseIpc.on('/get-main-state', prjDir => {
         let appType = 'common';
         try {
           appType = require(path.join(prj, 'rekit.json')).appType;
-        } catch(err) {}
+        } catch (err) {}
         let logo = null;
         const logoPath = rekitCore.paths.configFile(`app-registry/app-types/${appType}/logo.png`);
         if (fs.existsSync(logoPath)) {
@@ -56,8 +56,8 @@ promiseIpc.on('/get-main-state', prjDir => {
         }
         recentProjectsInfoCache[prj] = {
           path: prj,
-          logo, 
-        }
+          logo,
+        };
       }
       return recentProjectsInfoCache[prj];
     }),
@@ -66,7 +66,9 @@ promiseIpc.on('/get-main-state', prjDir => {
 
 promiseIpc.on('/get-app-types', async () => {
   await rekitCore.create.syncAppRegistryRepo();
-  const appTypes = fs.readJsonSync(rekitCore.paths.configFile('app-registry/appTypes.json'));
+  const appTypes = fs
+    .readJsonSync(rekitCore.paths.configFile('app-registry/appTypes.json'))
+    .filter(t => !t.disabled);
   appTypes.forEach(appType => {
     appType.logo =
       'file://' + rekitCore.paths.configFile(`app-registry/app-types/${appType.id}/logo.png`);
