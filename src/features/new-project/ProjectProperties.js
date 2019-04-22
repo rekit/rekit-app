@@ -13,7 +13,7 @@ export class ProjectProperties extends Component {
   render() {
     return (
       <div className="new-project-project-properties">
-        Page Content: new-project/ProjectProperties
+        Page Content: new-project/ProjectProperties2
       </div>
     );
   }
