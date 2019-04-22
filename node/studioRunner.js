@@ -35,19 +35,19 @@ function startStudio(prjDir, restart) {
       port = String(port);
       try {
         const child = taskRunner.runTask(`${nodeBin} ${studioBin} -d ${prjDir} -p ${port}`, prjDir);
-        setTimeout(() => {
-          if (studioMap[prjDir] && !studioMap[prjDir].started) {
-            studioMap[prjDir].started = true;
-            utils.notifyMainStateChange();
-          }
-        }, 3000);
+        // setTimeout(() => {
+        //   if (studioMap[prjDir] && !studioMap[prjDir].started) {
+        //     studioMap[prjDir].started = true;
+        //     utils.notifyMainStateChange();
+        //   }
+        // }, 10000);
         child.on('message', msg => {
           log.info('msg from rekit studio: ', msg.type);
           if (msg.type === 'rekit-studio-started') {
-            if (!studioMap[prjDir].started) {
+            // if (!studioMap[prjDir].started) {
               studioMap[prjDir].started = true;
               utils.notifyMainStateChange();
-            }
+            // }
           }
           if (msg.type === 'rekit-studio-error') {
             log.error('studio error: ', msg.error);
