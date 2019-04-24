@@ -45,8 +45,8 @@ function startStudio(prjDir, restart) {
           log.info('msg from rekit studio: ', msg.type);
           if (msg.type === 'rekit-studio-started') {
             // if (!studioMap[prjDir].started) {
-              studioMap[prjDir].started = true;
-              utils.notifyMainStateChange();
+            studioMap[prjDir].started = true;
+            utils.notifyMainStateChange();
             // }
           }
           if (msg.type === 'rekit-studio-error') {
@@ -71,7 +71,9 @@ function startStudio(prjDir, restart) {
         });
 
         studioMap[prjDir] = {
-          name: require(`${prjDir}/package.json`).name,
+          name: fs.existsSync(`${prjDir}/package.json`)
+            ? require(`${prjDir}/package.json`).name
+            : prjDir.split(/[/\\]/).pop(),
           process: child,
           port,
           prjDir,
