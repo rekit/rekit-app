@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input, Icon } from 'antd';
+import { Input, Icon } from 'antd';
 
 export default class FolderPicker extends Component {
   static propTypes = {

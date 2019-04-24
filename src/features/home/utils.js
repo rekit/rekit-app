@@ -4,7 +4,6 @@ import history from '../../common/history';
 import {
   openProject as openProjectAction,
   showNewProjectDialog as showNewProjectDialogAction,
-  showWelcomePage as showWelcomePageAction,
 } from './redux/actions';
 import { Modal } from 'antd';
 

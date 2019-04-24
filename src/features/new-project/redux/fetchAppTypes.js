@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   NEW_PROJECT_FETCH_APP_TYPES_BEGIN,
   NEW_PROJECT_FETCH_APP_TYPES_SUCCESS,

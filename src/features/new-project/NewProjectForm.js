@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Modal, Icon, Form, Spin, Button } from 'antd';
+import { Form } from 'antd';
 import { FormBuilder, FolderPicker } from '../common';
 
 export class NewProjectForm extends Component {

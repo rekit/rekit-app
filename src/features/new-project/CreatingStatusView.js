@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Alert, Spin, Timeline, Icon } from 'antd';
+import { Alert, Timeline, Icon } from 'antd';
 import { clearCreateAppStatus } from './redux/actions';
 
 export class CreatingStatusView extends Component {
