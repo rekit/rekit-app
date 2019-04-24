@@ -10,6 +10,7 @@ import {
   Input,
   InputNumber,
   Radio,
+  Checkbox,
   Select,
   DatePicker,
 } from 'antd';
@@ -21,6 +22,7 @@ const componentMap = {
   input: Input,
   'date-picker': DatePicker,
   radio: Radio,
+  checkbox: Checkbox,
   textarea: Input.TextArea,
   select: Select,
   number: InputNumber,
