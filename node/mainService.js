@@ -104,7 +104,7 @@ promiseIpc.on('/create-app', options => {
       ...options,
       status: (code, msg) => {
         console.log(code, msg);
-        BrowserWindow.getFocusedWindow().webContents.send('redux-action', {
+        BrowserWindow.getAllWindows()[0].webContents.send('redux-action', {
           type: 'CREATE_APP_STATUS',
           data: {
             code,
@@ -114,12 +114,12 @@ promiseIpc.on('/create-app', options => {
       },
     })
     .then(() => {
-      BrowserWindow.getFocusedWindow().webContents.send('redux-action', {
+      BrowserWindow.getAllWindows()[0].webContents.send('redux-action', {
         type: 'CREATE_APP_SUCCESS',
       });
     })
     .catch(err => {
-      BrowserWindow.getFocusedWindow().webContents.send('redux-action', {
+      BrowserWindow.getAllWindows()[0].webContents.send('redux-action', {
         type: 'CREATE_APP_FAILURE',
         data: err,
       });
