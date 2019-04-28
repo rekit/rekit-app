@@ -1,5 +1,20 @@
 const electron = require('electron');
 
+// Auto updater
+require('update-electron-app')({
+  repo: 'rekit/rekit-app',
+  // updateInterval: '10 minutes',
+  logger: (()=> {
+    const logger = require('./logger');
+    return {
+      ...logger,
+      log(...args) {
+        // Make log as info so that updater could use it.
+        logger.info(...args);
+      }
+    };
+  })()
+})
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.

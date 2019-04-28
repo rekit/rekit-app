@@ -1,8 +1,12 @@
 {
   "name": "rekit-app",
   "author": "Nate Wang",
-  "version": "3.0.0-beta.11",
-  "private": true,
+  "version": "3.0.0-beta.1",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rekit/rekit-core"
+  },
   "dependencies": {
     "babel-generator": "^6.23.0",
     "babel-traverse": "^6.23.1",
@@ -18,6 +22,7 @@
     "electron-log": "^2.2.17",
     "electron-promise-ipc": "^0.1.3",
     "electron-store": "^2.0.0",
+    "electron-updater": "^4.0.6",
     "electron-util": "^0.10.2",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.2.0",
