@@ -3,7 +3,7 @@
   "studioPort": 3002,
   "appType": "rekit-react",
   "folders": ["node", "public", "config", "scripts"],
-  "files": ["package.json", "README.md", "rekit.json"],
+  "files": ["package.json", "README.md", "rekit.json",  ".gitignore"],
   "pluginRekitReact": {
     "css": "less"
   }

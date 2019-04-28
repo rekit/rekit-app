@@ -4,7 +4,7 @@ const ua = require('./ua');
 
 function getRecentMenuItems() {
   const recent = store.get('recentProjects') || [];
-  if (recent.length > 10) recent.length = 10;
+  if (recent.length > 20) recent.length = 20;
   return recent.map(dir => {
     return {
       label: dir,
