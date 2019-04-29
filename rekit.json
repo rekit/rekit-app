@@ -2,6 +2,7 @@
   "devPort": 6093,
   "studioPort": 3002,
   "appType": "rekit-react",
+  "rekitTest": true,
   "folders": ["node", "public", "config", "scripts"],
   "files": ["electron-builder.yml", "electron-builder.env", "package.json", "README.md", "rekit.json"],
   "css": "less"
