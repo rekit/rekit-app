@@ -1,11 +1,11 @@
 {
   "name": "rekit-app",
   "author": "Nate Wang",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.14",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/rekit/rekit-core"
+    "url": "https://github.com/rekit/rekit-app"
   },
   "dependencies": {
     "babel-generator": "^6.23.0",
@@ -51,13 +51,14 @@
     "start-electron-dist": "cross-env NODE_ENV=production electron ./",
     "build-static": "node ./scripts/buildStatic.js",
     "pack": "electron-builder --dir",
+    "release": "build",
     "dist": "electron-builder"
   },
   "build": {
     "compression": "normal",
     "appId": "com.webows.rekit",
     "productName": "Rekit",
-    "copyright": "Copyright © 2018 ${author}",
+    "copyright": "Copyright © 2019 ${author}",
     "asar": true,
     "asarUnpack": [
       "node_modules",
@@ -73,26 +74,12 @@
     },
     "mac": {
       "category": "public.app-category.developer-tools",
-      "target": "dmg",
       "identity": "Pei Wang (ZUQ2GPKPP2)"
+    },
+    "publish": {
+      "provider": "github",
+      "releaseType": "prerelease"
     }
-  },
-  "rekit": {
-    "devPort": 6093,
-    "studioPort": 6076,
-    "plugins": [],
-    "appType": "rekit-react",
-    "folders": [
-      "node",
-      "public",
-      "config",
-      "scripts"
-    ],
-    "files": [
-      "package.json",
-      "README.md"
-    ],
-    "css": "less"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -152,7 +139,6 @@
     "dotenv-expand": "4.2.0",
     "electron": "^3.0.8",
     "electron-builder": "^20.38.2",
-    "electron-rebuild": "^1.8.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "4.10.0",

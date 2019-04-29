@@ -71,6 +71,7 @@ export function reducer(state, action) {
         getInitialStatePending: false,
         getInitialStateError: null,
         initializing: false,
+        version: payload.version,
         studios: payload.studios.map(s => s.prjDir),
         studioById: payload.studios.reduce((p, s) => {
           p[s.prjDir] = s;

@@ -13,7 +13,6 @@ module.exports = {
   notifyMainStateChange() {
     const win = BrowserWindow.getAllWindows()[0];
     if (win) {
-      logger.info('Focused window found.');
       win.webContents.send('state-changed');
     } else {
       logger.warn('No window found when notifiyMainStateChange in utils.js, retry in 2 seconds...');

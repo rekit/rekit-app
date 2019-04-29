@@ -1,4 +1,4 @@
-const { ipcMain, BrowserWindow } = require('electron');
+const { ipcMain, BrowserWindow, app } = require('electron');
 const promiseIpc = require('electron-promise-ipc');
 const fs = require('fs-extra');
 const path = require('path');
@@ -43,6 +43,7 @@ promiseIpc.on('/get-main-state', prjDir => {
   const studios = studioRunner.getRunningStudios();
   return {
     studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started', 'error'])),
+    version: app.getVersion(),
     recentProjects: (store.get('recentProjects') || []).map(prj => {
       if (!recentProjectsInfoCache[prj]) {
         let appType = 'common';

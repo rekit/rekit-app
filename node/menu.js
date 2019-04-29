@@ -1,4 +1,6 @@
 const { app, Menu, BrowserWindow } = require('electron');
+const { handleCheckMenuClick } = require('./checkUpdate');
+
 const store = require('./store');
 const ua = require('./ua');
 
@@ -29,6 +31,10 @@ function createMenu() {
       label: 'Rekit',
       submenu: [
         { label: 'About Rekit', selector: 'orderFrontStandardAboutPanel:' },
+        {
+          label: 'Check for Updates...',
+          click: handleCheckMenuClick,
+        },
         { type: 'separator' },
         {
           label: 'Quit Rekit',

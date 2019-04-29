@@ -1,20 +1,5 @@
 const electron = require('electron');
 
-// Auto updater
-require('update-electron-app')({
-  repo: 'rekit/rekit-app',
-  // updateInterval: '10 minutes',
-  logger: (()=> {
-    const logger = require('./logger');
-    return {
-      ...logger,
-      log(...args) {
-        // Make log as info so that updater could use it.
-        logger.info(...args);
-      }
-    };
-  })()
-})
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -41,7 +26,7 @@ function createWindow() {
     width: 1200,
     height: 900,
     titleBarStyle: 'hidden',
-    backgroundColor: '#1e1e1e',
+    backgroundColor: '#1e1e1e', 
     webPreferences: {
       webSecurity: false,
     },
@@ -58,7 +43,7 @@ function createWindow() {
   //   }),
   // );
 
-  console.log('isdev: ', process.env.NODE_ENV, isDev);
+  log.info('isdev: ', process.env.NODE_ENV, isDev);
 
   if (isDev) {
     mainWindow.loadURL('http://localhost:6093/');
@@ -84,10 +69,9 @@ function createWindow() {
 app.on('ready', () => {
   createWindow();
 
-  // if (0 && !isDev) {
   // Create the Application's main menu
   menu.createMenu(mainWindow, app);
-  // }
+  require('./checkUpdate').checkUpdate();
 });
 
 // Quit when all windows are closed.

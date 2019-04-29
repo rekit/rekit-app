@@ -32,7 +32,6 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 dist
-build
 
 # Dependency directories
 node_modules/
@@ -61,3 +60,6 @@ typings/
 
 # next.js build output
 .next
+
+# electron env
+electron-builder.env

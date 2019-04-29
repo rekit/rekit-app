@@ -26,7 +26,7 @@ export class WelcomePage extends Component {
       <div className="welcome-area">
         <img src={rekitLogo} className="rekit-logo" alt="logo" />
         <h1>Welcome to Rekit</h1>
-        <p>Version: 3.0</p>
+        <p>Version: {this.props.version}</p>
         <div className="row-button" onClick={this.handleCreateNewProject}>
           <Icon type="file" />
           <p>Create a new project</p>
@@ -60,7 +60,7 @@ export class WelcomePage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    
+    version: state.home.version,
   };
 }
 

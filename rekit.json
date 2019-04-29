@@ -3,6 +3,6 @@
   "studioPort": 3002,
   "appType": "rekit-react",
   "folders": ["node", "public", "config", "scripts"],
-  "files": ["package.json", "README.md", "rekit.json",  ".gitignore"],
+  "files": ["electron-builder.yml", "electron-builder.env", "package.json", "README.md", "rekit.json"],
   "css": "less"
 }
