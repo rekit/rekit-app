@@ -1,5 +1,5 @@
-import createHistory from 'history/createHashHistory';
+import { createHashHistory } from 'history';
 
 // A singleton history object for easy API navigation
-const history = createHistory();
+const history = createHashHistory();
 export default history;

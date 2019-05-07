@@ -33,6 +33,7 @@ function createWindow() {
     // transparent: true,
     // frame: false,
   });
+  // mainWindow.webContents.session
   mainWindow.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
   // and load the index.html of the app.
   // mainWindow.loadURL(
