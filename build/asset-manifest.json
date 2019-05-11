@@ -1,7 +1,17 @@
 {
   "main.css": "static/css/main.d6283473.css",
   "main.css.map": "static/css/main.d6283473.css.map",
-  "main.js": "static/js/main.efe738ca.js",
-  "main.js.map": "static/js/main.efe738ca.js.map",
-  "static/media/rekit-logo.svg": "static/media/rekit-logo.7480cbd9.svg"
+  "main.js": "static/js/main.0c4e9327.js",
+  "main.js.map": "static/js/main.0c4e9327.js.map",
+  "static/media/rekit-logo.svg": "static/media/rekit-logo.7480cbd9.svg",
+  "static/media/roboto-v19-latin-100.eot": "static/media/roboto-v19-latin-100.6906d86d.eot",
+  "static/media/roboto-v19-latin-100.svg": "static/media/roboto-v19-latin-100.bdd892cd.svg",
+  "static/media/roboto-v19-latin-100.ttf": "static/media/roboto-v19-latin-100.ff1e90ce.ttf",
+  "static/media/roboto-v19-latin-100.woff": "static/media/roboto-v19-latin-100.5cb7edfc.woff",
+  "static/media/roboto-v19-latin-100.woff2": "static/media/roboto-v19-latin-100.7370c367.woff2",
+  "static/media/roboto-v19-latin-300.eot": "static/media/roboto-v19-latin-300.bda729db.eot",
+  "static/media/roboto-v19-latin-300.svg": "static/media/roboto-v19-latin-300.dd0bea1f.svg",
+  "static/media/roboto-v19-latin-300.ttf": "static/media/roboto-v19-latin-300.806854d4.ttf",
+  "static/media/roboto-v19-latin-300.woff": "static/media/roboto-v19-latin-300.b00849e0.woff",
+  "static/media/roboto-v19-latin-300.woff2": "static/media/roboto-v19-latin-300.ef7c6637.woff2"
 }
