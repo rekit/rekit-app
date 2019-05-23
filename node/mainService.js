@@ -41,6 +41,7 @@ promiseIpc.on('/start-studio', args => {
 
 promiseIpc.on('/get-main-state', prjDir => {
   const studios = studioRunner.getRunningStudios();
+  const appTypes = rekitCore.app.getAppTypes();
   return {
     studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started', 'error'])),
     version: app.getVersion(),
@@ -50,11 +51,8 @@ promiseIpc.on('/get-main-state', prjDir => {
         try {
           appType = require(path.join(prj, 'rekit.json')).appType;
         } catch (err) {}
-        let logo = null;
-        const logoPath = rekitCore.paths.configFile(`app-registry/app-types/${appType}/logo.png`);
-        if (fs.existsSync(logoPath)) {
-          logo = 'file://' + logoPath;
-        }
+        const found = _.find(appTypes, { id: appType });
+        const logo = found && found.logo || null; // eslint-disable-line
         recentProjectsInfoCache[prj] = {
           path: prj,
           logo,
@@ -65,17 +63,18 @@ promiseIpc.on('/get-main-state', prjDir => {
   };
 });
 
-promiseIpc.on('/get-app-types', async () => {
-  await rekitCore.create.syncAppRegistryRepo();
-  const appTypes = fs
-    .readJsonSync(rekitCore.paths.configFile('app-registry/appTypes.json'))
-    .filter(t => !t.disabled);
-  appTypes.forEach(appType => {
-    appType.logo =
-      'file://' + rekitCore.paths.configFile(`app-registry/app-types/${appType.id}/logo.png`);
-  });
-  console.log('app types: ', appTypes);
-  return appTypes;
+promiseIpc.on('/get-app-types', () => {
+  // await rekitCore.create.syncAppRegistryRepo();
+  return rekitCore.app.getAppTypes();
+  // const appTypes = fs
+  //   .readJsonSync(rekitCore.paths.configFile('app-registry/appTypes.json'))
+  //   .filter(t => !t.disabled);
+  // appTypes.forEach(appType => {
+  //   appType.logo =
+  //     'file://' + rekitCore.paths.configFile(`app-registry/app-types/${appType.id}/logo.png`);
+  // });
+  // console.log('app types: ', appTypes);
+  // return appTypes;
 });
 
 promiseIpc.on('/open-studio', prjDir => {

@@ -29,7 +29,7 @@ export class RecentProjects extends Component {
               title={prj.path}
               onClick={() => this.handleOpenProject(prj.path)}
             >
-              {prj.logo ? <img className="icon" src={prj.logo} alt="logo" /> : <Icon type="folder" />}
+              {prj.logo ? <img className="icon" src={`file://${prj.logo}`} alt="logo" /> : <Icon type="folder" />}
               <h4>{prj.path.split('/').pop()}</h4>
               <p>{prj.path}</p>
             </li>

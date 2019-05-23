@@ -1,13 +1,14 @@
 {
   "name": "rekit-app",
   "author": "Nate Wang",
-  "version": "3.0.0-beta.21",
+  "version": "3.0.0-beta.23",
   "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/rekit/rekit-app"
   },
   "dependencies": {
+    "@babel/traverse": "^7.4.3",
     "babel-generator": "^6.23.0",
     "babel-traverse": "^6.23.1",
     "babel-types": "^6.23.0",

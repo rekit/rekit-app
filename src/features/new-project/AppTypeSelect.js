@@ -58,17 +58,19 @@ export class AppTypeSelect extends Component {
           className="icon-block-container"
           style={{ marginBottom: this.props.value ? '110px' : '0px' }}
         >
-          {appTypes.map(appType => (
-            <div
-              title={appType.name}
-              key={appType.id}
-              className={'icon-block' + (appType.id === this.props.value ? ' selected' : '')}
-              onClick={() => this.props.onChange(appType.id)}
-            >
-              <img src={appType.logo} alt="logo" />
-              <label>{appType.name}</label>
-            </div>
-          ))}
+          {appTypes
+            .filter(t => !t.disabled)
+            .map(appType => (
+              <div
+                title={appType.name}
+                key={appType.id}
+                className={'icon-block' + (appType.id === this.props.value ? ' selected' : '')}
+                onClick={() => this.props.onChange(appType.id)}
+              >
+                <img src={`file://${appType.logo}`} alt="logo" />
+                <label>{appType.name}</label>
+              </div>
+            ))}
         </div>
         {this.props.value && (
           <div className="description">
