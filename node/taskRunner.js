@@ -47,6 +47,7 @@ function runTask(cmd, cwd, env) {
       {
         PATH: `${process.env.PATH}${getEnvPath()}`,
         NODE_PATH: fixPathForAsarUnpack(path.join(app.getAppPath(), 'node_modules')),
+        NODE_ENV: '',  // should not inherit NODE_ENV from the process
       },
       env || {},
     ),
