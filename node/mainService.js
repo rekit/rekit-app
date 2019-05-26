@@ -52,7 +52,7 @@ promiseIpc.on('/get-main-state', prjDir => {
           appType = require(path.join(prj, 'rekit.json')).appType;
         } catch (err) {}
         const found = _.find(appTypes, { id: appType });
-        const logo = found && found.logo || null; // eslint-disable-line
+        const logo = (found && found.logo) || null; // eslint-disable-line
         recentProjectsInfoCache[prj] = {
           path: prj,
           logo,
@@ -64,8 +64,8 @@ promiseIpc.on('/get-main-state', prjDir => {
 });
 
 promiseIpc.on('/get-app-types', () => {
-  // await rekitCore.create.syncAppRegistryRepo();
-  return rekitCore.app.getAppTypes();
+  rekitCore.create.syncAppRegistryRepo().then((changed) => changed && utils.notifyMainStateChange());
+  return rekitCore.app.getAppTypes({ noSync: true });
   // const appTypes = fs
   //   .readJsonSync(rekitCore.paths.configFile('app-registry/appTypes.json'))
   //   .filter(t => !t.disabled);
