@@ -17,8 +17,19 @@ export class AppTypeSelect extends Component {
     value: null,
   };
 
+  state = {
+    hoverAppType: null,
+  };
+
   componentDidMount() {
     this.props.actions.fetchAppTypes();
+  }
+
+  handleMouseOver(appTypeId) {
+    this.setState({ hoverAppType: appTypeId });
+  }
+  handleMouseOut() {
+    this.setState({ hoverAppType: null });
   }
 
   renderLoading() {
@@ -66,15 +77,17 @@ export class AppTypeSelect extends Component {
                 key={appType.id}
                 className={'icon-block' + (appType.id === this.props.value ? ' selected' : '')}
                 onClick={() => this.props.onChange(appType.id)}
+                onMouseOver={() => this.handleMouseOver(appType.id)}
+                onMouseOut={() => this.handleMouseOut(appType.id)}
               >
                 <img src={`file://${appType.logo}`} alt="logo" />
                 <label>{appType.name}</label>
               </div>
             ))}
         </div>
-        {this.props.value && (
+        {(this.props.value || this.state.hoverAppType) && (
           <div className="description">
-            {_.find(appTypes, { id: this.props.value }).description}
+            {_.find(appTypes, { id: this.state.hoverAppType || this.props.value }).description}
           </div>
         )}
       </React.Fragment>

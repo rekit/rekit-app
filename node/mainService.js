@@ -45,6 +45,7 @@ promiseIpc.on('/get-main-state', prjDir => {
   return {
     studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started', 'error'])),
     version: app.getVersion(),
+    appTypes,
     recentProjects: (store.get('recentProjects') || []).map(prj => {
       if (!recentProjectsInfoCache[prj]) {
         let appType = 'common';

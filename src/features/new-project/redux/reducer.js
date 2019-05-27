@@ -10,7 +10,7 @@ import initialState from './initialState';
 import { reducer as fetchAppTypesReducer } from './fetchAppTypes';
 import { reducer as createAppReducer } from './createApp';
 import { reducer as clearCreateAppStatusReducer } from './clearCreateAppStatus';
-
+import { HOME_GET_MAIN_STATE_SUCCESS } from '../../home/redux/constants';
 const reducers = [
   fetchAppTypesReducer,
   createAppReducer,
@@ -40,6 +40,12 @@ export default function reducer(state = initialState, action) {
         createAppStatus: [],
         createAppPending: false,
         createAppError: action.data,
+      };
+      break;
+    case HOME_GET_MAIN_STATE_SUCCESS: 
+      newState = {
+        ...state,
+        appTypes: action.data.appTypes,
       };
       break;
     default:
