@@ -6,6 +6,7 @@ import rekitLogo from '../../images/rekit-logo.svg';
 import * as actions from './redux/actions';
 import utils from './utils';
 import { RecentProjects } from './';
+import history from '../../common/history';
 
 export class WelcomePage extends Component {
 
@@ -19,6 +20,10 @@ export class WelcomePage extends Component {
 
   handleLearnRekit = () => {
     window.bridge.shell.openExternal('http://rekit.org');
+  }
+
+  handleManagePlugins = () => {
+    history.push('/plugins');
   }
 
   renderWelcomArea() {
@@ -35,9 +40,9 @@ export class WelcomePage extends Component {
           <Icon type="folder-open" />
           <p>Open an existing project</p>
         </div>
-        <div className="row-button" onClick={this.handleLearnRekit}>
-          <Icon type="question-circle" />
-          <p>Learn Rekit...</p>
+        <div className="row-button" onClick={this.handleManagePlugins}>
+          <Icon type="appstore" />
+          <p>Manage plugins</p>
         </div>
       </div>
     );
@@ -51,6 +56,11 @@ export class WelcomePage extends Component {
             <Col span={13}>{this.renderWelcomArea()}</Col>
             <Col span={11}><RecentProjects /></Col>
           </Row>
+          <div className="footer">
+            <label><Icon type="question-circle" /> Documentation</label>
+            <label><Icon type="github" /> Github</label>
+            <label><Icon type="slack" /> Discussion</label>
+          </div>
         </div>
       </div>
     );
