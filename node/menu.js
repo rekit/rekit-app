@@ -107,6 +107,7 @@ function createMenu() {
         },
         {
           label: 'Plugins',
+          accelerator: 'CmdOrCtrl+Y',
           click() {
             ua.event('rekit-app', 'menu:plugins').send();
             BrowserWindow.getFocusedWindow().webContents.send('show-plugins');
