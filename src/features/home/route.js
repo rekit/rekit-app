@@ -1,4 +1,4 @@
-import { WelcomePage, RekitStudioPage } from './';
+import { WelcomePage } from './';
 
 export default {
   path: '/',
@@ -9,6 +9,5 @@ export default {
       component: WelcomePage,
       isIndex: true,
     },
-    { path: 'rekit-studio/:port', component: RekitStudioPage },
   ],
 };

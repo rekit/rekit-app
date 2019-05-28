@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import { matchPath } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { TitleBar, DialogPlace } from './';
+import { RekitStudioPage, TitleBar, DialogPlace } from './';
 import { getMainState } from './redux/actions';
 
 /*
@@ -15,6 +16,7 @@ export class App extends Component {
     children: PropTypes.node,
     actions: PropTypes.object.isRequired,
     initializing: PropTypes.bool.isRequired,
+    router: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -29,21 +31,29 @@ export class App extends Component {
   }
 
   render() {
+    const match = matchPath(this.props.router.location.pathname, {
+      path: '/rekit-studio/:port',
+      exact: true,
+    });
+    console.log('match: ', match);
     return (
       <div className="home-app">
         <TitleBar />
-        <div className="page-container">{this.props.initializing ? 'Loading...' : this.props.children}</div>
+        <RekitStudioPage match={match} />
+        <div className="page-container">
+          {this.props.initializing ? 'Loading...' : this.props.children}
+        </div>
         <DialogPlace />
       </div>
     );
   }
 }
 
-
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     initializing: state.home.initializing,
+    router: state.router,
   };
 }
 

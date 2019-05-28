@@ -4,6 +4,7 @@ import _ from 'lodash';
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button } from 'antd';
+import classnames from 'classnames';
 import history from '../../common/history';
 import { WebView } from '../common';
 import rekitLogo from '../../images/rekit-logo.svg';
@@ -11,10 +12,14 @@ import utils from './utils';
 
 export class RekitStudioPage extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired,
+    match: PropTypes.object,
     studios: PropTypes.array.isRequired,
     studioById: PropTypes.object.isRequired,
   };
+
+  static defaultProps = {
+    match: null,
+  }
 
   constructor(props) {
     super(props);
@@ -23,8 +28,13 @@ export class RekitStudioPage extends Component {
   state = {
     loaded: {},
     closing: {},
+    match: null,
   };
 
+  static getDerivedStateFromProps(props) {
+    if (props.match) return { match: props.match };
+    return null;
+  }
   componentDidMount() {
     window.bridge.ipcRenderer.on('close-project', this.handleCloseProject);
     window.bridge.ipcRenderer.on('restart-project', this.handleRestartProject);
@@ -35,7 +45,7 @@ export class RekitStudioPage extends Component {
   }
 
   handleRestartProject = () => {
-    const { port } = this.props.match.params;
+    const { port } = this.state.match.params;
     const { studioById } = this.props;
     const studio = _.find(Object.values(studioById), { port });
     this.setState({
@@ -48,7 +58,7 @@ export class RekitStudioPage extends Component {
   };
 
   handleCloseProject = () => {
-    const { port } = this.props.match.params;
+    const { port } = this.state.match.params;
     const { studios, studioById } = this.props;
     const studio = _.find(Object.values(this.props.studioById), { port });
     this.setState({
@@ -135,7 +145,7 @@ export class RekitStudioPage extends Component {
 
   renderWebView = id => {
     const studio = this.props.studioById[id];
-    const { port } = this.props.match.params;
+    const { port } = this.state.match.params;
     return studio.started ? (
       <WebView
         key={studio.port}
@@ -155,13 +165,14 @@ export class RekitStudioPage extends Component {
   }
 
   render() {
-    const { port } = this.props.match.params;
+    if (!this.state.match) return null;
+    const { port } = this.state.match.params;
     const currentStudio = _.find(Object.values(this.props.studioById), {
       port,
     });
 
     return (
-      <div className="home-rekit-studio-page">
+      <div className={classnames('home-rekit-studio-page', { hidden: !this.props.match })}>
         {this.renderWebViews()}
         {currentStudio &&
           !currentStudio.error &&
