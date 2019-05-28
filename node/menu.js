@@ -99,6 +99,7 @@ function createMenu() {
 
         {
           label: 'Welcome Page',
+          accelerator: 'CmdOrCtrl+H',
           click() {
             ua.event('rekit-app', 'menu:welcome-page').send();
             BrowserWindow.getFocusedWindow().webContents.send('show-welcome');
