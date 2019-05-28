@@ -1,26 +1,71 @@
 @import '../../styles/mixins';
 
 .plugin-manager-main-page {
-  padding: 30px;
   color: #ccc;
-  h1 {
+  height: 100%;
+  h2 {
+    font-size: 16px;
     color: #ccc;
-    .plugin-count{
+    line-height: 40px;
+    padding-left: 15px;
+    .plugin-count {
       color: #777;
-      font-size: 18px;
+      font-size: 12px;
+    }
+  }
+  .main-area {
+    padding-top: 1px;
+    margin: 0 auto;
+    .vertical-center();
+    height: 600px;
+    width: 900px;
+    background-color: #222;
+    .ant-row, .ant-col{
+      height: 100%;
+    }
+    .ant-col-8 {
+      border-right: 1px solid #111;
+    }
+  }
+  .plugin-manager-header {
+    height: 40px;
+    margin-top: -40px;
+    text-align: right;
+    .ant-btn {
+      cursor: pointer;
+      margin-right: -15px;
+      background: #222;
+      border:none;
+      margin-top: 22px;
+      color: #999;
+      transition: none;
+      &:hover {
+        color:#ddd;
+      }
     }
   }
 
+  .plugin-intro {
+    padding: 15px 20px 20px 20px;
+    color: #bbb;
+    h2 {
+      border-bottom: 1px solid #333;
+      padding-left: 0;
+    }
+    p {
+      color: #aaa;
+    }
+  }
   .ant-row {
-    position: absolute;
-    left: 30px;
-    top: 30px;
-    right: 30px;
-    bottom: 30px;
+    // position: absolute;
+    // left: 30px;
+    // top: 30px;
+    // right: 30px;
+    // bottom: 30px;
   }
 
   .ant-col-12 {
-    height: 100%;
-    position: relative;
+    // height: 100%;
+    // position: relative;
   }
 }

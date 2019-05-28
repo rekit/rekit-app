@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Row, Col } from 'antd';
-import { PluginList } from './';
+import { Row, Col, Button } from 'antd';
+import { PluginList, PluginHeader } from './';
+import history from '../../common/history';
 
 export class MainPage extends Component {
   static propTypes = {
@@ -15,16 +16,21 @@ export class MainPage extends Component {
   render() {
     return (
       <div className="plugin-manager-main-page">
-        <Row gutter={20}>
-          <Col span={12}>
-            <h1>Installed Plugins <span className="plugin-count">(12)</span></h1>
-            <PluginList type="installed"/>
-          </Col>
-          <Col span={12}>
-            <h1>Available Plugins <span className="plugin-count">(87)</span></h1>
-            <PluginList  type="available"/>
-          </Col>
-        </Row>
+        <div className="main-area">
+          <div className="plugin-manager-header">
+            <Button icon="close" onClick={() => history.go(-1)} shape="circle" />
+          </div>
+          <Row gutter={0}>
+            <Col span={8}>
+              <h2>Plugins</h2>
+              <PluginList type="installed" />
+            </Col>
+            <Col span={16} className="plugin-intro">
+              <PluginHeader />
+              <p>This is plugin description</p>
+            </Col>
+          </Row>
+        </div>
       </div>
     );
   }
