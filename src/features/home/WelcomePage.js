@@ -60,6 +60,7 @@ export class WelcomePage extends Component {
             <label><Icon type="question-circle" /> Documentation</label>
             <label><Icon type="github" /> Github</label>
             <label><Icon type="slack" /> Discussion</label>
+            <label><Icon type="twitter" /> Twitter</label>
           </div>
         </div>
       </div>
