@@ -21,7 +21,7 @@ export function fetchPlugins(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
+      const doRequest = window.bridge.promiseIpc.send('/list-plugins');
       doRequest.then(
         (res) => {
           dispatch({
@@ -67,6 +67,7 @@ export function reducer(state, action) {
       // The request is success
       return {
         ...state,
+        plugins: action.data,
         fetchPluginsPending: false,
         fetchPluginsError: null,
       };

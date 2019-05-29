@@ -3,12 +3,14 @@ const promiseIpc = require('electron-promise-ipc');
 const fs = require('fs-extra');
 const path = require('path');
 const _ = require('lodash');
+const axios = require('axios');
 const rekitCore = require('rekit-core').core;
 const utils = require('./utils');
 const studioRunner = require('./studioRunner');
 const taskRunner = require('./taskRunner');
 const store = require('./store');
 const ua = require('./ua');
+const logger = require('./logger');
 
 // filter recent projects existance
 function checkRecent() {
@@ -116,5 +118,11 @@ promiseIpc.on('/create-app', options => {
 });
 
 promiseIpc.on('/list-plugins', async () => {
-  return rekitCore.plugin.listInstalledPlugins();
+  let onlinePlugins = [];
+  try {
+    onlinePlugins = await axios.get('https://rekit.github.io/plugin-registry/registry.json');
+  } catch (err) {
+    logger.info('Failed to get online plugins: ', err);
+  }
+  return rekitCore.plugin.getAllPlugins().concat(onlinePlugins.data);
 });

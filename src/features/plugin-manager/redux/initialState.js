@@ -18,6 +18,7 @@ const initialState = {
   installPluginError: null,
   uninstallPluginPending: false,
   uninstallPluginError: null,
+  plugins: null,
 };
 
 export default initialState;
