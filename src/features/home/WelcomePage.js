@@ -7,6 +7,7 @@ import * as actions from './redux/actions';
 import utils from './utils';
 import { RecentProjects } from './';
 import history from '../../common/history';
+import { ReactComponent as DiscordIcon } from '../../images/discord.svg';
 
 export class WelcomePage extends Component {
 
@@ -59,7 +60,7 @@ export class WelcomePage extends Component {
           <div className="footer">
             <label><Icon type="question-circle" /> Documentation</label>
             <label><Icon type="github" /> Github</label>
-            <label><a href="https://discord.gg/Prn8vdY"><Icon type="slack" /> Discussion</a></label>
+            <a href="https://discord.gg/Prn8vdY" target="_blank"><Icon component={DiscordIcon} /> Discussion</a>
             <label><Icon type="twitter" /> Twitter</label>
           </div>
         </div>

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Icon, Row, Col, Button } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { fetchPlugins } from './redux/actions';
 
 const defaultPluginLogo = require('../../images/plugin-logo.png');
