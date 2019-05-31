@@ -72,6 +72,7 @@ export class PluginList extends Component {
     console.log('menu click: ', evt, item);
     switch (evt.key) {
       case 'update':
+        this.handleInstall(item);
         break;
       case 'remove':
         this.props.actions.uninstallPlugin(item.name);

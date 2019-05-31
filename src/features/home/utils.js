@@ -70,7 +70,7 @@ function showPluginsPage() {
 }
 
 window.bridge.ipcRenderer.on('open-project', (evt, dir) => openProject(dir));
-window.bridge.ipcRenderer.on('redux-action', (evt, action) => store.getStore().dispatch(action));
+// window.bridge.ipcRenderer.on('redux-action', (evt, action) => store.getStore().dispatch(action));
 window.bridge.ipcRenderer.on('new-project', evt => showNewProjectDialog());
 window.bridge.ipcRenderer.on('show-welcome', evt => showWelcomePage());
 window.bridge.ipcRenderer.on('show-plugins', evt => showPluginsPage());

@@ -13,7 +13,7 @@ function renderApp(app) {
 
 renderApp(<Root store={store.getStore()} routeConfig={routeConfig} />);
 
-window.bridge.ipcRenderer.on('redux-action', action => store.getStore().dispatch(action));
+window.bridge.ipcRenderer.on('redux-action', (evt, action) => store.getStore().dispatch(action));
 
 // Hot Module Replacement API
 /* istanbul ignore if  */

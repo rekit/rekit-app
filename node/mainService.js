@@ -136,24 +136,44 @@ promiseIpc.on('/get-online-plugins', async () => {
   return onlinePlugins.data;
 });
 
-
-
 promiseIpc.on('/install-plugin', name => {
   installing[name] = true;
-  return rekitCore.plugin.installPlugin(name).then(p => {
-    installing[name] = false;
-    utils.notifyMainStateChange();
-    return Promise.resolve(p);
-  });
+  return rekitCore.plugin
+    .installPlugin(name)
+    .then(p => {
+      installing[name] = false;
+      utils.reduxAction({
+        type: 'PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS',
+        data: p,
+      });
+      return Promise.resolve(p);
+    })
+    .catch(err => {
+      utils.reduxAction({
+        type: 'PLUGIN_MANAGER_INSTALL_PLUGIN_FAILURE',
+        data: { name },
+      });
+    });
 });
 
 promiseIpc.on('/uninstall-plugin', name => {
   uninstalling[name] = true;
-  return rekitCore.plugin.uninstallPlugin(name).then(() => {
-    uninstalling[name] = false;
-    utils.notifyMainStateChange();
-    return Promise.resolve();
-  });
+  return rekitCore.plugin
+    .uninstallPlugin(name)
+    .then(() => {
+      uninstalling[name] = false;
+      utils.reduxAction({
+        type: 'PLUGIN_MANAGER_UNINSTALL_PLUGIN_SUCCESS',
+        data: { name },
+      });
+      return Promise.resolve();
+    })
+    .catch(err => {
+      utils.reduxAction({
+        type: 'PLUGIN_MANAGER_UNINSTALL_PLUGIN_FAILURE',
+        data: { name },
+      });
+    });
 });
 
 promiseIpc.on('/disable-plugin', async () => {

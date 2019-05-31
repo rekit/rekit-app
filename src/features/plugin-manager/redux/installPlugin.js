@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   PLUGIN_MANAGER_INSTALL_PLUGIN_BEGIN,
   PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS,
@@ -77,7 +78,7 @@ export function reducer(state, action) {
           ...state.installing,
           [action.data.name]: false,
         },
-        plugins: [...state.plugins, action.data],
+        plugins: _.uniqBy([...state.plugins, action.data], 'name'),
         installPluginPending: false,
         installPluginError: null,
       };
