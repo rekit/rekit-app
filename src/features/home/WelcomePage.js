@@ -59,7 +59,7 @@ export class WelcomePage extends Component {
           <div className="footer">
             <label><Icon type="question-circle" /> Documentation</label>
             <label><Icon type="github" /> Github</label>
-            <label><Icon type="slack" /> Discussion</label>
+            <label><a href="https://discord.gg/Prn8vdY"><Icon type="slack" /> Discussion</a></label>
             <label><Icon type="twitter" /> Twitter</label>
           </div>
         </div>
