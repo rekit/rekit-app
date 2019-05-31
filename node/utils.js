@@ -23,4 +23,10 @@ module.exports = {
         }, 2000);
     }
   },
+  reduxAction(action) {
+    const win = BrowserWindow.getAllWindows()[0];
+    if (win) {
+      win.webContents.send('redux-action', action);
+    }
+  }
 };

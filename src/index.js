@@ -8,15 +8,12 @@ import routeConfig from './common/routeConfig';
 import Root from './Root';
 
 function renderApp(app) {
-  render(
-    <AppContainer>
-      {app}
-    </AppContainer>,
-    document.getElementById('root')
-  );
+  render(<AppContainer>{app}</AppContainer>, document.getElementById('root'));
 }
 
 renderApp(<Root store={store.getStore()} routeConfig={routeConfig} />);
+
+window.bridge.ipcRenderer.on('redux-action', action => store.getStore().dispatch(action));
 
 // Hot Module Replacement API
 /* istanbul ignore if  */
