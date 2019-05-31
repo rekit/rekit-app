@@ -18,7 +18,10 @@ const initialState = {
   installPluginError: null,
   uninstallPluginPending: false,
   uninstallPluginError: null,
-  plugins: null,
+  plugins: [],
+  onlinePlugins: [],
+  fetchOnlinePluginsPending: false,
+  fetchOnlinePluginsError: null,
 };
 
 export default initialState;

@@ -13,6 +13,7 @@ import { reducer as enablePluginReducer } from './enablePlugin';
 import { reducer as disablePluginReducer } from './disablePlugin';
 import { reducer as installPluginReducer } from './installPlugin';
 import { reducer as uninstallPluginReducer } from './uninstallPlugin';
+import { reducer as fetchOnlinePluginsReducer } from './fetchOnlinePlugins';
 
 const reducers = [
   getInstalledPluginsReducer,
@@ -21,6 +22,7 @@ const reducers = [
   disablePluginReducer,
   installPluginReducer,
   uninstallPluginReducer,
+  fetchOnlinePluginsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

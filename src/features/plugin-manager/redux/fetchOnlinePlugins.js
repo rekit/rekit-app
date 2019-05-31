@@ -1,16 +1,16 @@
 import {
-  PLUGIN_MANAGER_INSTALL_PLUGIN_BEGIN,
-  PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS,
-  PLUGIN_MANAGER_INSTALL_PLUGIN_FAILURE,
-  PLUGIN_MANAGER_INSTALL_PLUGIN_DISMISS_ERROR,
+  PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_BEGIN,
+  PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_SUCCESS,
+  PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_FAILURE,
+  PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_DISMISS_ERROR,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function installPlugin(name) {
+export function fetchOnlinePlugins(args = {}) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: PLUGIN_MANAGER_INSTALL_PLUGIN_BEGIN,
+      type: PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -21,11 +21,11 @@ export function installPlugin(name) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = window.bridge.promiseIpc.send('/install-plugin', name);
+      const doRequest = window.bridge.promiseIpc.send('/get-online-plugins');
       doRequest.then(
         (res) => {
           dispatch({
-            type: PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS,
+            type: PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_SUCCESS,
             data: res,
           });
           resolve(res);
@@ -33,7 +33,7 @@ export function installPlugin(name) {
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: PLUGIN_MANAGER_INSTALL_PLUGIN_FAILURE,
+            type: PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -47,43 +47,44 @@ export function installPlugin(name) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissInstallPluginError() {
+export function dismissFetchOnlinePluginsError() {
   return {
-    type: PLUGIN_MANAGER_INSTALL_PLUGIN_DISMISS_ERROR,
+    type: PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case PLUGIN_MANAGER_INSTALL_PLUGIN_BEGIN:
+    case PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        installPluginPending: true,
-        installPluginError: null,
+        fetchOnlinePluginsPending: true,
+        fetchOnlinePluginsError: null,
       };
 
-    case PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS:
+    case PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_SUCCESS:
       // The request is success
       return {
         ...state,
-        installPluginPending: false,
-        installPluginError: null,
+        onlinePlugins: action.data,
+        fetchOnlinePluginsPending: false,
+        fetchOnlinePluginsError: null,
       };
 
-    case PLUGIN_MANAGER_INSTALL_PLUGIN_FAILURE:
+    case PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_FAILURE:
       // The request is failed
       return {
         ...state,
-        installPluginPending: false,
-        installPluginError: action.data.error,
+        fetchOnlinePluginsPending: false,
+        fetchOnlinePluginsError: action.data.error,
       };
 
-    case PLUGIN_MANAGER_INSTALL_PLUGIN_DISMISS_ERROR:
+    case PLUGIN_MANAGER_FETCH_ONLINE_PLUGINS_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        installPluginError: null,
+        fetchOnlinePluginsError: null,
       };
 
     default:

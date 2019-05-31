@@ -117,12 +117,40 @@ promiseIpc.on('/create-app', options => {
     });
 });
 
-promiseIpc.on('/list-plugins', async () => {
+promiseIpc.on('/list-plugins', () => {
+  return rekitCore.plugin.getAllPlugins(); //.concat(onlinePlugins.data);
+});
+
+promiseIpc.on('/get-online-plugins', async () => {
   let onlinePlugins = [];
   try {
     onlinePlugins = await axios.get('https://rekit.github.io/plugin-registry/registry.json');
   } catch (err) {
     logger.info('Failed to get online plugins: ', err);
   }
-  return rekitCore.plugin.getAllPlugins().concat(onlinePlugins.data);
+  return onlinePlugins.data;
+});
+
+promiseIpc.on('/install-plugin', async (name) => {
+  return rekitCore.plugin.installPlugin(name);
+});
+
+promiseIpc.on('/uninstall-plugin', async () => {
+  // let onlinePlugins = [];
+  // try {
+  //   onlinePlugins = await axios.get('https://rekit.github.io/plugin-registry/registry.json');
+  // } catch (err) {
+  //   logger.info('Failed to get online plugins: ', err);
+  // }
+  // return onlinePlugins.data;
+});
+
+promiseIpc.on('/disable-plugin', async () => {
+  // let onlinePlugins = [];
+  // try {
+  //   onlinePlugins = await axios.get('https://rekit.github.io/plugin-registry/registry.json');
+  // } catch (err) {
+  //   logger.info('Failed to get online plugins: ', err);
+  // }
+  // return onlinePlugins.data;
 });

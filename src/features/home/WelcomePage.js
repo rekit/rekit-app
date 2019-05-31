@@ -10,7 +10,6 @@ import history from '../../common/history';
 import { ReactComponent as DiscordIcon } from '../../images/discord.svg';
 
 export class WelcomePage extends Component {
-
   handleCreateNewProject = () => {
     utils.showNewProjectDialog();
   };
@@ -21,11 +20,11 @@ export class WelcomePage extends Component {
 
   handleLearnRekit = () => {
     window.bridge.shell.openExternal('http://rekit.org');
-  }
+  };
 
   handleManagePlugins = () => {
     history.push('/plugins');
-  }
+  };
 
   renderWelcomArea() {
     return (
@@ -55,13 +54,23 @@ export class WelcomePage extends Component {
         <div className="main-area">
           <Row>
             <Col span={13}>{this.renderWelcomArea()}</Col>
-            <Col span={11}><RecentProjects /></Col>
+            <Col span={11}>
+              <RecentProjects />
+            </Col>
           </Row>
           <div className="footer">
-            <label><Icon type="question-circle" /> Documentation</label>
-            <label><Icon type="github" /> Github</label>
-            <a href="https://discord.gg/Prn8vdY" target="_blank"><Icon component={DiscordIcon} /> Discussion</a>
-            <label><Icon type="twitter" /> Twitter</label>
+            <label>
+              <Icon type="question-circle" /> Documentation
+            </label>
+            <label>
+              <Icon type="github" /> Github
+            </label>
+            <a href="https://discord.gg/Prn8vdY" target="_blank">
+              <Icon component={DiscordIcon} /> Discussion
+            </a>
+            <label>
+              <Icon type="twitter" /> Twitter
+            </label>
           </div>
         </div>
       </div>

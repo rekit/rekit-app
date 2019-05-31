@@ -7,7 +7,7 @@ import {
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function uninstallPlugin(args = {}) {
+export function uninstallPlugin(name) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
       type: PLUGIN_MANAGER_UNINSTALL_PLUGIN_BEGIN,
@@ -21,7 +21,7 @@ export function uninstallPlugin(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
+      const doRequest = window.bridge.promiseIpc.send('/uninstall-plugins');
       doRequest.then(
         (res) => {
           dispatch({
