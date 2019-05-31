@@ -21,7 +21,7 @@ export class MainPage extends Component {
             <Button icon="close" onClick={() => history.go(-1)} shape="circle" />
           </div>
           <Row gutter={0}>
-            <Col span={8}>
+            <Col span={8} className="plugin-manager-sider">
               <h2>Plugins</h2>
               <PluginList type="installed" />
             </Col>

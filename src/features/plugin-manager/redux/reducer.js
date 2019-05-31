@@ -7,17 +7,17 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
 import initialState from './initialState';
-import { reducer as getInstalledPluginsReducer } from './getInstalledPlugins';
-import { reducer as fetchPluginsReducer } from './fetchPlugins';
+import { reducer as fetchInstalledPluginsReducer } from './fetchInstalledPlugins';
 import { reducer as enablePluginReducer } from './enablePlugin';
 import { reducer as disablePluginReducer } from './disablePlugin';
 import { reducer as installPluginReducer } from './installPlugin';
 import { reducer as uninstallPluginReducer } from './uninstallPlugin';
 import { reducer as fetchOnlinePluginsReducer } from './fetchOnlinePlugins';
 
+import { HOME_GET_MAIN_STATE_SUCCESS } from '../../home/redux/constants';
+
 const reducers = [
-  getInstalledPluginsReducer,
-  fetchPluginsReducer,
+  fetchInstalledPluginsReducer,
   enablePluginReducer,
   disablePluginReducer,
   installPluginReducer,
@@ -29,6 +29,13 @@ export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here
+    case HOME_GET_MAIN_STATE_SUCCESS:
+      newState = {
+        ...state,
+        installing: action.data.installing,
+        uninstalling: action.data.uninstalling,
+      };
+      break;
     default:
       newState = state;
       break;

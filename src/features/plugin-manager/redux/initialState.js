@@ -6,10 +6,8 @@
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
-  getInstalledPluginsPending: false,
-  getInstalledPluginsError: null,
-  fetchPluginsPending: false,
-  fetchPluginsError: null,
+  fetchInstalledPluginsPending: false,
+  fetchInstalledPluginsError: null,
   enablePluginPending: false,
   enablePluginError: null,
   disablePluginPending: false,
@@ -20,6 +18,8 @@ const initialState = {
   uninstallPluginError: null,
   plugins: [],
   onlinePlugins: [],
+  installing: {},
+  uninstalling: {},
   fetchOnlinePluginsPending: false,
   fetchOnlinePluginsError: null,
 };

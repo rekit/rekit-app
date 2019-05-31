@@ -58,6 +58,30 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .status-installing {
+      display: inline-block;
+      background-color: @green2;
+      border-radius: 2px;
+      font-size: 10px;
+      padding: 0 3px;
+      color: #fff;
+      .anticon {
+        font-size: 9px;
+        margin-right: 5px;
+      }
+    }
+    .status-uninstalling {
+      display: inline-block;
+      background-color: 444;
+      border-radius: 2px;
+      font-size: 10px;
+      padding: 0 3px;
+      color: #bbb;
+      .anticon {
+        font-size: 9px;
+        margin-right: 5px;
+      }
+    }
     .ant-col {
       font-size: 12px;
       .author {
@@ -80,7 +104,11 @@
       }
 
       .btn-installed {
+        color: #bbb;
         background-color: #444;
+        .anticon {
+          font-size: 10px;
+        }
       }
     }
   }

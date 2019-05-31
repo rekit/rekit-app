@@ -1,5 +1,4 @@
-export { getInstalledPlugins, dismissGetInstalledPluginsError } from './getInstalledPlugins';
-export { fetchPlugins, dismissFetchPluginsError } from './fetchPlugins';
+export { fetchInstalledPlugins, dismissFetchInstalledPluginsError } from './fetchInstalledPlugins';
 export { enablePlugin, dismissEnablePluginError } from './enablePlugin';
 export { disablePlugin, dismissDisablePluginError } from './disablePlugin';
 export { installPlugin, dismissInstallPluginError } from './installPlugin';

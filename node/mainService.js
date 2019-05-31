@@ -12,6 +12,9 @@ const store = require('./store');
 const ua = require('./ua');
 const logger = require('./logger');
 
+const installing = {};
+const uninstalling = {};
+
 // filter recent projects existance
 function checkRecent() {
   let recent = store.get('recentProjects') || [];
@@ -48,6 +51,8 @@ promiseIpc.on('/get-main-state', prjDir => {
     studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started', 'error'])),
     version: app.getVersion(),
     appTypes,
+    installing,
+    uninstalling,
     recentProjects: (store.get('recentProjects') || []).map(prj => {
       let appType = 'common';
       try {
@@ -117,8 +122,8 @@ promiseIpc.on('/create-app', options => {
     });
 });
 
-promiseIpc.on('/list-plugins', () => {
-  return rekitCore.plugin.getAllPlugins(); //.concat(onlinePlugins.data);
+promiseIpc.on('/get-installed-plugins', () => {
+  return rekitCore.plugin.getInstalledPlugins(); //.concat(onlinePlugins.data);
 });
 
 promiseIpc.on('/get-online-plugins', async () => {
@@ -131,18 +136,24 @@ promiseIpc.on('/get-online-plugins', async () => {
   return onlinePlugins.data;
 });
 
-promiseIpc.on('/install-plugin', async (name) => {
-  return rekitCore.plugin.installPlugin(name);
+
+
+promiseIpc.on('/install-plugin', name => {
+  installing[name] = true;
+  return rekitCore.plugin.installPlugin(name).then(p => {
+    installing[name] = false;
+    utils.notifyMainStateChange();
+    return Promise.resolve(p);
+  });
 });
 
-promiseIpc.on('/uninstall-plugin', async () => {
-  // let onlinePlugins = [];
-  // try {
-  //   onlinePlugins = await axios.get('https://rekit.github.io/plugin-registry/registry.json');
-  // } catch (err) {
-  //   logger.info('Failed to get online plugins: ', err);
-  // }
-  // return onlinePlugins.data;
+promiseIpc.on('/uninstall-plugin', name => {
+  uninstalling[name] = true;
+  return rekitCore.plugin.uninstallPlugin(name).then(() => {
+    uninstalling[name] = false;
+    utils.notifyMainStateChange();
+    return Promise.resolve();
+  });
 });
 
 promiseIpc.on('/disable-plugin', async () => {

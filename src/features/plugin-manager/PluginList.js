@@ -3,18 +3,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Row, Col, Button, Modal, Menu, Dropdown } from 'antd';
-import { fetchPlugins, fetchOnlinePlugins } from './redux/actions';
+import { Row, Col, Button, Modal, Menu, Dropdown, Icon } from 'antd';
+import {
+  fetchInstalledPlugins,
+  fetchOnlinePlugins,
+  installPlugin,
+  uninstallPlugin,
+} from './redux/actions';
+// import { fetchMainState } from '../../home/redux/actions';
 
 const defaultPluginLogo = require('../../images/plugin-logo.png');
 export class PluginList extends Component {
   static propTypes = {
     pluginManager: PropTypes.object.isRequired,
+    installing: PropTypes.object.isRequired,
+    uninstalling: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
-    this.props.actions.fetchPlugins();
+    this.props.actions.fetchInstalledPlugins();
     this.props.actions.fetchOnlinePlugins();
   }
 
@@ -38,7 +46,7 @@ export class PluginList extends Component {
   }
 
   handleInstall(item) {
-    this.props.action
+    this.props.actions
       .installPlugin(item.name)
       .then()
       .catch(err => {
@@ -49,8 +57,8 @@ export class PluginList extends Component {
       });
   }
   handleUninstall(item) {
-    this.props.action
-      .uninstall(item.name)
+    this.props.actions
+      .uninstallPlugin(item.name)
       .then()
       .catch(err => {
         Modal.error({
@@ -58,6 +66,19 @@ export class PluginList extends Component {
           content: 'Failed to remove plugin: ' + item.name,
         });
       });
+  }
+
+  handleMenuClick(evt, item) {
+    console.log('menu click: ', evt, item);
+    switch (evt.key) {
+      case 'update':
+        break;
+      case 'remove':
+        this.props.actions.uninstallPlugin(item.name);
+        break;
+      default:
+        break;
+    }
   }
 
   renderItem = item => {
@@ -90,12 +111,44 @@ export class PluginList extends Component {
   };
 
   renderInstallButton(item) {
-    if (item.__notInstalled) return <Button size="small" onClick={() => this.handleInstall(item)}>Install</Button>;
-    if (!item.latestVersion || item.latestVersion.versoin !== item.version) {
+    const { installing, uninstalling } = this.props;
+    if (installing[item.name]) {
       return (
-        <Button size="small" className="btn-installed">
-          Installed
+        <span className="status-installing">
+          <Icon type="loading-3-quarters" spin />
+          Installing...
+        </span>
+      );
+    }
+    if (uninstalling[item.name]) {
+      return (
+        <span className="status-uninstalling">
+          <Icon type="loading-3-quarters" spin />
+          Removing...
+        </span>
+      );
+    }
+    if (item.__notInstalled)
+      return (
+        <Button size="small" onClick={() => this.handleInstall(item)}>
+          Install
         </Button>
+      );
+    if (!item.latestVersion || item.latestVersion.versoin !== item.version) {
+      const menu = (
+        <Menu onClick={evt => this.handleMenuClick(evt, item)}>
+          {item.latestVersion && item.latestVersion.versoin !== item.version && (
+            <Menu.Item key="update">Update</Menu.Item>
+          )}
+          <Menu.Item key="remove">Remove</Menu.Item>
+        </Menu>
+      );
+      return (
+        <Dropdown overlay={menu}>
+          <Button size="small" className="btn-installed">
+            Installed <Icon type="down" />
+          </Button>
+        </Dropdown>
       );
     }
   }
@@ -117,13 +170,18 @@ export class PluginList extends Component {
 function mapStateToProps(state) {
   return {
     pluginManager: state.pluginManager,
+    installing: state.pluginManager.installing,
+    uninstalling: state.pluginManager.uninstalling,
   };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ fetchPlugins, fetchOnlinePlugins }, dispatch),
+    actions: bindActionCreators(
+      { fetchInstalledPlugins, fetchOnlinePlugins, installPlugin, uninstallPlugin },
+      dispatch,
+    ),
   };
 }
 

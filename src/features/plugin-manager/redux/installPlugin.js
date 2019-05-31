@@ -8,9 +8,11 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function installPlugin(name) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: PLUGIN_MANAGER_INSTALL_PLUGIN_BEGIN,
+      data: { name },
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -23,7 +25,7 @@ export function installPlugin(name) {
       // args.error here is only for test coverage purpose.
       const doRequest = window.bridge.promiseIpc.send('/install-plugin', name);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS,
             data: res,
@@ -31,7 +33,7 @@ export function installPlugin(name) {
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: PLUGIN_MANAGER_INSTALL_PLUGIN_FAILURE,
             data: { error: err },
@@ -59,17 +61,27 @@ export function reducer(state, action) {
       // Just after a request is sent
       return {
         ...state,
+        installing: {
+          ...state.installing,
+          [action.data.name]: true,
+        },
         installPluginPending: true,
         installPluginError: null,
       };
 
-    case PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS:
+    case PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS: {
       // The request is success
       return {
         ...state,
+        installing: {
+          ...state.installing,
+          [action.data.name]: false,
+        },
+        plugins: [...state.plugins, action.data],
         installPluginPending: false,
         installPluginError: null,
       };
+    }
 
     case PLUGIN_MANAGER_INSTALL_PLUGIN_FAILURE:
       // The request is failed

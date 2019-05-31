@@ -11,6 +11,7 @@ export function uninstallPlugin(name) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
       type: PLUGIN_MANAGER_UNINSTALL_PLUGIN_BEGIN,
+      data: { name }
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -21,12 +22,12 @@ export function uninstallPlugin(name) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = window.bridge.promiseIpc.send('/uninstall-plugins');
+      const doRequest = window.bridge.promiseIpc.send('/uninstall-plugin', name);
       doRequest.then(
         (res) => {
           dispatch({
             type: PLUGIN_MANAGER_UNINSTALL_PLUGIN_SUCCESS,
-            data: res,
+            data: {name},
           });
           resolve(res);
         },
@@ -59,6 +60,10 @@ export function reducer(state, action) {
       // Just after a request is sent
       return {
         ...state,
+        uninstalling: {
+          ...state.uninstalling,
+          [action.data.name]: true,
+        },
         uninstallPluginPending: true,
         uninstallPluginError: null,
       };
@@ -67,6 +72,11 @@ export function reducer(state, action) {
       // The request is success
       return {
         ...state,
+        uninstalling: {
+          ...state.uninstalling,
+          [action.data.name]: false,
+        },
+        plugins: state.plugins.filter(p => p.name !== action.data.name),
         uninstallPluginPending: false,
         uninstallPluginError: null,
       };
