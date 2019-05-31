@@ -71,6 +71,15 @@ export function reducer(state, action) {
       };
 
     case PLUGIN_MANAGER_INSTALL_PLUGIN_SUCCESS: {
+      const name = action.data.name;
+      const found = _.find(state.plugins, { name });
+      let newPlugins = [...state.plugins];
+      if (found) {
+        newPlugins = newPlugins.map(p => (p === found ? Object.assign({}, found, action.data) : p));
+      } else {
+        newPlugins.push(action.data);
+      }
+
       // The request is success
       return {
         ...state,
@@ -78,7 +87,7 @@ export function reducer(state, action) {
           ...state.installing,
           [action.data.name]: false,
         },
-        plugins: _.uniqBy([...state.plugins, action.data], 'name'),
+        plugins: newPlugins,
         installPluginPending: false,
         installPluginError: null,
       };

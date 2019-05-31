@@ -35,7 +35,6 @@ export class App extends Component {
       path: '/rekit-studio/:port',
       exact: true,
     });
-    console.log('match: ', match);
     return (
       <div className="home-app">
         <TitleBar />

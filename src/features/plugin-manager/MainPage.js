@@ -4,16 +4,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { Row, Col, Button } from 'antd';
-import { PluginList, PluginHeader } from './';
+import { PluginList, PluginDetail } from './';
 import history from '../../common/history';
 
 export class MainPage extends Component {
   static propTypes = {
     pluginManager: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
   };
 
   render() {
+    console.log('match: ', this.props.match);
+
     return (
       <div className="plugin-manager-main-page">
         <div className="main-area">
@@ -23,11 +26,10 @@ export class MainPage extends Component {
           <Row gutter={0}>
             <Col span={8} className="plugin-manager-sider">
               <h2>Plugins</h2>
-              <PluginList type="installed" />
+              <PluginList type="installed" current={this.props.match.params.plugin}/>
             </Col>
             <Col span={16} className="plugin-intro">
-              <PluginHeader />
-              <p>This is plugin description</p>
+              <PluginDetail  name={this.props.match.params.plugin} />
             </Col>
           </Row>
         </div>

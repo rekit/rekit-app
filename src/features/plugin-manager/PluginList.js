@@ -1,9 +1,11 @@
 /* eslint jsx-a11y/alt-text:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Modal, Menu, Dropdown, Icon } from 'antd';
+import history from '../../common/history';
 import {
   fetchInstalledPlugins,
   fetchOnlinePlugins,
@@ -84,7 +86,10 @@ export class PluginList extends Component {
 
   renderItem = item => {
     return (
-      <li>
+      <li
+        onClick={() => history.push(`/plugins/${item.name}`)}
+        className={classnames({ selected: item.name === this.props.current })}
+      >
         <img
           className="plugin-logo"
           src={
@@ -136,18 +141,20 @@ export class PluginList extends Component {
         </Button>
       );
     if (!item.latestVersion || item.latestVersion.versoin !== item.version) {
+      const needUpdate = item.latestVersion && item.latestVersion.versoin !== item.version;
       const menu = (
         <Menu onClick={evt => this.handleMenuClick(evt, item)}>
-          {item.latestVersion && item.latestVersion.versoin !== item.version && (
-            <Menu.Item key="update">Update</Menu.Item>
-          )}
+          {needUpdate && <Menu.Item key="update">Update</Menu.Item>}
           <Menu.Item key="remove">Remove</Menu.Item>
         </Menu>
       );
       return (
         <Dropdown overlay={menu}>
-          <Button size="small" className="btn-installed">
-            Installed <Icon type="down" />
+          <Button
+            size="small"
+            className={classnames('btn-installed', { 'btn-to-update': needUpdate })}
+          >
+            {needUpdate ? 'Update' : 'Installed'} <Icon type="down" />
           </Button>
         </Dropdown>
       );

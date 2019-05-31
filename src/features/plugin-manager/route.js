@@ -6,6 +6,6 @@ import { MainPage } from './';
 export default {
   path: 'plugins',
   childRoutes: [
-    { path: '/plugins', component: MainPage },
+    { path: '/plugins/:plugin?', component: MainPage },
   ],
 };
