@@ -12,9 +12,8 @@ import {
   installPlugin,
   uninstallPlugin,
 } from './redux/actions';
-// import { fetchMainState } from '../../home/redux/actions';
+import { PluginIcon } from './';
 
-const defaultPluginLogo = require('../../images/plugin-logo.png');
 export class PluginList extends Component {
   static propTypes = {
     pluginManager: PropTypes.object.isRequired,
@@ -90,17 +89,7 @@ export class PluginList extends Component {
         onClick={() => history.push(`/plugins/${item.name}`)}
         className={classnames({ selected: item.name === this.props.current })}
       >
-        <img
-          className="plugin-logo"
-          src={
-            item.logo
-              ? `file://${item.logo}`
-              : `https://rekit.github.io/plugin-registry/logos/${item.name}.png`
-          }
-          onError={evt => {
-            evt.target.src = defaultPluginLogo;
-          }}
-        />
+        <PluginIcon item={item} />
         <label className="name">{item.name}</label>
         <label className="version">{item.version || ''}</label>
         <p>{item.description || 'No description.'}</p>
