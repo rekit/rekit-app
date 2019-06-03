@@ -3,7 +3,7 @@ const defaultPluginLogo = require('../../images/plugin-logo.png');
 
 export default class PluginIcon extends Component {
   static propTypes = {};
-
+  
   render() {
     const { item } = this.props;
     return (

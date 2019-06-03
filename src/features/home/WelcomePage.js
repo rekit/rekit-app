@@ -65,9 +65,9 @@ export class WelcomePage extends Component {
             <label>
               <Icon type="github" /> Github
             </label>
-            <a href="https://discord.gg/Prn8vdY" target="_blank">
-              <Icon component={DiscordIcon} /> Discussion
-            </a>
+            <label href="https://discord.gg/Prn8vdY" target="_blank">
+              <Icon type="slack" component={DiscordIcon} /> Discussion
+            </label>
             <label>
               <Icon type="twitter" /> Twitter
             </label>

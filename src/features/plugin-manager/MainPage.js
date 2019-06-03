@@ -15,8 +15,6 @@ export class MainPage extends Component {
   };
 
   render() {
-    console.log('match: ', this.props.match);
-
     return (
       <div className="plugin-manager-main-page">
         <div className="main-area">

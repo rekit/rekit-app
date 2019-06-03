@@ -12,7 +12,7 @@ import {
   installPlugin,
   uninstallPlugin,
 } from './redux/actions';
-import { PluginIcon } from './';
+import { PluginIcon, InstallButton } from './';
 
 export class PluginList extends Component {
   static propTypes = {
@@ -46,46 +46,10 @@ export class PluginList extends Component {
     return merged;
   }
 
-  handleInstall(item) {
-    this.props.actions
-      .installPlugin(item.name)
-      .then()
-      .catch(err => {
-        Modal.error({
-          title: 'Failed',
-          content: 'Failed to install plugin: ' + item.name,
-        });
-      });
-  }
-  handleUninstall(item) {
-    this.props.actions
-      .uninstallPlugin(item.name)
-      .then()
-      .catch(err => {
-        Modal.error({
-          title: 'Failed',
-          content: 'Failed to remove plugin: ' + item.name,
-        });
-      });
-  }
-
-  handleMenuClick(evt, item) {
-    console.log('menu click: ', evt, item);
-    switch (evt.key) {
-      case 'update':
-        this.handleInstall(item);
-        break;
-      case 'remove':
-        this.props.actions.uninstallPlugin(item.name);
-        break;
-      default:
-        break;
-    }
-  }
-
   renderItem = item => {
     return (
       <li
+        key={item.name}
         onClick={() => history.push(`/plugins/${item.name}`)}
         className={classnames({ selected: item.name === this.props.current })}
       >
@@ -98,7 +62,7 @@ export class PluginList extends Component {
             <label className="author">{item.author}</label>
           </Col>
           <Col span={8} style={{ textAlign: 'right' }}>
-            {this.renderInstallButton(item)}
+            <InstallButton item={item} />
           </Col>
         </Row>
       </li>
