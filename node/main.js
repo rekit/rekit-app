@@ -26,7 +26,7 @@ function createWindow() {
     width: 1200,
     height: 900,
     titleBarStyle: 'hidden',
-    backgroundColor: '#1e1e1e', 
+    backgroundColor: '#1e1e1e',
     webPreferences: {
       webSecurity: false,
     },
@@ -35,6 +35,8 @@ function createWindow() {
   });
   // mainWindow.webContents.session
   mainWindow.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
+  // So that localhost is not proxyed in some cases
+  mainWindow.webContents.session.setProxy({ proxyRules: null }, () => {});
   // and load the index.html of the app.
   // mainWindow.loadURL(
   //   url.format({

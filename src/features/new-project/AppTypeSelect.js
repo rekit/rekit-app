@@ -64,7 +64,6 @@ export class AppTypeSelect extends Component {
     const { appTypes } = this.props;
     return (
       <React.Fragment>
-        <h2>Which type of the project to create?</h2>
         <div
           className="icon-block-container"
           style={{ marginBottom: this.props.value ? '110px' : '0px' }}

@@ -74,30 +74,28 @@ export class NewProjectDialog extends Component {
     const { createAppError, createAppPending } = this.props;
     const creationDone = step === 2 && !createAppError && !createAppPending;
     return [
-      !creationDone &&
-        step > 0 && (
-          <Button key="back" className="btn-back" onClick={this.handleBack}>
-            Back
-          </Button>
-        ),
+      !creationDone && step > 0 && (
+        <Button key="back" className="btn-back" onClick={this.handleBack}>
+          Back
+        </Button>
+      ),
       !creationDone && (
         <Button key="cancel" className="btn-cancel" onClick={this.handleCancel}>
           Cancel
         </Button>
       ),
-      !creationDone &&
-        !createAppError && (
-          <Button
-            key="ok"
-            type="primary"
-            className="btn-ok"
-            onClick={this.handleOk}
-            loading={step === 2}
-            disabled={step === 2}
-          >
-            {{ 0: 'Next', 1: 'Create', 2: 'Creating' }[step]}
-          </Button>
-        ),
+      !creationDone && !createAppError && (
+        <Button
+          key="ok"
+          type="primary"
+          className="btn-ok"
+          onClick={this.handleOk}
+          loading={step === 2}
+          disabled={step === 2}
+        >
+          {{ 0: 'Next', 1: 'Create', 2: 'Creating' }[step]}
+        </Button>
+      ),
       creationDone && <Button onClick={this.handleClose}>Close</Button>,
       creationDone && (
         <Button type="primary" onClick={this.handleOpen}>
@@ -112,7 +110,7 @@ export class NewProjectDialog extends Component {
     return (
       <Modal
         visible
-        title="Create a New Project"
+        title={step === 0 ? 'Which type of the project to create?' : 'Create a New Project'}
         onCancel={this.props.actions.hideNewProjectDialog}
         onOk={this.handleOk}
         className="new-project-new-project-dialog"
