@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Icon } from 'antd';
+import { Row, Col } from 'antd';
 import PropTypes from 'prop-types';
 import { PluginIcon, InstallButton } from './';
 

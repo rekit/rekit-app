@@ -1,5 +1,4 @@
-import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
+import  { PureComponent } from 'react';
 
 export default class PageNotFound extends PureComponent {
   render() {

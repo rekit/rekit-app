@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Row, Col, Button, Modal, Menu, Dropdown, Icon } from 'antd';
+import { Row, Col, Button, Menu, Dropdown, Icon } from 'antd';
 import history from '../../common/history';
 import {
   fetchInstalledPlugins,
