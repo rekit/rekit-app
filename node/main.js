@@ -9,7 +9,6 @@ const menu = require('./menu');
 
 const path = require('path');
 const taskRunner = require('./taskRunner');
-// const init = require('./init');
 require('./ua');
 
 require('./mainService');
