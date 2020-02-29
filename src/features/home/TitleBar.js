@@ -96,7 +96,7 @@ export class TitleBar extends Component {
                       <span className="status-badges">
                         <span
                           className={`running-scripts ${runLen ? '' : 'badge-hidden'}`}
-                          title={`${runLen} ${runLen <= 1 ? 'scripts are' : 'script is'} running.`}
+                          title={`${runLen} ${runLen > 1 ? 'scripts are' : 'script is'} running.`}
                         >
                           {runLen}
                         </span>
