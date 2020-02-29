@@ -48,7 +48,9 @@ promiseIpc.on('/get-main-state', prjDir => {
   const studios = studioRunner.getRunningStudios();
   const appTypes = rekitCore.app.getAppTypes();
   return {
-    studios: studios.map(s => _.pick(s, ['name', 'port', 'prjDir', 'started', 'error'])),
+    studios: studios.map(s =>
+      _.pick(s, ['name', 'port', 'prjDir', 'started', 'error', 'runningScripts', 'gitStatus']),
+    ),
     version: app.getVersion(),
     appTypes,
     installing,

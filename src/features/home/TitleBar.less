@@ -92,6 +92,37 @@
         color: #888;
         margin-left: 10px;
       }
+      .status-badges {
+        display: inline-block;
+        width: 40px;
+        font-size: 8px;
+        > span {
+          display: inline-block;
+          color: #fff;
+          border-radius: 6px;
+          padding: 0 2px;
+          margin: 0;
+          line-height: 12px;
+          min-width: 12px;
+          height: 12px;
+          text-align: center;
+          &:nth-child(2) {
+            margin-left: 5px;
+          }
+        }
+        .running-scripts {
+          background-color: green;
+        }
+        .git-status {
+          background-color: #0288D1;
+        }
+        .git-status-has-change {
+          background-color: #E64A19;
+        }
+        .badge-hidden {
+          visibility: hidden;
+        }
+      }
       .studio-url {
         display: table-cell;
         margin-left: 20px;
@@ -108,7 +139,6 @@
             color: rgb(242, 119, 119);
           }
         }
-
       }
     }
   }

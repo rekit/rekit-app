@@ -55,6 +55,14 @@ function startStudio(prjDir, restart) {
             studioMap[prjDir].error = msg.error;
             utils.notifyMainStateChange();
           }
+          if (msg.type === 'update-running-scripts') {
+            studioMap[prjDir].runningScripts = msg.data;
+            utils.notifyMainStateChange();
+          }
+          if (msg.type === 'update-git-status') {
+            studioMap[prjDir].gitStatus = msg.data;
+            utils.notifyMainStateChange();
+          }
         });
         child.on('exit', msg => {
           if (stopping[prjDir]) {

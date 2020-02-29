@@ -70,6 +70,18 @@ export class TitleBar extends Component {
                   const arr = s.prjDir.split('/');
                   const name = arr.pop();
                   const dir = arr.join('/');
+                  const runLen = (s.runningScripts && s.runningScripts.length) || 0;
+                  const ahead = (s.gitStatus && s.gitStatus.ahead) || 0;
+                  const hasChange = s.gitStatus && s.gitStatus.files.length > 0;
+                  let gitStatusTitle = '';
+                  if (s.gitStatus) {
+                    const status = s.gitStatus;
+                    if (status.ahead)
+                      gitStatusTitle = `Ahead of '${status.tracking}' by ${status.ahead} commits.`;
+                    if (status.files.length > 0) {
+                      gitStatusTitle += ' There are changes not committed.';
+                    }
+                  }
                   return (
                     <li
                       key={s.prjDir}
@@ -80,6 +92,22 @@ export class TitleBar extends Component {
                         <span className="current-indicator">&gt;</span>
                         <span className="project-name">{name}</span>
                         <span className="project-dir">{dir} </span>
+                      </span>
+                      <span className="status-badges">
+                        <span
+                          className={`running-scripts ${runLen ? '' : 'badge-hidden'}`}
+                          title={`${runLen} ${runLen <= 1 ? 'scripts are' : 'script is'} running.`}
+                        >
+                          {runLen}
+                        </span>
+                        <span
+                          className={`git-status ${hasChange ? 'git-status-has-change' : ''} ${
+                            !hasChange && ahead === 0 ? 'badge-hidden' : ''
+                          }`}
+                          title={gitStatusTitle}
+                        >
+                          {ahead > 0 ? ahead : hasChange ? '*' : '0'}
+                        </span>
                       </span>
                       <span className="studio-url">
                         <OpenLink href={`http://localhost:${s.port}`} title="Open in the browser">
