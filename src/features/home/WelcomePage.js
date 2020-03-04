@@ -40,7 +40,7 @@ export class WelcomePage extends Component {
           <Icon type="folder-open" />
           <p>Open an existing project</p>
         </div>
-        <div className="row-button" onClick={this.handleManagePlugins}>
+        <div className="row-button" style={{ display: 'none'}} onClick={this.handleManagePlugins}>
           <Icon type="appstore" />
           <p>Manage plugins</p>
         </div>
