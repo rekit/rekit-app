@@ -1,7 +1,7 @@
 {
   "name": "rekit-app",
   "author": "Nate Wang",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "private": false,
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
     "get-port": "^4.0.0",
     "lodash": "^4.17.5",
     "minami": "^1.1.1",
-    "node": "^10.10.0",
+    "node": "^14.16.0",
     "npm-run": "^4.1.0",
     "prettier": "^1.12.1",
     "rekit-core": "^2.3.4",
@@ -60,7 +60,7 @@
     "compression": "normal",
     "appId": "com.webows.rekit",
     "productName": "Rekit",
-    "copyright": "Copyright © 2019 ${author}",
+    "copyright": "Copyright © 2021 ${author}",
     "asar": true,
     "asarUnpack": [
       "node_modules",
@@ -76,7 +76,8 @@
     },
     "mac": {
       "category": "public.app-category.developer-tools",
-      "identity": "Pei Wang (ZUQ2GPKPP2)"
+      "identity": "Pei Wang (ZUQ2GPKPP2)",
+      "target":"pkg"
     },
     "publish": {
       "provider": "github",
@@ -161,7 +162,6 @@
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "nock": "^9.2.3",
-    "node-pty": "^0.7.8",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
