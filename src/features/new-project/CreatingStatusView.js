@@ -21,11 +21,11 @@ export class CreatingStatusView extends Component {
         message="Create App Sccuess!"
         description={
           <div>
-            <p>Congratulations! You app has been created successfully. Next:</p>
+            <p>Congratulations! Your app has been created successfully. Next:</p>
             <ol>
-              <li>Open project by click open button below.</li>
-              <li>Go to termianl to install dependencies using Yarn or Npm.</li>
-              <li>Run 'start' script in Scripts tab to start the development server.</li>
+              <li>Open project by clicking open button below.</li>
+              <li>Go to terminal to install dependencies using Yarn or Npm.</li>
+              <li>Run 'start' script in the Scripts tab to start the development server.</li>
             </ol>
             <p>Enjoy!</p>
           </div>
